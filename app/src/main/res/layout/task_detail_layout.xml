@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_background"
+    android:padding="15dp">
+
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:importantForAccessibility="no"
+        android:paddingStart="0dp"
+        android:paddingEnd="25dp"
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp"
+        android:background="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <ImageButton
+        android:id="@+id/editButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:importantForAccessibility="no"
+        android:paddingStart="25dp"
+        android:paddingTop="25dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="25dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/taskName"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton"
+        tools:text="Create UI for ToDo App" />
+
+    <TextView
+        android:id="@+id/startDateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:text="@string/start_date"
+        android:alpha="0.5"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskName" />
+
+    <TextView
+        android:id="@+id/startDate"
+        android:layout_width="5dp"
+        android:layout_height="30dp"
+        android:alpha="0.5"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/start_date"
+        android:textColor="@color/gray"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/startDateTitle"
+        app:layout_constraintTop_toBottomOf="@+id/taskName" />
+
+    <!--<TextView
+        android:id="@+id/descriptionTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="@string/about_the_task"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="@color/recent_card_color"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="1dp"
+        app:strokeColor="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTitle">
+
+        <TextView
+            android:id="@+id/descriptionContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:maxLines="5"
+            android:textSize="14sp"
+            android:lineHeight="23dp"
+            android:text="@string/about_the_task"
+            android:layout_margin="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backButton"
+            tools:text="We need to create full UI for Todo App this week."/>
+    </com.google.android.material.card.MaterialCardView>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

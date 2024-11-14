@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="screen_background">#F1EBED</color>
+    <color name="recent_card_color">#F4F4F4</color>
+    <color name="pink">#FF4B8C</color>
+    <color name="super_light_pink">#1AFF4B8C</color>
+    <color name="gray">#757575</color>
+    <color name="turquoise">#40E0D0</color>
+</resources>

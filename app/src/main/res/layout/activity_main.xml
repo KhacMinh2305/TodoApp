@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_background"
+    android:padding="15dp"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/notificationIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_todo_notification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Doan Khac Minh"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="doankhacminh2301@gmail.com"
+        android:textColor="@color/gray"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userName" />
+
+    <TextView
+        android:id="@+id/productivityTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/productivity"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userEmail" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/productivityCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productivityTitle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/overallTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/overall"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/finishedTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/overallTitle"
+                tools:text="39" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/plannedImage"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                android:src="@color/gray"
+                app:layout_constraintEnd_toStartOf="@+id/plannedTitle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/RoundedImage" />
+
+            <TextView
+                android:id="@+id/plannedTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:text="@string/planned"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/completeImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/completeImage"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                android:src="@color/turquoise"
+                app:layout_constraintEnd_toStartOf="@+id/completeTitle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/RoundedImage" />
+
+
+            <TextView
+                android:id="@+id/completeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:text="@string/completed"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <FrameLayout
+                android:id="@+id/monProgressContainer"
+                android:layout_width="30dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toStartOf="@+id/tueProgressContainer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/finishedTask"
+                android:layout_marginTop="15dp">
+
+                <ProgressBar
+                    android:id="@+id/monProgress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:max="100"
+                    android:progress="40"
+                    android:progressDrawable="@drawable/vertical_progress_drawable" />
+                
+                <TextView
+                    android:id="@+id/mondayProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    tools:text="23%"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/tueProgressContainer"
+                android:layout_width="30dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toStartOf="@+id/wedProgressContainer"
+                app:layout_constraintStart_toEndOf="@+id/monProgressContainer"
+                app:layout_constraintTop_toBottomOf="@+id/finishedTask"
+                android:layout_marginTop="15dp">
+
+                <ProgressBar
+                    android:id="@+id/tueProgress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:max="100"
+                    android:progress="40"
+                    android:progressDrawable="@drawable/vertical_progress_drawable" />
+
+                <TextView
+                    android:id="@+id/tuesdayProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    tools:text="23%"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/wedProgressContainer"
+                android:layout_width="30dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toStartOf="@id/thuProgressContainer"
+                app:layout_constraintStart_toEndOf="@+id/tueProgressContainer"
+                app:layout_constraintTop_toBottomOf="@+id/finishedTask"
+                android:layout_marginTop="15dp">
+
+                <ProgressBar
+                    android:id="@+id/wedProgress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:max="100"
+                    android:progress="40"
+                    android:progressDrawable="@drawable/vertical_progress_drawable" />
+
+                <TextView
+                    android:id="@+id/wednesdayProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    tools:text="23%"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/thuProgressContainer"
+                android:layout_width="30dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toStartOf="@id/friProgressContainer"
+                app:layout_constraintStart_toEndOf="@id/wedProgressContainer"
+                app:layout_constraintTop_toBottomOf="@+id/finishedTask"
+                android:layout_marginTop="15dp">
+
+                <ProgressBar
+                    android:id="@+id/thuProgress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:max="100"
+                    android:progress="40"
+                    android:progressDrawable="@drawable/vertical_progress_drawable" />
+
+                <TextView
+                    android:id="@+id/thursdayProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    tools:text="23%"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/friProgressContainer"
+                android:layout_width="30dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toStartOf="@id/satProgressContainer"
+                app:layout_constraintStart_toEndOf="@id/thuProgressContainer"
+                app:layout_constraintTop_toBottomOf="@+id/finishedTask"
+                android:layout_marginTop="15dp">
+
+                <ProgressBar
+                    android:id="@+id/friProgress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:max="100"
+                    android:progress="40"
+                    android:progressDrawable="@drawable/vertical_progress_drawable" />
+
+                <TextView
+                    android:id="@+id/fridayProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    tools:text="23%"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/satProgressContainer"
+                android:layout_width="30dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toStartOf="@id/sunProgressContainer"
+                app:layout_constraintStart_toEndOf="@id/friProgressContainer"
+                app:layout_constraintTop_toBottomOf="@+id/finishedTask"
+                android:layout_marginTop="15dp">
+
+                <ProgressBar
+                    android:id="@+id/satProgress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:max="100"
+                    android:progress="40"
+                    android:progressDrawable="@drawable/vertical_progress_drawable" />
+
+                <TextView
+                    android:id="@+id/saturdayProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    tools:text="23%"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/sunProgressContainer"
+                android:layout_width="30dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/satProgressContainer"
+                app:layout_constraintTop_toBottomOf="@+id/finishedTask"
+                android:layout_marginTop="15dp">
+
+                <ProgressBar
+                    android:id="@+id/sunProgress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:max="100"
+                    android:progress="40"
+                    android:progressDrawable="@drawable/vertical_progress_drawable" />
+
+                <TextView
+                    android:id="@+id/sundayProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    tools:text="23%"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/monTitle"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/mon"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/tueTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/monProgressContainer" />
+
+            <TextView
+                android:id="@+id/tueTitle"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/tue"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/wedTitle"
+                app:layout_constraintStart_toEndOf="@+id/monTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tueProgressContainer" />
+
+            <TextView
+                android:id="@+id/wedTitle"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/wed"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/thuTitle"
+                app:layout_constraintStart_toEndOf="@+id/tueTitle"
+                app:layout_constraintTop_toBottomOf="@+id/wedProgressContainer" />
+
+            <TextView
+                android:id="@+id/thuTitle"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/thu"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/friTitle"
+                app:layout_constraintStart_toEndOf="@+id/wedTitle"
+                app:layout_constraintTop_toBottomOf="@+id/thuProgressContainer" />
+
+            <TextView
+                android:id="@+id/friTitle"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/fri"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/satTitle"
+                app:layout_constraintStart_toEndOf="@+id/thuTitle"
+                app:layout_constraintTop_toBottomOf="@+id/friProgressContainer" />
+
+            <TextView
+                android:id="@+id/satTitle"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/sat"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/sunTitle"
+                app:layout_constraintStart_toEndOf="@+id/friTitle"
+                app:layout_constraintTop_toBottomOf="@+id/satProgressContainer" />
+
+            <TextView
+                android:id="@+id/sunTitle"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/sun"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/satTitle"
+                app:layout_constraintTop_toBottomOf="@+id/sunProgressContainer" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Recent Tasks Section -->
+    <TextView
+        android:id="@+id/recentTasksTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/on_going"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productivityCard" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/taskCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:cardBackgroundColor="@color/recent_card_color"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recentTasksTitle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/taskName"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:alpha="0.6"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                android:lines="1"
+                android:textColor="@color/gray"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/taskProgress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Finish layout of To Do App" />
+
+            <TextView
+                android:id="@+id/taskProgress"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/taskProgressBar"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="58%" />
+
+            <ProgressBar
+                android:id="@+id/taskProgressBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:max="100"
+                android:progress="50"
+                android:progressDrawable="@drawable/recent_task_progress_bar_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/subTaskName"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:gravity="start|center_vertical"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/taskName"
+                tools:text="Home Screen UI" />
+
+            <TextView
+                android:id="@+id/taskTime"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="start|center_vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/subTaskName"
+                tools:text="10:00 - 14:00" />
+
+            <TextView
+                android:id="@+id/createdDay"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/pink"
+                android:background="@drawable/day_textview_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/taskTime"
+                tools:text="5 days left" />
+
+            <TextView
+                android:id="@+id/priority"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/day_textview_background"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="@color/pink"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="High" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
