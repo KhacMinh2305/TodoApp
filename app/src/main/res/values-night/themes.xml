@@ -10,6 +10,12 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="Custom.ButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">20dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="CustomFab" parent="Widget.Design.FloatingActionButton">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">100dp</item>

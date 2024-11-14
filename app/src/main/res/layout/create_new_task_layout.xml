@@ -13,9 +13,9 @@
         android:layout_height="50dp"
         android:importantForAccessibility="no"
         android:paddingStart="0dp"
-        android:paddingEnd="25dp"
-        android:paddingTop="25dp"
-        android:paddingBottom="25dp"
+        android:paddingEnd="28dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="28dp"
         android:background="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -229,7 +229,7 @@
 
             <EditText
                 android:id="@+id/beginEditText"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="45dp"
                 android:alpha="0.7"
                 android:ellipsize="end"
@@ -256,7 +256,7 @@
 
             <EditText
                 android:id="@+id/endEditText"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="45dp"
                 android:alpha="0.7"
                 android:ellipsize="end"
@@ -392,15 +392,15 @@
 
     <Button
         android:id="@+id/createTaskButton"
-        style="@style/Custom.ButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:backgroundTint="@color/black"
+        android:layout_height="65dp"
+        android:background="@drawable/ongoing_card_background"
+        app:backgroundTint="@null"
         app:layout_constraintVertical_bias="1.0"
         android:text="@string/create_task"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/pink"
+        android:textColor="@color/screen_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
