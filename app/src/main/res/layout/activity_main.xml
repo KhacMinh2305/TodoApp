@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_background"
-    tools:context=".view.activity.MainActivity">
+    tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -534,9 +534,9 @@
                     android:id="@+id/taskTime"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:gravity="start|center_vertical"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:gravity="start|center_vertical"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/subTaskName"
                     tools:text="10:00 - 14:00" />
@@ -545,14 +545,14 @@
                     android:id="@+id/createdDay"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/day_textview_background"
                     android:gravity="center"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:textColor="@color/pink"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/pink"
+                    android:background="@drawable/day_textview_background"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/taskTime"
                     tools:text="5 days left" />
