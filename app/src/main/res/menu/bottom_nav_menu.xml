@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/home_nav_graph"
+        android:title="Home"
+        android:icon="@drawable/ic_todo_home"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/calendar_nav_graph"
+        android:title="Calendar"
+        android:icon="@drawable/ic_todo_calendar"
+        app:showAsAction="ifRoom"/>
+
+    <item android:title="padding"/>
+
+    <item android:id="@+id/profile_nav_graph"
+        android:title="Notification"
+        android:icon="@drawable/ic_todo_profile"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/setting_nav_graph"
+        android:title="Settings"
+        android:icon="@drawable/ic_todo_setting"
+        app:showAsAction="ifRoom"/>
+
+</menu>

@@ -3,10 +3,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
-    <color name="screen_background">#F1EBED</color>
+    <color name="screen_background">#F8F5F7</color>
     <color name="recent_card_color">#F4F4F4</color>
     <color name="pink">#FF4B8C</color>
+    <color name="medium">#D7A32F</color>
+    <color name="low">#41E23D</color>
+    <color name="medium_pink">#B3FF4B8C</color>
+    <color name="light_pink">#66FF4B8C</color>
     <color name="super_light_pink">#1AFF4B8C</color>
     <color name="gray">#757575</color>
     <color name="turquoise">#40E0D0</color>
+    <color name="super_light_turquoise">#4D40E0D0</color>
 </resources>

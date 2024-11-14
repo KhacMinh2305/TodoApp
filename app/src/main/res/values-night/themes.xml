@@ -9,4 +9,11 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="CustomFab" parent="Widget.Design.FloatingActionButton">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">100dp</item>
+        <item name="backgroundTint">@color/pink</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

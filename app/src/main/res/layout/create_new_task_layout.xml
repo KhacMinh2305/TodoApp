@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="15dp"
+    android:background="@color/screen_background">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:importantForAccessibility="no"
+        android:paddingStart="0dp"
+        android:paddingEnd="25dp"
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp"
+        android:background="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_todo_cancel" />
+
+    <TextView
+        android:id="@+id/createTaskTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:text="@string/create_new_task"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/taskNameContainer"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createTaskTitle">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="6dp"
+            android:background="@color/pink"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@color/pink"
+            app:shapeAppearance="@style/RoundedImage"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/taskNameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:alpha="0.7"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/task_name"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/taskName"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            tools:text="Finish UI for ToDo App"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:background="@drawable/edittext_background"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:layout_marginStart="20dp"
+            tools:ignore="LabelFor" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/startDateContainer"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskNameContainer">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="6dp"
+            android:background="@color/pink" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:src="@color/pink"
+            app:shapeAppearance="@style/RoundedImage" />
+
+        <TextView
+            android:id="@+id/startDateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:alpha="0.7"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/start_date"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/startDate"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:background="@drawable/edittext_background"
+            android:importantForAutofill="no"
+            android:inputType="date"
+            tools:ignore="LabelFor" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/endDateContainer"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startDateContainer">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="6dp"
+            android:background="@color/pink" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:src="@color/pink"
+            app:shapeAppearance="@style/RoundedImage" />
+
+        <TextView
+            android:id="@+id/endDateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:alpha="0.7"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/end_date"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/endDate"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:background="@drawable/edittext_background"
+            android:importantForAutofill="no"
+            android:inputType="date"
+            tools:ignore="LabelFor" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/timeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endDateContainer">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="6dp"
+            android:background="@color/pink" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:src="@color/pink"
+            app:shapeAppearance="@style/RoundedImage" />
+
+        <TextView
+            android:id="@+id/timeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:alpha="0.7"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/time"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/beginEditText"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:alpha="0.7"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:importantForAutofill="no"
+                android:lines="1"
+                android:inputType="time"
+                android:background="@drawable/edittext_background"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="LabelFor,TextFields" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:layout_marginStart="10dp"
+                android:text="@string/time_character"
+                android:textColor="@color/gray"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/endEditText"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:alpha="0.7"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:importantForAutofill="no"
+                android:lines="1"
+                android:inputType="time"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/edittext_background"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="LabelFor,TextFields" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/descriptionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeContainer">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="6dp"
+            android:background="@color/pink" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:src="@color/pink"
+            app:shapeAppearance="@style/RoundedImage" />
+
+        <TextView
+            android:id="@+id/descriptionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:alpha="0.7"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/description"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:maxLines="3"
+            android:lines="3"
+            android:lineHeight="25dp"
+            android:ellipsize="end"
+            android:padding="10dp"
+            tools:text="@string/demo_long_text"
+            android:inputType="textMultiLine"
+            android:background="@drawable/edittext_background"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/priorityTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:alpha="0.7"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        android:text="@string/priority"
+        android:textColor="@color/gray"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionContainer" />
+
+    <RadioGroup
+        android:id="@+id/priorityRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:gravity="center"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priorityTitle">
+
+        <RadioButton
+            android:id="@+id/highPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/high"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/pink"/>
+
+        <RadioButton
+            android:id="@+id/mediumPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/medium"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/medium"/>
+
+        <RadioButton
+            android:id="@+id/lowPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/low"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/low"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/createTaskButton"
+        style="@style/Custom.ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:backgroundTint="@color/black"
+        app:layout_constraintVertical_bias="1.0"
+        android:text="@string/create_task"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/pink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionContainer" />
+</androidx.constraintlayout.widget.ConstraintLayout>
