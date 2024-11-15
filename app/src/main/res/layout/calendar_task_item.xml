@@ -28,7 +28,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <!-- Time range of the task -->
+
+
+
         <TextView
             android:id="@+id/timestart"
             android:layout_width="wrap_content"
@@ -44,6 +48,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             tools:text="10:00 - 14:00" />
+
         <TextView
             android:id="@+id/timeend"
             android:layout_width="wrap_content"
