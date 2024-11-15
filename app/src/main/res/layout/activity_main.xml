@@ -38,6 +38,7 @@
                 android:layout_height="match_parent"
                 app:labelVisibilityMode="unlabeled"
                 android:elevation="4dp"
+                android:color="@color/pink"
                 android:background="@drawable/bottom_nav_bar_background"
                 app:menu="@menu/bottom_nav_menu"/>
         </com.google.android.material.bottomappbar.BottomAppBar>
