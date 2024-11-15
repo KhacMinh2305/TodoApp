@@ -7,12 +7,13 @@ import java.io.Serializable
 @Entity(tableName = "task")
 data class Task(
     @PrimaryKey(autoGenerate = true)
-    var idTask: Long? = null,
+    var idTask: Int=0,
     var nameTask: String,
     var contentTask: String,
-    var startTime: Long,
-    var endTime: Long,
-    var priority: Int,
-    var notes: String? = null
+    var startTime: String,
+    var endTime: String,
+    var priority: String,
+    //var notes: String? = null
 ) : Serializable
+
 
