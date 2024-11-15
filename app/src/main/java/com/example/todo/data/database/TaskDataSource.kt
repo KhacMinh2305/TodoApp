@@ -43,6 +43,23 @@ object TaskDataSource {
             startTime = 1678484400000L, // timestamp
             endTime = 1678488000000L, // timestamp
             priority = "Medium"
+        ),
+        Task(
+            idTask = 6,
+            nameTask = "Call Mom",
+            contentTask = "Check in with mom and catch up.",
+            startTime = 1678484400000L, // timestamp
+            endTime = 1678488000000L, // timestamp
+            priority = "Medium"
+        ),
+        Task(
+            idTask = 7,
+            nameTask = "Call Mom",
+            contentTask = "Check in with mom and catch up.",
+            startTime = 1678484400000L, // timestamp
+            endTime = 1678488000000L, // timestamp
+            priority = "Medium"
         )
+
     )
 }

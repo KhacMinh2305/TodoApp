@@ -34,7 +34,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_todo_edit" />
 
-    <TextView
+
+
+    <EditText
         android:id="@+id/taskName"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -43,6 +45,7 @@
         android:lines="1"
         android:textSize="22sp"
         android:textStyle="bold"
+        android:inputType="text"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,22 +70,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskName" />
 
-    <TextView
+    <EditText
         android:id="@+id/startDate"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:ellipsize="end"
         android:gravity="start|center_vertical"
         android:lines="1"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginStart="20dp"
         tools:text="23/01/2003"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginEnd="15dp"
+        android:autofillHints="time"
+        android:labelFor="@+id/startDateTitle"
         app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="datetime"
         app:layout_constraintStart_toEndOf="@+id/startDateTitle"
-        app:layout_constraintTop_toBottomOf="@+id/taskName" />
+        app:layout_constraintTop_toBottomOf="@+id/taskName"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:id="@+id/endDateTitle"
@@ -101,56 +108,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startDateTitle" />
 
-    <TextView
+    <EditText
         android:id="@+id/endDate"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:ellipsize="end"
         android:gravity="start|center_vertical"
         android:lines="1"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginStart="20dp"
+        android:inputType="datetime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/endDateTitle"
         app:layout_constraintTop_toBottomOf="@+id/startDate"
         tools:text="05/08/2024" />
 
-    <TextView
-        android:id="@+id/timeTitle"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:alpha="0.7"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:lines="1"
-        android:text="@string/time"
-        android:textColor="@color/gray"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endDateTitle" />
+<!--    <TextView-->
+<!--        android:id="@+id/timeTitle"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:alpha="0.7"-->
+<!--        android:ellipsize="end"-->
+<!--        android:gravity="start|center_vertical"-->
+<!--        android:lines="1"-->
+<!--        android:text="@string/time"-->
+<!--        android:textColor="@color/gray"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/endDateTitle" />-->
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:lines="1"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/timeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/endDate"
-        tools:text="10:00 - 14:00" />
+<!--    <TextView-->
+<!--        android:id="@+id/time"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:ellipsize="end"-->
+<!--        android:gravity="start|center_vertical"-->
+<!--        android:lines="1"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/timeTitle"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/endDate"-->
+<!--        tools:text="10:00 - 14:00" />-->
 
     <TextView
         android:id="@+id/priorityTitle"
@@ -167,30 +175,92 @@
         android:textStyle="bold"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/endDateTitle" />
 
-    <TextView
+    <RadioGroup
         android:id="@+id/priority"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:ellipsize="end"
         android:gravity="start|center_vertical"
-        android:lines="1"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:layout_marginEnd="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         app:layout_constraintStart_toEndOf="@+id/priorityTitle"
-        app:layout_constraintTop_toBottomOf="@+id/time"
-        tools:text="High" />
+        app:layout_constraintTop_toBottomOf="@+id/endDate"
+        tools:text="High" >
+        <RadioButton
+            android:id="@+id/highPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/high"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/pink"/>
+
+        <RadioButton
+            android:id="@+id/mediumPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/medium"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/medium"/>
+
+        <RadioButton
+            android:id="@+id/lowPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/low"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/low"/>
+    </RadioGroup>
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:importantForAccessibility="no"
+        android:padding="13dp"
+        android:background="@drawable/header_button_background"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/priority"
+        android:scaleType="centerCrop"
+        android:text="Save"
+        android:textColor="@color/black"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:importantForAccessibility="no"
+        android:padding="13dp"
+        android:background="@drawable/header_button_background"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="60dp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/priority"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Cancel"
+        android:textColor="@color/black"
+        tools:ignore="MissingConstraints" />
+
 
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -217,7 +287,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <EditText
                 android:id="@+id/description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -226,6 +296,7 @@
                 android:layout_gravity="top|end"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
+                android:inputType="text"
                 android:gravity="start|center_vertical"
                 tools:text="@string/demo_long_text"
                 android:textSize="16sp"

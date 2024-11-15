@@ -13,6 +13,7 @@ import com.example.todo.view.adapter.ListTaskAdapter
 import com.example.todo.R
 import com.example.todo.data.TaskDataSource
 import com.example.todo.data.model.Task
+
 import com.example.todo.databinding.CalendarTaskItemBinding
 
 class ListTaskFragment:Fragment() {
@@ -29,7 +30,16 @@ class ListTaskFragment:Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewtask)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        taskAdapter = ListTaskAdapter(taskList)
+        taskAdapter = ListTaskAdapter(taskList){task ->
+            val fragment = TaskDetailsFragment()
+            val bundle = Bundle()
+            bundle.putParcelable("task",task)
+            fragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
         recyclerView.adapter = taskAdapter
         backButton = view.findViewById(R.id.backButton2)
         backButton.setOnClickListener {
