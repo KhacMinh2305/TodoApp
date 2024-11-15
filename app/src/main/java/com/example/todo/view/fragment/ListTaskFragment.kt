@@ -41,10 +41,6 @@ class ListTaskFragment:Fragment() {
                 .commit()
         }
         recyclerView.adapter = taskAdapter
-        backButton = view.findViewById(R.id.backButton2)
-        backButton.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
-        }
         return view
     }
 }
