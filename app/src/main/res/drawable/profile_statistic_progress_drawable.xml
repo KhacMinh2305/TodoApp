@@ -6,7 +6,7 @@
             android:thicknessRatio="10"
             android:useLevel="false">
 
-            <solid android:color="@color/screen_background"/>
+            <solid android:color="@color/progress_background"/>
         </shape>
     </item>
 
@@ -17,7 +17,8 @@
                 android:thicknessRatio="10"
                 android:useLevel="true">
 
-                <solid android:color="@color/pink"/>
+                <gradient android:startColor="@color/turquoise"
+                    android:endColor="@color/pink"/>
             </shape>
         </rotate>
     </item>

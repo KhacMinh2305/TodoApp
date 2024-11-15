@@ -1,0 +1,114 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:context="ui.view.SettingFragment">
+
+    <TextView
+        android:id="@+id/profileLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setting"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/indicator1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_pink"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileLabel" />
+
+    <TextView
+        android:id="@+id/allTaskLabel"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:drawablePadding="10dp"
+        android:text="@string/language"
+        android:textSize="18sp"
+        android:layout_marginEnd="15dp"
+        app:drawableStartCompat="@drawable/ic_toto_task"
+        app:layout_constraintEnd_toStartOf="@+id/englishFlag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/indicator1" />
+
+    <ImageView
+        android:id="@+id/englishFlag"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="5dp"
+        android:scaleType="centerCrop"
+        android:padding="3dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_england"
+        app:layout_constraintEnd_toStartOf="@+id/languageSwitch"
+        app:layout_constraintTop_toBottomOf="@+id/indicator1" />
+
+    <Switch
+        android:id="@+id/languageSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/vietnamFlag"
+        app:layout_constraintTop_toBottomOf="@+id/indicator1"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <ImageView
+        android:id="@+id/vietnamFlag"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        android:padding="3dp"
+        android:layout_marginTop="15dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_vietnam"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/indicator1" />
+
+    <View
+        android:id="@+id/indicator2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_pink"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allTaskLabel" />
+
+    <TextView
+        android:id="@+id/themeLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/theme"
+        android:textSize="18sp"
+        android:drawablePadding="10dp"
+        app:drawableEndCompat="@drawable/ic_right_black_arrow"
+        app:drawableStartCompat="@drawable/ic_todo_theme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/indicator2" />
+
+    <!--add color view to allow user to choose color-->
+
+    <View
+        android:id="@+id/indicator3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_pink"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/themeLabel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

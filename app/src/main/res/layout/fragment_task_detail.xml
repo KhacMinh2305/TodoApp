@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="ui.view.TaskDetailFragment">
 
     <ImageButton
         android:id="@+id/backButton"
@@ -195,7 +194,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priority">
-        
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -283,4 +282,5 @@
             android:layout_gravity="top|end"
             android:layout_marginEnd="30dp"/>
     </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

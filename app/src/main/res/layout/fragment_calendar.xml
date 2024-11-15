@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/screen_background"
+    tools:context="ui.view.CalendarFragment">
 
     <TextView
-        android:id="@+id/userName"
+        android:id="@+id/monthInYear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -30,7 +31,7 @@
         android:background="@drawable/header_button_background"
         android:src="@drawable/ic_todo_backward"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
+        app:layout_constraintTop_toBottomOf="@+id/monthInYear" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/weekDayRecyclerView"
@@ -41,7 +42,7 @@
         android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toStartOf="@+id/toward"
         app:layout_constraintStart_toEndOf="@+id/backward"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
+        app:layout_constraintTop_toBottomOf="@+id/monthInYear" />
 
     <ImageButton
         android:id="@+id/toward"
@@ -55,7 +56,7 @@
         android:background="@drawable/header_button_background"
         android:src="@drawable/ic_todo_torward"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
+        app:layout_constraintTop_toBottomOf="@+id/monthInYear" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
