@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Todo</string>
+    <string name="productivity">Năng suất</string>
+    <string name="overall">Tổng quan</string>
+    <string name="completed">Hoàn thành</string>
+    <string name="planned">Kế hoạch</string>
+    <string name="mon">Thứ Hai</string>
+    <string name="tue">Thứ Ba</string>
+    <string name="wed">Thứ Tư</string>
+    <string name="thu">Thứ Năm</string>
+    <string name="fri">Thứ Sáu</string>
+    <string name="sat">Thứ Bảy</string>
+    <string name="sun">Chủ Nhật</string>
+    <string name="recent_tasks">Công việc gần đây</string>
+    <string name="about_the_task">Thông tin về công việc</string>
+    <string name="on_going">Đang thực hiện</string>
+    <string name="start_date">Ngày bắt đầu</string>
+    <string name="end_date">Ngày kết thúc</string>
+    <string name="time">Thời gian</string>
+    <string name="priority">Ưu tiên</string>
+    <string name="comment">Ghi chú</string>
+    <string name="description">Mô tả</string>
+    <string name="demo_long_text">Bạn không thể xác minh địa chỉ email từ các dịch vụ email tạm thời (dịch vụ cho phép bạn nhận email tại một địa chỉ tạm thời sẽ hết hạn sau một thời gian nhất định).</string>
+    <string name="review">Đánh giá</string>
+    <string name="create_new_task">Tạo công việc mới</string>
+    <string name="task_name">Tên công việc</string>
+    <string name="begin">Bắt đầu</string>
+    <string name="time_character">--</string>
+    <string name="create_task">Tạo công việc</string>
+    <string name="high">Cao</string>
+    <string name="medium">Trung bình</string>
+    <string name="low">Thấp</string>
+    <string name="today">Công việc hôm nay</string>
+    <string name="hello_blank_fragment">Xin chào</string>
+    <string name="profile">Hồ sơ</string>
+    <string name="all_tasks">Tất cả công việc</string>
+    <string name="statistic">Thống kê năng suất</string>
+    <string name="setting">Cài đặt</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="day">Hôm nay</string>
+    <string name="theme">Chủ đề</string>
+</resources>
