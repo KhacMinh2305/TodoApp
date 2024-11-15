@@ -1,13 +1,10 @@
-package com.example.todo.base
-
+package com.example.todo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-open class BaseActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
     }
-
-    // Các phương thức
 }
