@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +15,12 @@ import androidx.activity.viewModels
 import com.example.todo.R
 import com.example.todo.data.model.Task
 import com.example.todo.data.database.TaskDao
+import com.example.todo.data.database.TaskRoomDatabaseClass
+
 import com.example.todo.data.repository.TaskRepository
 import java.text.SimpleDateFormat
+import kotlinx.coroutines.*
+
 import java.util.*
 
 class CreateTaskFragment : Fragment() {
@@ -29,14 +35,12 @@ class CreateTaskFragment : Fragment() {
     private lateinit var priorityGroup: RadioGroup
     private val calendar = Calendar.getInstance()
 
-    @SuppressLint("DefaultLocale")
+    @SuppressLint("NewApi")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.create_new_task_layout, container, false)
-
-        // Khởi tạo các thành phần UI
         backButton = rootView.findViewById(R.id.backButton)
         taskName = rootView.findViewById(R.id.taskName)
         startDate = rootView.findViewById(R.id.startDate)
@@ -46,80 +50,99 @@ class CreateTaskFragment : Fragment() {
         startTimeEditText = rootView.findViewById(R.id.beginEditText)
         endTimeEditText = rootView.findViewById(R.id.endEditText)
 
-        // Xử lý sự kiện khi nhấn nút quay lại
         backButton.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        // Hiển thị DatePicker khi người dùng nhấn vào trường ngày bắt đầu
         startDate.setOnClickListener {
             showDatePickerDialog { date -> startDate.setText(date) }
         }
 
-        // Hiển thị DatePicker khi người dùng nhấn vào trường ngày kết thúc
         endDate.setOnClickListener {
             showDatePickerDialog { date -> endDate.setText(date) }
         }
 
-        // Hiển thị TimePicker khi người dùng nhấn vào trường giờ bắt đầu
         startTimeEditText.setOnClickListener {
             showTimePicker { hour, minute -> startTimeEditText.setText(String.format("%02d:%02d", hour, minute)) }
         }
 
-        // Hiển thị TimePicker khi người dùng nhấn vào trường giờ kết thúc
         endTimeEditText.setOnClickListener {
             showTimePicker { hour, minute -> endTimeEditText.setText(String.format("%02d:%02d", hour, minute)) }
         }
 
-        // Lắng nghe sự kiện nhấn nút tạo công việc
         val createTaskButton = rootView.findViewById<Button>(R.id.createTaskButton)
         createTaskButton.setOnClickListener {
-            val selectedPriorityId = priorityGroup.checkedRadioButtonId
-            val selectedPriority: String = when (selectedPriorityId) {
-                R.id.highPriority -> "High"
-                R.id.mediumPriority -> "Medium"
-                R.id.lowPriority -> "Low"
-                else -> {
-                    Toast.makeText(context, "Please select a priority", Toast.LENGTH_SHORT).show()
+            try {
+                val taskNameadd = taskName.text.toString()
+                val startDateStr = startDate.text.toString()
+                val endDateStr = endDate.text.toString()
+                val descriptionStr = description.text.toString()
+
+                val selectedPriorityId = priorityGroup.checkedRadioButtonId
+                val selectedPriority: String = when (selectedPriorityId) {
+                    R.id.highPriority -> "High"
+                    R.id.mediumPriority -> "Medium"
+                    R.id.lowPriority -> "Low"
+                    else -> {
+                        Toast.makeText(context, "Please select a priority", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                }
+
+                // Kiểm tra các trường nhập liệu
+                if (taskNameadd.isBlank() || startDateStr.isBlank() || endDateStr.isBlank()) {
+                    Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
+
+                // Chuyển đổi ngày từ String sang Long (timestamp)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val startDateLong = dateFormat.parse(startDateStr)?.time ?: 0L
+                val endDateLong = dateFormat.parse(endDateStr)?.time ?: 0L
+
+                // Tạo task mới
+                val task = Task(
+                    nameTask = taskNameadd,
+                    contentTask = descriptionStr,
+                    startTime = startDateLong,
+                    endTime = endDateLong,
+                    priority = selectedPriority
+                )
+
+                // Thêm task vào cơ sở dữ liệu
+                val taskDao = TaskRoomDatabaseClass.getDatabase(requireContext()).taskDao()
+                GlobalScope.launch(Dispatchers.Main) {
+                    withContext(Dispatchers.IO) {
+                        try {
+                            taskDao.addTask(task)
+                        } catch (e: Exception) {
+                            // Xử lý lỗi nếu có khi insert vào database
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(context, "Error saving task: ${e.message}", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
+                    // Thông báo khi thêm thành công
+                    Toast.makeText(context, "Task created successfully", Toast.LENGTH_SHORT).show()
+                }
+
+                // Xóa dữ liệu khỏi các trường nhập liệu sau khi tạo công việc
+                taskName.text.clear()
+                startDate.text.clear()
+                endDate.text.clear()
+                description.text.clear()
+                priorityGroup.clearCheck()
+
+            } catch (e: Exception) {
+                // Xử lý các lỗi trong quá trình tạo task
+                Toast.makeText(context, "Error creating task: ${e.message}", Toast.LENGTH_LONG).show()
             }
-
-            if (taskName.text.isBlank() || startDate.text.isBlank() || endDate.text.isBlank()) {
-                Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            // Chuyển đổi ngày và giờ từ EditText thành Long
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val startDateLong = dateFormat.parse(startDate.text.toString())?.time ?: 0L
-            val endDateLong = dateFormat.parse(endDate.text.toString())?.time ?: 0L
-
-            // Tạo task mới (Chưa lưu vào cơ sở dữ liệu)
-            val task = Task(
-                idTask = 0,
-                nameTask = taskName.text.toString(),
-                contentTask = description.text.toString(),
-                startTime = startDate.text.toString(),
-                endTime = endDate.text.toString(),
-                priority = selectedPriority
-            )
-
-            // Thông báo thành công
-            Toast.makeText(context, "Task created successfully", Toast.LENGTH_SHORT).show()
-
-            // Xóa dữ liệu khỏi các trường nhập liệu sau khi tạo công việc
-            taskName.text.clear()
-            startDate.text.clear()
-            endDate.text.clear()
-            description.text.clear()
-            priorityGroup.clearCheck()
         }
+
 
         return rootView
     }
 
-    // Hàm để hiển thị DatePickerDialog
     private fun showDatePickerDialog(onDateSet: (String) -> Unit) {
         val datePickerDialog = DatePickerDialog(
             requireContext(),
@@ -135,7 +158,6 @@ class CreateTaskFragment : Fragment() {
         datePickerDialog.show()
     }
 
-    // Hàm để hiển thị TimePickerDialog
     private fun showTimePicker(onTimeSet: (hour: Int, minute: Int) -> Unit) {
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
@@ -144,5 +166,6 @@ class CreateTaskFragment : Fragment() {
             onTimeSet(selectedHour, selectedMinute)
         }, hour, minute, true).show()
     }
+
 }
 

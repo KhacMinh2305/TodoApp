@@ -28,10 +28,11 @@ class TaskAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskA
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = taskList[position]
         holder.taskName.text = task.nameTask
-        holder.startTime.text = task.startTime
-        holder.endTime.text = task.endTime
+        holder.startTime.text = task.startTime.toString()
+        holder.endTime.text = task.endTime.toString()
         holder.priority.text = task.priority
     }
+
 
     override fun getItemCount() = taskList.size
 }

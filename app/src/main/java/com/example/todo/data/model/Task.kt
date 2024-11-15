@@ -10,10 +10,9 @@ data class Task(
     var idTask: Int=0,
     var nameTask: String,
     var contentTask: String,
-    var startTime: String,
-    var endTime: String,
+    var startTime: Long,
+    var endTime: Long,
     var priority: String,
-    //var notes: String? = null
 ) : Serializable
 
 

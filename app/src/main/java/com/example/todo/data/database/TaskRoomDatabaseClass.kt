@@ -5,28 +5,35 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.todo.data.model.Task
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Database(entities = [Task::class], version = 1, exportSchema = false)
 abstract class TaskRoomDatabaseClass : RoomDatabase() {
+
     abstract fun taskDao(): TaskDao
+
     companion object {
+
         @Volatile
         private var INSTANCE: TaskRoomDatabaseClass? = null
+
         fun getDatabase(context: Context): TaskRoomDatabaseClass {
-            if(INSTANCE == null){
-                synchronized(this){
-                    INSTANCE = buildDataBase(context)
-                }
+            return INSTANCE ?: synchronized(this) {
+                val instance = INSTANCE ?: buildDataBase(context)
+                INSTANCE = instance
+                instance
             }
-            return INSTANCE!!
         }
 
-        private fun buildDataBase(context: Context):TaskRoomDatabaseClass{
-            return  Room.databaseBuilder(
+        private fun buildDataBase(context: Context): TaskRoomDatabaseClass {
+            return Room.databaseBuilder(
                 context.applicationContext,
                 TaskRoomDatabaseClass::class.java,
                 "task_database"
-            ).allowMainThreadQueries().build()
+            )
+                .fallbackToDestructiveMigration()
+                .build()
         }
     }
 }
