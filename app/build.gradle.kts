@@ -57,11 +57,20 @@ dependencies {
     //DI
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.work)
+
+    implementation(libs.androidx.work.runtime.ktx)
+
     //Navigation
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+
     //Room
     implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.paging)
     implementation(libs.androidx.room.ktx)
 }
 

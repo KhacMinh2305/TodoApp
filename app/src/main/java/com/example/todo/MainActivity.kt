@@ -2,25 +2,31 @@ package com.example.todo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.todo.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import ui.viewmodel.AppViewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var navController : NavController
+    private lateinit var viewModel : AppViewModel
 
     // Do not change thís
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-        navController = navHostFragment.navController
-        binding.bottomNavView.setupWithNavController(navController)
+        binding = DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main)
+            .apply { lifecycleOwner = this@MainActivity }
+        supportFragmentManager.findFragmentById(R.id.nav_host).also {
+            navController = (it as NavHostFragment).navController
+            binding.bottomNavView.setupWithNavController(navController)
+        }
+        viewModel = ViewModelProvider(this)[AppViewModel::class.java]
     }
 
     override fun onStart() {

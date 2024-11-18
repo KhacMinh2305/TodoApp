@@ -1,24 +1,40 @@
 [versions]
 agp = "8.6.0"
 hiltAndroid = "2.52"
+hiltCompiler = "1.2.0"
+hiltCompilerVersion = "1.2.0-alpha01"
+hiltLifecycleViewmodel = "1.0.0-alpha03"
+hiltVersion = "1.2.0-alpha01"
 kotlin = "1.9.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+lifecycleViewmodelKtx = "2.8.7"
 material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.2.0"
 navigationFragment = "2.8.4"
 roomRuntime = "2.6.1"
+workRuntimeKtx = "2.10.0"
 
 [libraries]
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }
+androidx-hilt-compiler-v120alpha01 = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompilerVersion" }
+androidx-hilt-lifecycle-viewmodel = { module = "androidx.hilt:hilt-lifecycle-viewmodel", version.ref = "hiltLifecycleViewmodel" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltCompilerVersion" }
+androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltVersion" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigationFragment" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigationFragment" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
