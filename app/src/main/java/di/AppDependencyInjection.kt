@@ -26,4 +26,9 @@ object AppDependencyInjection {
     @Provides
     @Singleton
     fun provideTaskDao(appLocalDatabase: AppLocalDatabase) = appLocalDatabase.taskDao()
+
+    @Provides
+    @Singleton
+    fun provideCommentDao(appLocalDatabase: AppLocalDatabase) = appLocalDatabase.commentDao()
+
 }

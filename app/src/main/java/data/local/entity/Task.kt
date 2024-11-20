@@ -10,6 +10,10 @@ data class Task(
     val id: String,
     @ColumnInfo(name = "name")
     val name: String,
+    @ColumnInfo(name = "priority")
+    val priority: Int,
+    @ColumnInfo(name = "created_at")
+    val createdAt: String,
     @ColumnInfo(name = "start_date")
     val startDate: String,
     @ColumnInfo(name = "end_date")
@@ -21,5 +25,7 @@ data class Task(
     @ColumnInfo(name = "description")
     val description: String,
     @ColumnInfo(name = "state")
-    val state: Int
+    val state: Int,
+    @ColumnInfo(name = "user_id")
+    val userId: String
 )

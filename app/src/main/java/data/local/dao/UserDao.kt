@@ -10,23 +10,21 @@ import data.local.entity.User
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM user")
-    suspend fun getAll() : List<User>
+    @Query("SELECT EXISTS(SELECT 1 FROM user WHERE name = :name AND password = :password) as user_exists")
+    suspend fun validateUserInfo(name : String, password : String) : Int
 
     @Query("SELECT * FROM user WHERE id = :id")
     suspend fun getUserById(id : String) : User
 
-    @Query("SELECT * FROM user WHERE name = :name")
-    suspend fun getUserByName(name : String) : User
+    @Query("SELECT * FROM user WHERE name = :name AND password = :password")
+    suspend fun getUserByNameAndPassword(name : String, password : String) : User
 
-    @Insert(entity = User::class, onConflict = OnConflictStrategy.REPLACE)
+    @Insert(entity = User::class, onConflict = OnConflictStrategy.ABORT)
     suspend fun addUser(user : User)
 
     @Delete(entity = User::class)
     suspend fun deleteUser(user : User)
 
     @Update(entity = User::class)
-    suspend fun updateUser(user : User) {
-
-    }
+    suspend fun updateUser(user : User)
 }

@@ -1,16 +1,19 @@
 package ui.view
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.todo.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todo.databinding.FragmentCalendarBinding
+import dagger.hilt.android.AndroidEntryPoint
+import ui.viewmodel.CalendarViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+@AndroidEntryPoint
 class CalendarFragment : Fragment() {
 
     private var param1: String? = null
@@ -28,6 +31,7 @@ class CalendarFragment : Fragment() {
     }
 
     private lateinit var binding : FragmentCalendarBinding
+    private lateinit var viewModel : CalendarViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +46,23 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        //initViews()
+        initComponents()
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.lifecycleOwner = viewLifecycleOwner
+    }
+
+    private fun initViews() {
+        binding.weekDayRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun initComponents() {
+        viewModel = ViewModelProvider(this)[CalendarViewModel::class.java]
+        viewModel.init()
     }
 
 }

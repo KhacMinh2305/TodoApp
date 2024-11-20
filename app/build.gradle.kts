@@ -71,6 +71,9 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.paging)
     implementation(libs.androidx.room.ktx)
+
+    // Coroutine
+    implementation(libs.kotlinx.coroutines.android.v190)
 }
 
 kapt {

@@ -42,4 +42,8 @@
     <string name="language">Language</string>
     <string name="day">Today</string>
     <string name="theme">Theme</string>
+    <string name="login">Login to your account</string>
+    <string name="login_btn">Login</string>
+    <string name="logni_hint">Your name</string>
+    <string name="password_hint">Password</string>
 </resources>

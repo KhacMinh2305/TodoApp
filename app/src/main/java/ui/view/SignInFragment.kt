@@ -4,19 +4,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.todo.databinding.FragmentCreatingTaskBinding
+import com.example.todo.R
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 @AndroidEntryPoint
-class CreatingTaskFragment : Fragment() {
+class SignInFragment : Fragment() {
 
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            CreatingTaskFragment().apply {
+            SignInFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -26,8 +26,6 @@ class CreatingTaskFragment : Fragment() {
 
     private var param1: String? = null
     private var param2: String? = null
-
-    private lateinit var binding: FragmentCreatingTaskBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,18 +38,8 @@ class CreatingTaskFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentCreatingTaskBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-    }
-
-    private fun init() {
-
+    ): View? {
+        return inflater.inflate(R.layout.fragment_sign_in, container, false)
     }
 
 }

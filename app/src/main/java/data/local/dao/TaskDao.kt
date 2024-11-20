@@ -17,7 +17,7 @@ interface TaskDao {
     suspend fun getTaskByName(name : String) : Task
 
     @Query("SELECT * FROM task WHERE start_date = :date")
-    suspend fun getTaskByDate(date : String) : List<Task>
+    suspend fun getTaskByStartDate(date : String) : List<Task>
 
     @Query("SELECT * FROM task WHERE state = :state")
     suspend fun getFinishedTask(state : Int) : List<Task>

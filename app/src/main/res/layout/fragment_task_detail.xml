@@ -283,4 +283,19 @@
             android:layout_marginEnd="30dp"/>
     </FrameLayout>
 
+    <View
+        android:id="@+id/bottomSheetAnchorView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <include
+        android:id="@+id/bottomSheet"
+        layout="@layout/edit_task_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_anchor="@id/bottomSheetAnchorView"
+        app:layout_anchorGravity="top" />
 </androidx.constraintlayout.widget.ConstraintLayout>

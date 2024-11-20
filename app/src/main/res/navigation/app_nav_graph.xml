@@ -19,5 +19,10 @@
     <action android:id="@+id/action_creating_task"
         app:destination="@id/creatingTaskFragment"
         app:restoreState="true" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="ui.view.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
 
 </navigation>
