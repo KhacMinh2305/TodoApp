@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="ui.viewmodel.AppViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/screen_background"
         tools:context=".MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
@@ -28,6 +35,7 @@
             app:backgroundTint="@color/transparent"
             app:fabAlignmentMode="center"
             app:elevation="4dp"
+            android:visibility="@{viewModel.bottomNavState ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -38,6 +46,7 @@
                 android:layout_height="match_parent"
                 app:labelVisibilityMode="unlabeled"
                 android:elevation="4dp"
+                app:itemIconTint="@color/bottom_nav_color"
                 android:color="@color/pink"
                 android:background="@drawable/bottom_nav_bar_background"
                 app:menu="@menu/bottom_nav_menu"/>
@@ -51,6 +60,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ic_add"
             app:elevation="10dp"
+            android:visibility="@{viewModel.bottomNavState ? View.VISIBLE : View.GONE}"
             app:backgroundTint="@color/pink"
             app:layout_anchor="@id/bottomAppBar"
             tools:ignore="ContentDescription" />

@@ -1,13 +1,18 @@
 package com.example.todo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.todo.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import ui.viewmodel.AppViewModel
 
 @AndroidEntryPoint
@@ -16,22 +21,43 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var navController : NavController
     private lateinit var viewModel : AppViewModel
+    private var keepSplashOnScreen = true
 
-    // Do not change thís
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main)
-            .apply { lifecycleOwner = this@MainActivity }
+            .apply {
+                lifecycleOwner = this@MainActivity }
+        init()
+        observeStates()
+        setupListeners()
+        splashScreen.setKeepOnScreenCondition { keepSplashOnScreen }
+    }
+
+    private fun init() {
         supportFragmentManager.findFragmentById(R.id.nav_host).also {
             navController = (it as NavHostFragment).navController
             binding.bottomNavView.setupWithNavController(navController)
         }
-        viewModel = ViewModelProvider(this)[AppViewModel::class.java]
+        viewModel = ViewModelProvider(this)[AppViewModel::class.java].also { binding.viewModel = it }
     }
 
-    override fun onStart() {
-        super.onStart()
-        setupListeners()
+    private fun observeStates() {
+        viewModel.signingState.observe(this@MainActivity) {
+            if(it) {
+                navController.navigate(R.id.action_signing_in)
+            }
+            viewModel.notifySplashFinished()
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.splashState.collect {
+                    keepSplashOnScreen = it
+                }
+            }
+        }
     }
 
     private fun setupListeners() {

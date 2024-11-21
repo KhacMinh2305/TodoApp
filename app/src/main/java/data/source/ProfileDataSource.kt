@@ -1,4 +1,5 @@
 package data.source
+import data.local.AppDataStore
 import data.local.dao.UserDao
 import data.local.entity.User
 import kotlinx.coroutines.Dispatchers
@@ -7,13 +8,19 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProfileDataSource @Inject constructor(private val userDao : UserDao) {
+class ProfileDataSource @Inject constructor(
+    private val dataStore : AppDataStore,
+    private val userDao : UserDao) {
 
     private var user : User? = null
 
     fun getUserId() = user?.id
 
     fun getUserName() = user?.name
+
+    suspend fun checkIfUserRememberAccount() = dataStore.getUserId()
+
+    suspend fun updateOnSignIn(userId : String) = dataStore.update(userId)
 
     suspend fun loadIfUserRememberAccount(id : String) {
         withContext(Dispatchers.IO) {

@@ -74,6 +74,11 @@ dependencies {
 
     // Coroutine
     implementation(libs.kotlinx.coroutines.android.v190)
+
+    //DataStore
+    implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.androidx.core.splashscreen)
 }
 
 kapt {

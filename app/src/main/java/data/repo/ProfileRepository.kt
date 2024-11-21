@@ -7,6 +7,10 @@ import javax.inject.Inject
 @Singleton
 class ProfileRepository @Inject constructor(private val profileDataSource: ProfileDataSource) {
 
+    suspend fun checkIfUserRememberAccount() = profileDataSource.checkIfUserRememberAccount()
+
+    suspend fun updateOnSignIn(userId : String) = profileDataSource.updateOnSignIn(userId)
+
     fun getUserId() = profileDataSource.getUserId()
 
     fun getUserName() = profileDataSource.getUserName()
