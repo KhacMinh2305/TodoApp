@@ -1,4 +1,6 @@
 package com.example.todo
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -11,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.todo.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ui.viewmodel.AppViewModel
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        binding.bottomNavView.itemActiveIndicatorColor = ColorStateList.valueOf(Color.TRANSPARENT)
         supportFragmentManager.findFragmentById(R.id.nav_host).also {
             navController = (it as NavHostFragment).navController
             binding.bottomNavView.setupWithNavController(navController)
@@ -47,8 +51,13 @@ class MainActivity : AppCompatActivity() {
         viewModel.signingState.observe(this@MainActivity) {
             if(it) {
                 navController.navigate(R.id.action_signing_in)
+                return@observe
             }
             viewModel.notifySplashFinished()
+        }
+
+        viewModel.messageState.observe(this@MainActivity) {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
 
         lifecycleScope.launch {

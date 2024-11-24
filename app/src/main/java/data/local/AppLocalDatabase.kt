@@ -8,7 +8,7 @@ import data.local.entity.Comment
 import data.local.entity.Task
 import data.local.entity.User
 
-@Database(entities = [User::class, Task::class, Comment::class], version = 1)
+@Database(entities = [User::class, Task::class, Comment::class], version = 2)
 abstract class AppLocalDatabase : RoomDatabase() {
     abstract fun userDao() : UserDao
     abstract fun taskDao() : TaskDao

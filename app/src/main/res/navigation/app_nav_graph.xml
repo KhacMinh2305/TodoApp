@@ -30,4 +30,11 @@
         app:destination="@id/signInFragment"
         app:restoreState="true" />
 
+    <action android:id="@+id/action_logging_out"
+        app:destination="@id/signInFragment"
+        app:popUpTo="@id/homeFragment"
+        app:popUpToInclusive="false"
+        app:restoreState="false"/>
+
+
 </navigation>

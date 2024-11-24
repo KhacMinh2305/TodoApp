@@ -4,9 +4,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
 import com.example.todo.R
+import com.example.todo.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
+import ui.viewmodel.AppViewModel
+import ui.viewmodel.HomeViewModel
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var param1: String? = null
@@ -23,6 +33,12 @@ class HomeFragment : Fragment() {
             }
     }
 
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var navController: NavController
+    private lateinit var appViewModel: AppViewModel
+    private lateinit var viewModel: HomeViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,7 +50,24 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+        }
+        navController = findNavController(requireActivity(), R.id.nav_host)
+        appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
+        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setUpListeners()
+    }
+
+    private fun setUpListeners() {
+        binding.userName.setOnClickListener {
+            navController.navigate(R.id.action_logging_out)
+        }
     }
 }

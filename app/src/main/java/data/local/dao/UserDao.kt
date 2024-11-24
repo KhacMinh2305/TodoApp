@@ -17,13 +17,13 @@ interface UserDao {
     suspend fun getUserById(id : String) : User
 
     @Query("SELECT * FROM user WHERE name = :name AND password = :password")
-    suspend fun getUserByNameAndPassword(name : String, password : String) : User
+    suspend fun getUserByNameAndPassword(name : String, password : String) : User?
 
     @Insert(entity = User::class, onConflict = OnConflictStrategy.ABORT)
-    suspend fun addUser(user : User)
+    fun addUser(user : User)
 
     @Delete(entity = User::class)
-    suspend fun deleteUser(user : User)
+    fun deleteUser(user : User)
 
     @Update(entity = User::class)
     suspend fun updateUser(user : User)

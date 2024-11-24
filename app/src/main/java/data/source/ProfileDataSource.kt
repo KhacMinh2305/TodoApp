@@ -1,7 +1,11 @@
 package data.source
+import config.AppMessage
 import data.local.AppDataStore
+import data.local.AppLocalDatabase
 import data.local.dao.UserDao
 import data.local.entity.User
+import data.result.Result
+import domain.HashUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -9,6 +13,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ProfileDataSource @Inject constructor(
+    private val db : AppLocalDatabase,
     private val dataStore : AppDataStore,
     private val userDao : UserDao) {
 
@@ -20,30 +25,56 @@ class ProfileDataSource @Inject constructor(
 
     suspend fun checkIfUserRememberAccount() = dataStore.getUserId()
 
-    suspend fun updateOnSignIn(userId : String) = dataStore.update(userId)
-
-    suspend fun loadIfUserRememberAccount(id : String) {
+    suspend fun loadUserIfRemember(id : String) {
         withContext(Dispatchers.IO) {
             user = userDao.getUserById(id)
         }
     }
 
-    suspend fun validateUserInfo(name : String, password : String) : Int {
-        return withContext(Dispatchers.IO) {
-            return@withContext userDao.validateUserInfo(name, password)
+    suspend fun signUp(username : String, password : String) : Result = withContext(Dispatchers.IO) {
+        val existed = userDao.validateUserInfo(username, password) == 1
+        if(existed) return@withContext Result.Failure(AppMessage.USER_EXISTED)
+        val id = HashUseCase().hash(username)
+        val newUser = User(id, username, password)
+        var error : Result.Error? = null
+        db.runInTransaction {
+            try {
+                userDao.addUser(newUser)
+            } catch (e : Exception) {
+                error = Result.Error(e.message)
+            }
         }
+        error?.let {
+            return@withContext error!!
+        }
+        user = newUser
+        dataStore.update(id)
+        return@withContext Result.Success
     }
 
-    suspend fun getUserByNameAndPassword(name : String, password : String) : User {
-        return withContext(Dispatchers.IO) {
-            return@withContext userDao.getUserByNameAndPassword(name, password)
+    suspend fun signIn(username : String, password : String) = withContext(Dispatchers.IO) {
+        try {
+            userDao.getUserByNameAndPassword(username, password)?.let {
+                user = it
+                dataStore.update(it.id)
+                return@withContext Result.Success
+            }
+        } catch (e : Exception) {
+            return@withContext Result.Error(e.message)
         }
+        return@withContext Result.Failure(AppMessage.USER_NOT_FOUND)
     }
 
-    suspend fun addUser(user : User) {
-        withContext(Dispatchers.IO) {
-            userDao.addUser(user)
+    suspend fun signOut() = withContext(Dispatchers.IO) {
+        try {
+            db.runInTransaction {
+                userDao.deleteUser(user!!)
+            }
+            dataStore.update("")
+            user = null
+            return@withContext Result.Success
+        } catch (e : Exception) {
+            return@withContext Result.Error(e.message)
         }
     }
-
 }

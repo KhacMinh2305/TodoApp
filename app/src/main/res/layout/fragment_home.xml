@@ -1,10 +1,12 @@
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fillViewport="true"
-    tools:context="ui.view.HomeFragment">
+<layout>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:fillViewport="true"
+        tools:context="ui.view.HomeFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,7 +27,7 @@
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Doan Khac Minh"
+                android:text="Demo Name"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:layout_marginStart="15dp"
@@ -33,16 +35,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/userEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="doankhacminh2301@gmail.com"
-                android:textColor="@color/gray"
-                android:layout_marginStart="15dp"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/userName" />
 
             <TextView
                 android:id="@+id/productivityTitle"
@@ -54,7 +46,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="30dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userEmail" />
+                app:layout_constraintTop_toBottomOf="@+id/userName" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/productivityCard"
@@ -602,4 +594,5 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/todayTaskRecyclerView"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</layout>

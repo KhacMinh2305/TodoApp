@@ -47,7 +47,7 @@
                 app:labelVisibilityMode="unlabeled"
                 android:elevation="4dp"
                 app:itemIconTint="@color/bottom_nav_color"
-                android:color="@color/pink"
+                android:color="@color/transparent"
                 android:background="@drawable/bottom_nav_bar_background"
                 app:menu="@menu/bottom_nav_menu"/>
         </com.google.android.material.bottomappbar.BottomAppBar>

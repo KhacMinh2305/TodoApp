@@ -4,11 +4,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
 import com.example.todo.R
+import com.example.todo.databinding.FragmentProfileBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import ui.viewmodel.AppViewModel
+import ui.viewmodel.ProfileViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private var param1: String? = null
@@ -25,6 +35,11 @@ class ProfileFragment : Fragment() {
             }
     }
 
+    private lateinit var binding: FragmentProfileBinding
+    private lateinit var navController: NavController
+    private lateinit var appViewModel: AppViewModel
+    private lateinit var viewModel: ProfileViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -36,8 +51,33 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        binding = FragmentProfileBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            navController = findNavController(requireActivity(), R.id.nav_host)
+        }
+        appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
+        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
+        observeState()
+        return binding.root
+    }
 
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+    override fun onStart() {
+        super.onStart()
+        setUpListeners()
+    }
+
+    private fun launchCoroutines(func : suspend () -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launch { func() }
+    }
+
+    private fun observeState() {
+        launchCoroutines(viewModel::signOut)
+    }
+
+    private fun setUpListeners() {
+        binding.logoutButton.setOnClickListener {
+            observeState()
+        }
     }
 }

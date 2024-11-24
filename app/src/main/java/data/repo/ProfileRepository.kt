@@ -1,5 +1,4 @@
 package data.repo
-import data.local.entity.User
 import data.source.ProfileDataSource
 import javax.inject.Singleton
 import javax.inject.Inject
@@ -7,27 +6,18 @@ import javax.inject.Inject
 @Singleton
 class ProfileRepository @Inject constructor(private val profileDataSource: ProfileDataSource) {
 
-    suspend fun checkIfUserRememberAccount() = profileDataSource.checkIfUserRememberAccount()
-
-    suspend fun updateOnSignIn(userId : String) = profileDataSource.updateOnSignIn(userId)
-
     fun getUserId() = profileDataSource.getUserId()
 
     fun getUserName() = profileDataSource.getUserName()
 
-    suspend fun loadIfUserRememberAccount(id : String) {
-        profileDataSource.loadIfUserRememberAccount(id)
-    }
+    suspend fun checkIfUserRememberAccount() = profileDataSource.checkIfUserRememberAccount()
 
-    suspend fun validateUserInfo(name : String, password : String) : Int {
-        return profileDataSource.validateUserInfo(name, password)
-    }
+    suspend fun loadUserIfRemember(id : String) = profileDataSource.loadUserIfRemember(id)
 
-    suspend fun getUserByNameAndPassword(name : String, password : String) : User {
-        return profileDataSource.getUserByNameAndPassword(name, password)
-    }
+    suspend fun signUp(username : String, password : String)  = profileDataSource.signUp(username, password)
 
-    suspend fun addUser(user : User) {
-        profileDataSource.addUser(user)
-    }
+    suspend fun signIn(username : String, password : String) = profileDataSource.signIn(username, password)
+
+    suspend fun signOut() = profileDataSource.signOut()
+
 }

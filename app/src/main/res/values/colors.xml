@@ -21,4 +21,5 @@
     <color name="super_light_medium">#1AD7A32F</color>
     <color name="super_light_low">#1A41E23D</color>
     <color name="progress_background">#E4F2F2</color>
+    <color name="scrim">#80FFFFFF</color>
 </resources>
