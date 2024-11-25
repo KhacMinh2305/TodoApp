@@ -36,6 +36,10 @@ class ProfileDataSource @Inject constructor(
 
     suspend fun changeUiMode(mode : Int) = dataStore.changeUiMode(mode)
 
+    suspend fun getLangMode() = dataStore.getLangMode()
+
+    suspend fun changeLanguage(langCode : String) = dataStore.changeLanguage(langCode)
+
     suspend fun signUp(username : String, password : String) : Result = withContext(Dispatchers.IO) {
         val existed = userDao.validateUserInfo(username, password) == 1
         if(existed) return@withContext Result.Failure(AppMessage.USER_EXISTED)

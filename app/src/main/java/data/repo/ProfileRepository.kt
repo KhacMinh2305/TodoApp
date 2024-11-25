@@ -24,5 +24,8 @@ class ProfileRepository @Inject constructor(private val profileDataSource: Profi
 
     suspend fun changeUiMode(mode : Int) = profileDataSource.changeUiMode(mode)
 
+    suspend fun getLangMode() = profileDataSource.getLangMode()
+
+    suspend fun changeLanguage(langCode : String) = profileDataSource.changeLanguage(langCode)
 
 }

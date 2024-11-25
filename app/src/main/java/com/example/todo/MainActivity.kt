@@ -16,9 +16,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.todo.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
+import config.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ui.viewmodel.AppViewModel
+import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private var keepSplashOnScreen = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //testChangeLanguage()
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main)
@@ -37,6 +40,14 @@ class MainActivity : AppCompatActivity() {
         observeStates()
         setupListeners()
         splashScreen.setKeepOnScreenCondition { keepSplashOnScreen }
+    }
+
+    private fun setLanguage(lang : String) {
+        val locale = Locale(lang);
+        val resources = getResources()
+        val configuration = resources.configuration;
+        configuration.setLocale(locale);
+        resources.updateConfiguration(configuration, resources.displayMetrics);
     }
 
     private fun init() {
@@ -59,22 +70,20 @@ class MainActivity : AppCompatActivity() {
     private fun observeThemeState() {
         viewModel.themeState.observe(this@MainActivity) {
             if(it) {
-                //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
                 return@observe
             }
             delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
-            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 
     private fun observeLanguageState() {
         viewModel.languageState.observe(this@MainActivity) {
             if(it) {
-                Log.d("TEST", "Switch to Vietnamese")
+                setLanguage(AppConstant.LANG_VI)
                 return@observe
             }
-            Log.d("TEST", "Switch to English")
+            setLanguage(AppConstant.LANG_EN)
         }
     }
 

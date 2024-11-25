@@ -21,6 +21,8 @@ class AppDataStore @Inject constructor(@ApplicationContext private val context :
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = AppConstant.LOCAL_FILE_NAME)
     private val idKey = stringPreferencesKey(AppConstant.USER_ID)
     private val uiModeKey = intPreferencesKey(AppConstant.UI_MODE)
+    private val langModeKey = stringPreferencesKey(AppConstant.LANG_MODE)
+
 
     suspend fun getUserId() : String = withContext(Dispatchers.IO) {
         context.dataStore.data.first()[idKey] ?: ""
@@ -38,5 +40,13 @@ class AppDataStore @Inject constructor(@ApplicationContext private val context :
 
     suspend fun changeUiMode(mode : Int) = withContext(Dispatchers.IO) {
         context.dataStore.edit { it[uiModeKey] = mode }
+    }
+
+    suspend fun getLangMode() = withContext(Dispatchers.IO) {
+        context.dataStore.data.first()[langModeKey] ?: AppConstant.LANG_DEFAULT
+    }
+
+    suspend fun changeLanguage(langCode : String) = withContext(Dispatchers.IO) {
+        context.dataStore.edit { it[langModeKey] = langCode }
     }
 }

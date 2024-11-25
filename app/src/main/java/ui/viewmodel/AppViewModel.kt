@@ -36,7 +36,11 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
         viewModelScope.launch {
             // read ui mode
             val mode = profileRepo.getUiMode()
-            _themeState.value = mode == AppConstant.MODE_DARK
+            if(mode == AppConstant.MODE_DARK) _themeState.value = true
+
+            // read lang mode
+            val langMode = profileRepo.getLangMode()
+            if(langMode == AppConstant.LANG_VI) _languageState.value = true
 
             // read user id
             val id = profileRepo.checkIfUserRememberAccount()
@@ -57,6 +61,9 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
 
     fun changeLanguage(changed: Boolean) {
         _languageState.value = changed
+        viewModelScope.launch {
+            profileRepo.changeLanguage(if(changed) AppConstant.LANG_VI else AppConstant.LANG_EN)
+        }
     }
 
     fun notifySplashFinished() {

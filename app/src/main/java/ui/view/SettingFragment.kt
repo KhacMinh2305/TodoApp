@@ -64,6 +64,12 @@ class SettingFragment : Fragment() {
             }
         }
 
+        appViewModel.languageState.observe(viewLifecycleOwner) {
+            if(it) {
+                binding.languageSwitch.isChecked = true
+            }
+        }
+
         binding.themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             appViewModel.changeTheme(isChecked)
         }
