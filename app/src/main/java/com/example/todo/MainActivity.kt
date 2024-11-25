@@ -2,7 +2,9 @@ package com.example.todo
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -30,8 +32,7 @@ class MainActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main)
-            .apply {
-                lifecycleOwner = this@MainActivity }
+            .apply { lifecycleOwner = this@MainActivity }
         init()
         observeStates()
         setupListeners()
@@ -48,6 +49,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeStates() {
+        observeThemeState()
+        observeLanguageState()
+        observeAuthenticationState()
+        observeMessagesState()
+        observeSplashState()
+    }
+
+    private fun observeThemeState() {
+        viewModel.themeState.observe(this@MainActivity) {
+            if(it) {
+                //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+                return@observe
+            }
+            delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+    }
+
+    private fun observeLanguageState() {
+        viewModel.languageState.observe(this@MainActivity) {
+            if(it) {
+                Log.d("TEST", "Switch to Vietnamese")
+                return@observe
+            }
+            Log.d("TEST", "Switch to English")
+        }
+    }
+
+    private fun observeAuthenticationState() {
         viewModel.signingState.observe(this@MainActivity) {
             if(it) {
                 navController.navigate(R.id.action_signing_in)
@@ -55,11 +86,15 @@ class MainActivity : AppCompatActivity() {
             }
             viewModel.notifySplashFinished()
         }
+    }
 
+    private fun observeMessagesState() {
         viewModel.messageState.observe(this@MainActivity) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
+    }
 
+    private fun observeSplashState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.splashState.collect {
@@ -73,7 +108,5 @@ class MainActivity : AppCompatActivity() {
         binding.addTaskButton.setOnClickListener { navController.navigate(R.id.action_creating_task)}
     }
 }
-
-
 // Each Screen (Fragment) has its own viewmodel that work as a bridge between UI components and data components
 // Man hinh Calenda su dung week recycler view cho tung tuan , ben duoi su dung viewPager cho tung ngay trong tuan

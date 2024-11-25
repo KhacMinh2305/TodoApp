@@ -62,12 +62,5 @@ class HomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        setUpListeners()
-    }
-
-    private fun setUpListeners() {
-        binding.userName.setOnClickListener {
-            navController.navigate(R.id.action_logging_out)
-        }
     }
 }

@@ -1,6 +1,7 @@
 package di
 import android.content.Context
 import androidx.room.Room
+import config.AppConstant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +17,7 @@ object AppDependencyInjection {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context : Context) : AppLocalDatabase {
-        return Room.databaseBuilder(context, AppLocalDatabase::class.java, "todo_database").build()
+        return Room.databaseBuilder(context, AppLocalDatabase::class.java, AppConstant.DATABASE_NAME).build()
     }
 
     @Provides

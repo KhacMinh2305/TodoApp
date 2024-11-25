@@ -1,5 +1,6 @@
 package ui.view
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -79,8 +80,7 @@ class SignInFragment : Fragment() {
     }
 
     private fun initViews() {
-
-        appViewModel.toggleBottomNav()
+        appViewModel.showBottomNav(false)
         sheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.signUpSheet)
     }
 
@@ -112,7 +112,7 @@ class SignInFragment : Fragment() {
 
     private fun observeSigningUpState() {
         viewModel.signUpState.observe(viewLifecycleOwner) {
-            appViewModel.toggleBottomNav()
+            appViewModel.showBottomNav(true)
             navController.navigateUp()
         }
     }
@@ -125,7 +125,9 @@ class SignInFragment : Fragment() {
             sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
         binding.bottomSheet.signUpButton.setOnClickListener { signUp() }
-        binding.loginButton.setOnClickListener { signIn() }
+        binding.loginButton.setOnClickListener {
+            signIn()
+        }
     }
 
     private fun authenticate(username : String, password : String, authFun : suspend (String, String) -> Unit) {

@@ -1,8 +1,10 @@
 package data.local
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import config.AppConstant
@@ -18,12 +20,23 @@ class AppDataStore @Inject constructor(@ApplicationContext private val context :
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = AppConstant.LOCAL_FILE_NAME)
     private val idKey = stringPreferencesKey(AppConstant.USER_ID)
+    private val uiModeKey = intPreferencesKey(AppConstant.UI_MODE)
 
     suspend fun getUserId() : String = withContext(Dispatchers.IO) {
         context.dataStore.data.first()[idKey] ?: ""
     }
 
     suspend fun update(userId : String) = withContext(Dispatchers.IO) {
-        context.dataStore.edit { it[idKey] = userId }
+        context.dataStore.edit {
+            it[idKey] = userId
+        }
+    }
+
+    suspend fun getUiMode() : Int = withContext(Dispatchers.IO) {
+        context.dataStore.data.first()[uiModeKey] ?: AppConstant.MODE_LIGHT
+    }
+
+    suspend fun changeUiMode(mode : Int) = withContext(Dispatchers.IO) {
+        context.dataStore.edit { it[uiModeKey] = mode }
     }
 }

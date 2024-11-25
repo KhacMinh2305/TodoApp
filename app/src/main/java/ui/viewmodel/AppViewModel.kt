@@ -3,6 +3,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import config.AppConstant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import data.repo.ProfileRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,23 +26,45 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
     private val _splashState = MutableStateFlow(true)
     val splashState : StateFlow<Boolean> = _splashState
 
-    fun notifySplashFinished() {
-        _splashState.value = false
-    }
+    private val _themeState = MutableLiveData<Boolean>()
+    val themeState : LiveData<Boolean> = _themeState
 
-    fun toggleBottomNav() {
-        _bottomNavState.value = !_bottomNavState.value
-    }
+    private val _languageState = MutableLiveData<Boolean>()
+    val languageState : LiveData<Boolean> = _languageState
 
     init {
         viewModelScope.launch {
+            // read ui mode
+            val mode = profileRepo.getUiMode()
+            _themeState.value = mode == AppConstant.MODE_DARK
+
+            // read user id
             val id = profileRepo.checkIfUserRememberAccount()
             id.isEmpty().also {
-                profileRepo.loadUserIfRemember(id)
+                if(!it) profileRepo.loadUserIfRemember(id)
                 _signingState.value = it
                 _bottomNavState.value = !it
             }
         }
+    }
+
+    fun changeTheme(changed : Boolean) {
+        _themeState.value = changed
+        viewModelScope.launch {
+            profileRepo.changeUiMode(if(changed) AppConstant.MODE_DARK else AppConstant.MODE_LIGHT)
+        }
+    }
+
+    fun changeLanguage(changed: Boolean) {
+        _languageState.value = changed
+    }
+
+    fun notifySplashFinished() {
+        _splashState.value = false
+    }
+
+    fun showBottomNav( visibility : Boolean) {
+        _bottomNavState.value = visibility
     }
 
     fun receiveMessage(message : String) {

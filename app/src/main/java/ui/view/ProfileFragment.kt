@@ -58,7 +58,7 @@ class ProfileFragment : Fragment() {
         }
         appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
         viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
-        observeState()
+        observeStates()
         return binding.root
     }
 
@@ -67,17 +67,33 @@ class ProfileFragment : Fragment() {
         setUpListeners()
     }
 
+    private fun observeStates() {
+        observeSigningOutState()
+        observeMessageState()
+    }
+
+    private fun observeSigningOutState() {
+        viewModel.signingOutState.observe(viewLifecycleOwner) {
+            if (it) {
+                appViewModel.showBottomNav(false)
+                navController.navigate(R.id.action_logging_out)
+            }
+        }
+    }
+
+    private fun observeMessageState() {
+        viewModel.messageState.observe(viewLifecycleOwner) {
+            appViewModel.receiveMessage(it)
+        }
+    }
+
     private fun launchCoroutines(func : suspend () -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch { func() }
     }
 
-    private fun observeState() {
-        launchCoroutines(viewModel::signOut)
-    }
-
     private fun setUpListeners() {
         binding.logoutButton.setOnClickListener {
-            observeState()
+            launchCoroutines(viewModel::signOut)
         }
     }
 }

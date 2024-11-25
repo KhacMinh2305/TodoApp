@@ -20,4 +20,9 @@ class ProfileRepository @Inject constructor(private val profileDataSource: Profi
 
     suspend fun signOut() = profileDataSource.signOut()
 
+    suspend fun getUiMode() = profileDataSource.getUiMode()
+
+    suspend fun changeUiMode(mode : Int) = profileDataSource.changeUiMode(mode)
+
+
 }

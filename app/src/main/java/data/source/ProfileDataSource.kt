@@ -1,4 +1,5 @@
 package data.source
+import android.util.Log
 import config.AppMessage
 import data.local.AppDataStore
 import data.local.AppLocalDatabase
@@ -31,6 +32,10 @@ class ProfileDataSource @Inject constructor(
         }
     }
 
+    suspend fun getUiMode() = dataStore.getUiMode()
+
+    suspend fun changeUiMode(mode : Int) = dataStore.changeUiMode(mode)
+
     suspend fun signUp(username : String, password : String) : Result = withContext(Dispatchers.IO) {
         val existed = userDao.validateUserInfo(username, password) == 1
         if(existed) return@withContext Result.Failure(AppMessage.USER_EXISTED)
@@ -54,7 +59,8 @@ class ProfileDataSource @Inject constructor(
 
     suspend fun signIn(username : String, password : String) = withContext(Dispatchers.IO) {
         try {
-            userDao.getUserByNameAndPassword(username, password)?.let {
+            val testUser = userDao.getUserByNameAndPassword(username, password)
+            testUser?.let {
                 user = it
                 dataStore.update(it.id)
                 return@withContext Result.Success
@@ -67,9 +73,6 @@ class ProfileDataSource @Inject constructor(
 
     suspend fun signOut() = withContext(Dispatchers.IO) {
         try {
-            db.runInTransaction {
-                userDao.deleteUser(user!!)
-            }
             dataStore.update("")
             user = null
             return@withContext Result.Success

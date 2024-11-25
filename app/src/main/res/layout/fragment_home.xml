@@ -6,6 +6,7 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:fillViewport="true"
+        android:background="@color/screen_background"
         tools:context="ui.view.HomeFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -120,7 +121,6 @@
                         app:layout_constraintEnd_toStartOf="@+id/completeTitle"
                         app:layout_constraintTop_toTopOf="parent"
                         app:shapeAppearance="@style/RoundedImage" />
-
 
                     <TextView
                         android:id="@+id/completeTitle"
