@@ -35,12 +35,10 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
     init {
         viewModelScope.launch {
             // read ui mode
-            val mode = profileRepo.getUiMode()
-            if(mode == AppConstant.MODE_DARK) _themeState.value = true
+            if(profileRepo.getUiMode() == AppConstant.MODE_DARK) _themeState.value = true
 
             // read lang mode
-            val langMode = profileRepo.getLangMode()
-            if(langMode == AppConstant.LANG_VI) _languageState.value = true
+            if(profileRepo.getLangMode() == AppConstant.LANG_VI) _languageState.value = true
 
             // read user id
             val id = profileRepo.checkIfUserRememberAccount()

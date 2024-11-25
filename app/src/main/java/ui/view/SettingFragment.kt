@@ -1,14 +1,16 @@
 package ui.view
+import android.content.Intent.getIntent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.todo.databinding.FragmentSettingBinding
 import dagger.hilt.android.AndroidEntryPoint
 import ui.viewmodel.AppViewModel
 import ui.viewmodel.SettingViewModel
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -46,7 +48,7 @@ class SettingFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentSettingBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner

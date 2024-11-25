@@ -1,10 +1,20 @@
 package domain
+import android.annotation.SuppressLint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.util.Date
 
 class DateTimeUseCase {
+
+    @SuppressLint("SimpleDateFormat")
+    fun convertLongToDateString(time : Long) : String {
+        val date = Date(time)
+        val format = SimpleDateFormat("dd/MM/yyyy")
+        return format.format(date)
+    }
 
     suspend fun getWeekDays(date : LocalDate) : List<LocalDate> {
         val dayOfWeek = mutableListOf<LocalDate>()

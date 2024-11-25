@@ -78,7 +78,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                tools:text="Finish UI for ToDo App"
                 android:textColor="@color/black"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
@@ -90,7 +89,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:id="@+id/startDateContainer"
+            android:id="@+id/dateContainer"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -117,76 +116,82 @@
                 android:layout_marginStart="20dp"
                 android:alpha="0.7"
                 android:ellipsize="end"
-                android:gravity="center"
+                android:gravity="start|center_vertical"
                 android:lines="1"
                 android:text="@string/start_date"
                 android:textColor="@color/gray"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/startDate"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:textColor="@color/black"
-                android:background="@drawable/edittext_background"
-                android:importantForAutofill="no"
-                android:inputType="date"
-                tools:ignore="LabelFor" />
-        </FrameLayout>
+                android:layout_marginTop="30dp">
 
-        <FrameLayout
-            android:id="@+id/endDateContainer"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/startDateContainer">
+                <EditText
+                    android:id="@+id/startDate"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="start"
+                    android:background="@drawable/edittext_background"
+                    android:importantForAutofill="no"
+                    android:inputType="date"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/linkTextView1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="LabelFor" />
 
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="6dp"
-                android:background="@color/pink" />
+                <TextView
+                    android:id="@+id/linkTextView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/to"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/endDate"
+                    app:layout_constraintStart_toEndOf="@+id/startDate"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center_vertical"
-                android:src="@color/pink"
-                app:shapeAppearance="@style/RoundedImage" />
+                <EditText
+                    android:id="@+id/endDate"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="end"
+                    android:background="@drawable/edittext_background"
+                    android:importantForAutofill="no"
+                    android:inputType="date"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:textColor="@color/black"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/chooseDateImageButton"
+                    app:layout_constraintStart_toEndOf="@id/linkTextView1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="LabelFor" />
 
-            <TextView
-                android:id="@+id/endDateTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="20dp"
-                android:alpha="0.7"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:text="@string/end_date"
-                android:textColor="@color/gray"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/endDate"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:textColor="@color/black"
-                android:background="@drawable/edittext_background"
-                android:importantForAutofill="no"
-                android:inputType="date"
-                tools:ignore="LabelFor" />
+                <ImageButton
+                    android:id="@+id/chooseDateImageButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/edittext_background"
+                    android:importantForAccessibility="no"
+                    android:padding="17dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toEndOf="@id/endDate"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_todo_calendar" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
 
         <FrameLayout
@@ -195,7 +200,7 @@
             android:layout_height="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/endDateContainer">
+            app:layout_constraintTop_toBottomOf="@+id/dateContainer">
 
             <View
                 android:layout_width="2dp"
@@ -224,56 +229,75 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp">
 
                 <EditText
                     android:id="@+id/beginEditText"
-                    android:layout_width="80dp"
-                    android:layout_height="45dp"
-                    android:alpha="0.7"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:importantForAutofill="no"
-                    android:lines="1"
-                    android:inputType="time"
-                    android:textColor="@color/black"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="start"
                     android:background="@drawable/edittext_background"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    tools:ignore="LabelFor,TextFields" />
+                    android:importantForAutofill="no"
+                    android:inputType="date"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/linkTextView2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="LabelFor" />
 
                 <TextView
+                    android:id="@+id/linkTextView2"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:ellipsize="end"
+                    android:layout_height="match_parent"
+                    android:text="@string/to"
+                    android:textSize="15sp"
                     android:gravity="center"
-                    android:lines="1"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/time_character"
-                    android:textColor="@color/gray"
-                    android:textStyle="bold" />
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/endEditText"
+                    app:layout_constraintStart_toEndOf="@+id/beginEditText"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/endEditText"
-                    android:layout_width="80dp"
-                    android:layout_height="45dp"
-                    android:alpha="0.7"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:importantForAutofill="no"
-                    android:lines="1"
-                    android:textColor="@color/black"
-                    android:inputType="time"
-                    android:layout_marginStart="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="end"
                     android:background="@drawable/edittext_background"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    tools:ignore="LabelFor,TextFields" />
-            </LinearLayout>
+                    android:importantForAutofill="no"
+                    android:inputType="date"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:textColor="@color/black"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/chooseTimeImageButton"
+                    app:layout_constraintStart_toEndOf="@id/linkTextView2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="LabelFor" />
+
+                <ImageButton
+                    android:id="@+id/chooseTimeImageButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/edittext_background"
+                    android:importantForAccessibility="no"
+                    android:padding="17dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toEndOf="@id/endEditText"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_time" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
 
         <FrameLayout

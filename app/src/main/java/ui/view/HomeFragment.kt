@@ -59,8 +59,4 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         return binding.root
     }
-
-    override fun onStart() {
-        super.onStart()
-    }
 }

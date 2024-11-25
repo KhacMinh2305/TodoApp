@@ -1,5 +1,7 @@
 package data.local.dao
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import data.local.entity.Task
@@ -24,6 +26,9 @@ interface TaskDao {
 
     @Update(entity = Task::class)
     suspend fun updateTask(task : Task)
+
+    @Insert(entity = Task::class, onConflict = OnConflictStrategy.ABORT)
+    fun addTask(task : Task)
 
     // more queries here ... (only declare when using)
 }

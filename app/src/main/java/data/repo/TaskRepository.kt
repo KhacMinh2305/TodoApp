@@ -12,4 +12,6 @@ class TaskRepository @Inject constructor(private var taskDataSource: TaskDataSou
     suspend fun getTaskOnDay(startDate : LocalDate) : List<Task> {
         return taskDataSource.getTaskOnDay(startDate)
     }
+
+    suspend fun addTask(task : Task) = taskDataSource.addTask(task)
 }

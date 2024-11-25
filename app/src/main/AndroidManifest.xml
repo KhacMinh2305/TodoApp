@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name="di.ToDoApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -10,8 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/SplashTheme"
-        android:name="di.ToDoApplication">
+        android:theme="@style/SplashTheme">
         <activity
             android:name=".MainActivity"
             android:configChanges="uiMode|navigation|screenSize|colorMode|screenLayout"

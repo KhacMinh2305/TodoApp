@@ -2,7 +2,6 @@ package com.example.todo
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -31,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     private var keepSplashOnScreen = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //testChangeLanguage()
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main)
@@ -40,14 +38,6 @@ class MainActivity : AppCompatActivity() {
         observeStates()
         setupListeners()
         splashScreen.setKeepOnScreenCondition { keepSplashOnScreen }
-    }
-
-    private fun setLanguage(lang : String) {
-        val locale = Locale(lang);
-        val resources = getResources()
-        val configuration = resources.configuration;
-        configuration.setLocale(locale);
-        resources.updateConfiguration(configuration, resources.displayMetrics);
     }
 
     private fun init() {
@@ -74,7 +64,17 @@ class MainActivity : AppCompatActivity() {
                 return@observe
             }
             delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+            return@observe
         }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun setLanguage(lang : String) {
+        val locale = Locale(lang)
+        val resources = getResources()
+        val configuration = resources.configuration
+        configuration.setLocale(locale)
+        resources.updateConfiguration(configuration, resources.displayMetrics)
     }
 
     private fun observeLanguageState() {

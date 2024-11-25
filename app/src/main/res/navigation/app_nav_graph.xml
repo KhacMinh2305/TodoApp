@@ -36,5 +36,4 @@
         app:popUpToInclusive="false"
         app:restoreState="false"/>
 
-
 </navigation>
