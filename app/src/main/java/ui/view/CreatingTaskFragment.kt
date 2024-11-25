@@ -4,8 +4,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
+import com.example.todo.R
 import com.example.todo.databinding.FragmentCreatingTaskBinding
 import dagger.hilt.android.AndroidEntryPoint
+import ui.viewmodel.AppViewModel
+import ui.viewmodel.CreatingTaskViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -28,6 +34,9 @@ class CreatingTaskFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentCreatingTaskBinding
+    private lateinit var navController: NavController
+    private lateinit var appViewModel : AppViewModel
+    private lateinit var viewModel : CreatingTaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +50,34 @@ class CreatingTaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCreatingTaskBinding.inflate(inflater, container, false)
+        binding = FragmentCreatingTaskBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+        }
+        navController = findNavController(requireActivity(), R.id.nav_host)
+        appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
+        viewModel = ViewModelProvider(this)[CreatingTaskViewModel::class.java]
+        observeStates()
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-
+        setUpListeners()
     }
 
-    private fun init() {
+    private fun observeStates() {
+        appViewModel.showBottomNav(false)
+    }
 
+    private fun setUpListeners() {
+        goBack()
+    }
+
+    private fun goBack() {
+        binding.backButton.setOnClickListener {
+            appViewModel.showBottomNav(true)
+            navController.popBackStack()
+        }
     }
 
 }

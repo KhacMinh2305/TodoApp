@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
+        <shape android:shape="rectangle">
+            <corners android:topLeftRadius="15dp" android:topRightRadius="15dp"/>
+            <gradient android:startColor="@color/pink"
+                android:endColor="@color/turquoise"/>
+        </shape>
+    </item>
+
+    <item android:start="3dp" android:end="3dp" android:top="3dp">
         <shape android:shape="rectangle">
             <corners android:topLeftRadius="15dp" android:topRightRadius="15dp"/>
             <solid android:color="@color/light_pink"/>
         </shape>
     </item>
-</selector>
+</layer-list>

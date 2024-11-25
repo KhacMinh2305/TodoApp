@@ -60,10 +60,9 @@
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_add"
+            android:foreground="@drawable/ic_gradient_add_drawable"
             app:elevation="10dp"
             android:visibility="@{viewModel.bottomNavState ? View.VISIBLE : View.GONE}"
-            app:backgroundTint="@color/pink"
             app:layout_anchor="@id/bottomAppBar"
             tools:ignore="ContentDescription" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

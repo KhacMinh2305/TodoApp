@@ -18,10 +18,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="CustomFab" parent="Widget.Design.FloatingActionButton">
+    <style name="CustomFab" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">100dp</item>
-        <item name="background">@color/pink</item>
+        <item name="android:background">@drawable/ic_gradient_add_drawable</item>
         <item name="android:gravity">center</item>
     </style>
 
