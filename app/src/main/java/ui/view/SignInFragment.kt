@@ -112,6 +112,7 @@ class SignInFragment : Fragment() {
 
     private fun observeSigningUpState() {
         viewModel.signUpState.observe(viewLifecycleOwner) {
+            appViewModel.notifyLoadingDataIfMustSignIn()
             appViewModel.showBottomNav(true)
             navController.navigateUp()
         }

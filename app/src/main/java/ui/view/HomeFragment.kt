@@ -38,7 +38,6 @@ class HomeFragment : Fragment() {
     private lateinit var appViewModel: AppViewModel
     private lateinit var viewModel: HomeViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -57,6 +56,17 @@ class HomeFragment : Fragment() {
         navController = findNavController(requireActivity(), R.id.nav_host)
         appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        observeStates()
         return binding.root
+    }
+
+    private fun observeStates() {
+        appViewModel.loadHomeData.observe(viewLifecycleOwner) {
+            viewModel.loadData()
+        }
+
+        viewModel.usernameState.observe(viewLifecycleOwner) {
+            binding.userName.text = it
+        }
     }
 }

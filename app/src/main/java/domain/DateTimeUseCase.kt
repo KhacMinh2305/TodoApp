@@ -16,6 +16,10 @@ class DateTimeUseCase {
         return format.format(date)
     }
 
+    fun convertDateInToString(date : LocalDate) : String {
+        return "${date.dayOfMonth}/${date.monthValue}/${date.year}"
+    }
+
     suspend fun getWeekDays(date : LocalDate) : List<LocalDate> {
         val dayOfWeek = mutableListOf<LocalDate>()
         withContext(Dispatchers.Default) {

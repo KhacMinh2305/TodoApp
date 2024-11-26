@@ -32,15 +32,15 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
     private val _languageState = MutableLiveData<Boolean>()
     val languageState : LiveData<Boolean> = _languageState
 
+    private val _loadHomeData = MutableLiveData<Boolean>()
+    val loadHomeData : LiveData<Boolean> = _loadHomeData
+
     init {
         viewModelScope.launch {
-            // read ui mode
             if(profileRepo.getUiMode() == AppConstant.MODE_DARK) _themeState.value = true
 
-            // read lang mode
             if(profileRepo.getLangMode() == AppConstant.LANG_VI) _languageState.value = true
 
-            // read user id
             val id = profileRepo.checkIfUserRememberAccount()
             id.isEmpty().also {
                 if(!it) profileRepo.loadUserIfRemember(id)
@@ -62,6 +62,10 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
         viewModelScope.launch {
             profileRepo.changeLanguage(if(changed) AppConstant.LANG_VI else AppConstant.LANG_EN)
         }
+    }
+
+    fun notifyLoadingDataIfMustSignIn() {
+        _loadHomeData.value = true
     }
 
     fun notifySplashFinished() {

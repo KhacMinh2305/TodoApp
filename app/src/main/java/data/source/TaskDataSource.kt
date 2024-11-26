@@ -3,6 +3,7 @@ import data.local.AppLocalDatabase
 import data.local.dao.TaskDao
 import data.local.entity.Task
 import data.result.Result
+import domain.DateTimeUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
@@ -21,6 +22,13 @@ class TaskDataSource @Inject constructor(
             val date = startDate.format(formatter)
             return@withContext taskDao.getTaskByStartDate(date)
         }
+    }
+
+    suspend fun getWeekTask(userId : String, weekDay : LocalDate) = withContext(Dispatchers.IO) {
+        val dates = DateTimeUseCase().getWeekDays(weekDay).map {
+            DateTimeUseCase().convertDateInToString(it)
+        }
+        return@withContext taskDao.getAllTaskInDateRange(userId, dates)
     }
 
     suspend fun addTask(task: Task) = withContext(Dispatchers.IO) {
