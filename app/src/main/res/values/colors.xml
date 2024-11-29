@@ -18,9 +18,11 @@
     <color name="medium_turquoise">#89E2D9</color>
     <color name="light_turquoise">#A8E2DE</color>
     <color name="super_light_turquoise">#1A40E0D0</color>
+    <color name="turquoise_light_gradient">#C1E4DF</color>
     <color name="mid_black">#191919</color>
     <color name="super_light_medium">#1AD7A32F</color>
     <color name="super_light_low">#1A41E23D</color>
     <color name="progress_background">#E4F2F2</color>
     <color name="scrim">#80FFFFFF</color>
+    <color name="card_color">#F1EFF0</color>
 </resources>

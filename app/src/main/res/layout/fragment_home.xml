@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewmodel"
             type="ui.viewmodel.HomeViewModel" />
@@ -55,7 +56,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userName" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/productivityCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +64,10 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
                 app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/card_color"
                 app:cardElevation="4dp"
+                app:strokeWidth="0dp"
+                app:strokeColor="@color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/productivityTitle">
@@ -94,6 +98,7 @@
                         android:text="@{String.valueOf(viewmodel.weekTotalTaskState)}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/overallTitle"
+                        app:layout_constraintEnd_toEndOf="@id/overallTitle"
                         tools:text="23" />
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -152,7 +157,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/finishedTask" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- Recent Tasks Section -->
             <TextView
@@ -173,9 +178,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                app:cardBackgroundColor="@color/recent_card_color"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="4dp"
+                app:strokeWidth="0dp"
+                app:strokeColor="@color/transparent"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -185,9 +191,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="@{viewmodel.finishedTaskState ? View.GONE : View.VISIBLE}"
                     android:background="@drawable/ongoing_card_background"
                     android:padding="15dp">
-
 
                     <FrameLayout
                         android:id="@+id/onGoingTaskProgressContainer"
@@ -213,7 +219,7 @@
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:progress="@{viewmodel.progressState}"
-                            android:max="@{viewmodel.maxProgressState}"
+                            android:max="100"
                             android:layout_gravity="center"
                             android:indeterminateOnly="false"
                             android:progressDrawable="@drawable/progress_drawable" />
@@ -301,6 +307,19 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/finishAllTaskTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/finish_all_task"
+                    android:layout_margin="15dp"
+                    android:gravity="center"
+                    android:visibility="@{viewmodel.finishedTaskState ? View.VISIBLE : View.GONE}"
+                    android:textColor="@color/turquoise"
+                    android:layout_gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
             </com.google.android.material.card.MaterialCardView>
 
             <TextView

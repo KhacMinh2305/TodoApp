@@ -10,7 +10,9 @@ import androidx.datastore.preferences.preferencesDataStore
 import config.AppConstant
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,7 +24,6 @@ class AppDataStore @Inject constructor(@ApplicationContext private val context :
     private val idKey = stringPreferencesKey(AppConstant.USER_ID)
     private val uiModeKey = intPreferencesKey(AppConstant.UI_MODE)
     private val langModeKey = stringPreferencesKey(AppConstant.LANG_MODE)
-
 
     suspend fun getUserId() : String = withContext(Dispatchers.IO) {
         context.dataStore.data.first()[idKey] ?: ""

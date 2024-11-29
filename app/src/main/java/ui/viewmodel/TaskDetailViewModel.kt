@@ -16,9 +16,6 @@ class TaskDetailViewModel @Inject constructor(private val taskRepo: TaskReposito
     private var task : Task? = null
     private var initialized = AtomicBoolean(false)
 
-    // Task 1 : Khai bao cac State Observable de bind du lieu (Khong bind du lieu , chi can khai bao !)
-    // (gom nhung states cho nhung truong hien thi du lieu)
-
     fun loadInit(id : String) {
         if (initialized.get()) return
         viewModelScope.launch {
@@ -27,10 +24,7 @@ class TaskDetailViewModel @Inject constructor(private val taskRepo: TaskReposito
         }
     }
 
-
-    // Task 2 : Check input cho cac ham cap nhat (khong can viet logic cap nhat , chi can kiem tra input nguoi dung co hop le hay khong)
-    // Note : Ham updateTask nay goi khi nguoi dung chinh sua thong tin o trong bottom Sheet va bam vao button xac nhan
     fun updateTask(/*input params*/) {
-        // Kiem tra tinh hop le cua du lieu (khong can viet logic cap nhat)
+        
     }
 }

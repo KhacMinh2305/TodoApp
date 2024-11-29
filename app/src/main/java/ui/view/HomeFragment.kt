@@ -66,6 +66,7 @@ class HomeFragment : Fragment() {
         binding.viewmodel = viewModel
         initViews()
         observeStates()
+        setupListeners()
         return binding.root
     }
 
@@ -94,6 +95,13 @@ class HomeFragment : Fragment() {
         observeLoadingHomeDataState()
         observeWeekProgressState()
         observeTodayTaskState()
+        observeMessageState()
+    }
+
+    private fun observeMessageState() {
+        viewModel.messageState.observe(viewLifecycleOwner) {
+            appViewModel.receiveMessage(it)
+        }
     }
 
     private fun wrapNavigationData(id : String) = Bundle().apply { putString(AppConstant.TASK_ID_TAG, id) }
@@ -118,4 +126,17 @@ class HomeFragment : Fragment() {
             (binding.todayTaskRecyclerView.adapter as TaskAdapter).submit(it)
         }
     }
+
+    private fun setupListeners() {
+        finishTask()
+    }
+
+    private fun finishTask() = binding.finishCheckBox.setOnCheckedChangeListener { button, isChecked ->
+        if(isChecked) {
+            viewModel.finishTask()
+            button.isChecked = false
+        }
+    }
 }
+
+//TODO : Bug cache and reload data at Fragment Creating Task

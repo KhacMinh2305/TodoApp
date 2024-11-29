@@ -31,7 +31,7 @@
             android:layout_gravity="top|center_horizontal"
             android:textSize="14sp"
             app:percentText="@{prog.progress}"
-            android:textColor="@color/black"
+            android:textColor="@color/pink"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
             android:gravity="center"/>
