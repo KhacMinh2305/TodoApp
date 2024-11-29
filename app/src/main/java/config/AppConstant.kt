@@ -2,6 +2,7 @@ package config
 
 sealed class AppConstant {
     companion object {
+        const val TASK_ID_TAG = "task_id"
         const val TASK_STATE_NOT_FINISHED = 0
         const val TASK_STATE_FINISHED = 1
         const val TASK_STATE_EXPIRED = 2

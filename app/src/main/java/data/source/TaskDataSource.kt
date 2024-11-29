@@ -36,6 +36,18 @@ class TaskDataSource @Inject constructor(
         cachedTasks[date] = it.toMutableList()
     }
 
+    suspend fun getTaskById(id : String) : Task? {
+        cachedTasks.filterValues { it ->
+            val task = it.find {
+                it.id == id
+            }
+            return task
+        }
+        return withContext(Dispatchers.IO) {
+            return@withContext taskDao.getTaskById(id)
+        }
+    }
+
     suspend fun getWeekTask(userId : String, weekDay : LocalDate) = withContext(Dispatchers.IO) {
         val dates = DateTimeUseCase().getWeekDays(weekDay).map {
             DateTimeUseCase().convertDateStringIntoLong("${it.dayOfMonth}/${it.monthValue}/${it.year}")

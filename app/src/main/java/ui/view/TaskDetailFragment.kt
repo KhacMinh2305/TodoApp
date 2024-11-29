@@ -11,6 +11,7 @@ import androidx.navigation.Navigation.findNavController
 import com.example.todo.R
 import com.example.todo.databinding.FragmentTaskDetailBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import config.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
 import ui.viewmodel.AppViewModel
 import ui.viewmodel.TaskDetailViewModel
@@ -23,6 +24,7 @@ class TaskDetailFragment : Fragment() {
 
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var taskId: String
 
     companion object {
         @JvmStatic
@@ -46,6 +48,7 @@ class TaskDetailFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            taskId = it.getString(AppConstant.TASK_ID_TAG).toString()
         }
     }
 
@@ -56,22 +59,49 @@ class TaskDetailFragment : Fragment() {
         binding = FragmentTaskDetailBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
         }
-        sheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.editTaskSheet)
         navController = findNavController(requireActivity(), R.id.nav_host)
         appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
-        viewModel = ViewModelProvider(this)[TaskDetailViewModel::class.java]
+        viewModel = ViewModelProvider(this)[TaskDetailViewModel::class.java].apply { loadInit(taskId) }
+        sheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.editTaskSheet)
         observeStates()
         setupListeners()
         return binding.root
     }
+
+    /*:
+        * Task 2 : Viet class Adapter cho phan Comment (tuong tu nhu cac Adapter co truoc)
+        * Task 3 : Test tat ca phan code voi test case cu the
+        *
+        * NOTE : Code dungc convention , khong dat ten bien tieng viet hoac vo nghia . Cac fun va thuoc tinh
+        * dat dung vi tri . Cac class phai dat vao dung thu muc va khong duoc tao them thu muc nao.
+        * KHONG VIET LOGIC LIEN QUAN DEN DU LIEU
+        * KHONG CHINH SUA HAY THEM BOT BAT CU LOGIC NAO NGOAI NHUNG NOI DA PHAN CONG
+        * CAC TASK NAY CHI PHAT SINH THEM 1 CLASS ADAPTER CHO COMMENT => CO THE IMPLEMENT LOGIC GI VAO DO CUNG DUOC
+        * NHUNG KHONG DUOC DUA CAC COMPONENTS CUA UI , DATA LAYER VAO (co the gay leaks memory)
+        * NEU THEM THU VIEN NGOAI NAO THI NHAN CHO TOI
+     */
 
     private fun observeStates() {
 
     }
 
     private fun setupListeners() {
+        openSheet()
+        turnBack()
+    }
+
+    private fun openSheet() {
         binding.editButton.setOnClickListener {
             sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
     }
+
+    private fun turnBack() {
+        binding.turnBackButton.setOnClickListener {
+            appViewModel.showBottomNav(true)
+            navController.navigateUp()
+        }
+    }
 }
+
+// Comment cac ham test o duoi day

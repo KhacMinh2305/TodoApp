@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.todo.R
 import com.example.todo.databinding.FragmentHomeBinding
+import config.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
 import ui.adapter.ProgressAdapter
 import ui.adapter.TaskAdapter
@@ -36,6 +37,7 @@ class HomeFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+        val TAG = "HOME_FRAGMENT"
     }
 
     private lateinit var binding: FragmentHomeBinding
@@ -83,7 +85,8 @@ class HomeFragment : Fragment() {
         snapHelper.attachToRecyclerView(binding.todayTaskRecyclerView)
         binding.todayTaskRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.todayTaskRecyclerView.adapter = TaskAdapter {
-            println("Navigate to detail : $it")
+            appViewModel.showBottomNav(false)
+            navController.navigate(R.id.action_homeFragment_to_taskDetailFragment, wrapNavigationData(it))
         }
     }
 
@@ -92,6 +95,8 @@ class HomeFragment : Fragment() {
         observeWeekProgressState()
         observeTodayTaskState()
     }
+
+    private fun wrapNavigationData(id : String) = Bundle().apply { putString(AppConstant.TASK_ID_TAG, id) }
 
     private fun observeLoadingHomeDataState() {
         appViewModel.loadHomeData.observe(viewLifecycleOwner) {

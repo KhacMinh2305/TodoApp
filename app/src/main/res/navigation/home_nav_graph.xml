@@ -14,6 +14,10 @@
             android:id="@+id/action_homeFragment_to_notificationFragment"
             app:destination="@id/notificationFragment"
             app:restoreState="true"/>
+        <action
+            android:id="@+id/action_homeFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment"
+            app:restoreState="true"/>
     </fragment>
 
     <fragment
@@ -21,4 +25,9 @@
         android:name="ui.view.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
+
+    <fragment
+        android:id="@+id/taskDetailFragment"
+        android:name="ui.view.TaskDetailFragment"
+        android:label="TaskDetailFragment" />
 </navigation>

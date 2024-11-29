@@ -8,6 +8,8 @@ import javax.inject.Singleton
 @Singleton
 class TaskRepository @Inject constructor(private var taskDataSource: TaskDataSource) {
 
+    suspend fun getTaskById(id : String) = taskDataSource.getTaskById(id)
+
     suspend fun getWeekTask(userId : String, weekDay : LocalDate) = taskDataSource.getWeekTask(userId, weekDay)
 
     suspend fun addTask(task : Task) = taskDataSource.addTask(task)
