@@ -97,11 +97,18 @@ class CreatingTaskFragment : Fragment() {
     private fun observeStates() {
         appViewModel.showBottomNav(false)
         observeMessages()
+        observeAddingTaskState()
     }
 
     private fun observeMessages() {
         viewModel.messageState.observe(viewLifecycleOwner) {
             appViewModel.receiveMessage(it)
+        }
+    }
+
+    private fun observeAddingTaskState() {
+        viewModel.addingTaskState.observe(viewLifecycleOwner) {
+            appViewModel.notifyReloadHomeDate()
         }
     }
 
@@ -153,6 +160,7 @@ class CreatingTaskFragment : Fragment() {
         }
     }
 
+    // TODO: move check logic to ViewModel
     private fun validateEmptyInput(input: String): Boolean {
         if (input.isEmpty()) {
             appViewModel.receiveMessage(AppMessage.EMPTY_INPUT)

@@ -4,11 +4,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import config.AppConstant
+import config.AppMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import data.local.entity.Task
 import data.model.WeekProgressItem
 import data.repo.ProfileRepository
 import data.repo.TaskRepository
+import data.result.Result
 import domain.DateTimeUseCase
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -48,11 +50,14 @@ class HomeViewModel @Inject constructor(
     private var _notFinishedTask = MutableLiveData<Int>()
     val notFinishedTask : LiveData<Int> = _notFinishedTask
 
-    private var _maxProgressState = MutableLiveData<Int>()
-    val maxProgressState : LiveData<Int> = _maxProgressState
-
     private var _progressState = MutableLiveData<Int>()
     val progressState : LiveData<Int> = _progressState
+
+    private var _finishedTaskState = MutableLiveData(false)
+    val finishedTaskState : LiveData<Boolean> = _finishedTaskState
+
+    private var _messageState = MutableLiveData<String>()
+    val messageState : LiveData<String> = _messageState
 
     fun loadData() {
         loadUserName()
@@ -60,7 +65,7 @@ class HomeViewModel @Inject constructor(
             loadWeekProgress()
             loadTodayTasks()
             loadOnGoingTaskToday()
-            loadOnGoingTaskStates()
+            emitOnGoingStates()
         }
     }
 
@@ -108,17 +113,44 @@ class HomeViewModel @Inject constructor(
         onGoingListTask = tasks
     }
 
-    private fun loadOnGoingTaskStates() {
-        if(onGoingListTask.isEmpty()) return
+    private fun emitOnGoingStates() {
+        val hasNoTaskToDo = onGoingListTask.isEmpty()
+        _finishedTaskState.value = hasNoTaskToDo
+        if(hasNoTaskToDo) return
         val onGoingTask = onGoingListTask.last()
         _onGoingTaskNameState.value = onGoingTask.name
         _onGoingTaskTimeState.value = "${onGoingTask.startTime} - ${onGoingTask.endTime}"
         _onGoingTaskDescriptionState.value = onGoingTask.description
         _onGoingTaskPriorityState.value = onGoingTask.priority
-        _todayTaskState.value?.let {
-            _maxProgressState.value = it.size
-            _progressState.value = it.size - onGoingListTask.size
+        var count = 0
+        _todayTaskState.value?.forEach {
+            count = if(it.state == AppConstant.TASK_STATE_FINISHED) count + 1 else count
         }
+        _progressState.value = if(count != 0) count * 100 / _todayTaskState.value!!.size else 0
         _notFinishedTask.value = onGoingListTask.size
+    }
+
+    private suspend fun reloadOnFinishTask() {
+        loadWeekProgress()
+        loadTodayTasks()
+        if(onGoingListTask.isEmpty()) {
+            _finishedTaskState.value = true
+            return
+        }
+        onGoingListTask.removeAt(onGoingListTask.size - 1)
+        emitOnGoingStates()
+        //TODO : Notify AppViewModel to update data in Calendar (if must) and Profile task
+    }
+
+    fun finishTask() {
+        if(onGoingListTask.isEmpty()) return
+        val taskId = onGoingListTask.last().id
+        viewModelScope.launch {
+            when(val result = taskRepo.finishTask(taskId)) {
+                is Result.Success -> reloadOnFinishTask()
+                is Result.Error -> result.message?.let { _messageState.value = it }
+                else -> _messageState.value = AppMessage.UNDEFINED_ERROR
+            }
+        }
     }
 }

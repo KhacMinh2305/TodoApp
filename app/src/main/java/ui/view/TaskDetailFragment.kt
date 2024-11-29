@@ -68,19 +68,6 @@ class TaskDetailFragment : Fragment() {
         return binding.root
     }
 
-    /*:
-        * Task 2 : Viet class Adapter cho phan Comment (tuong tu nhu cac Adapter co truoc)
-        * Task 3 : Test tat ca phan code voi test case cu the
-        *
-        * NOTE : Code dungc convention , khong dat ten bien tieng viet hoac vo nghia . Cac fun va thuoc tinh
-        * dat dung vi tri . Cac class phai dat vao dung thu muc va khong duoc tao them thu muc nao.
-        * KHONG VIET LOGIC LIEN QUAN DEN DU LIEU
-        * KHONG CHINH SUA HAY THEM BOT BAT CU LOGIC NAO NGOAI NHUNG NOI DA PHAN CONG
-        * CAC TASK NAY CHI PHAT SINH THEM 1 CLASS ADAPTER CHO COMMENT => CO THE IMPLEMENT LOGIC GI VAO DO CUNG DUOC
-        * NHUNG KHONG DUOC DUA CAC COMPONENTS CUA UI , DATA LAYER VAO (co the gay leaks memory)
-        * NEU THEM THU VIEN NGOAI NAO THI NHAN CHO TOI
-     */
-
     private fun observeStates() {
 
     }
@@ -103,5 +90,3 @@ class TaskDetailFragment : Fragment() {
         }
     }
 }
-
-// Comment cac ham test o duoi day

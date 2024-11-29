@@ -1,6 +1,5 @@
 package ui.view
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -112,7 +111,7 @@ class SignInFragment : Fragment() {
 
     private fun observeSigningUpState() {
         viewModel.signUpState.observe(viewLifecycleOwner) {
-            appViewModel.notifyLoadingDataIfMustSignIn()
+            appViewModel.notifyReloadHomeDate()
             appViewModel.showBottomNav(true)
             navController.navigateUp()
         }

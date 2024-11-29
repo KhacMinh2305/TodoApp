@@ -18,5 +18,7 @@ class TaskRepository @Inject constructor(private var taskDataSource: TaskDataSou
 
     suspend fun getOnGoingTaskAtDate(userId : String, date : Long) = taskDataSource.getOnGoingTaskAtDate(userId, date)
 
+    suspend fun finishTask(taskId: String) = taskDataSource.finishTask(taskId)
+
     fun clearCacheDataOnSignOut() = taskDataSource.clearCacheDataOnSignOut()
 }

@@ -12,7 +12,7 @@
             android:scaleWidth="0%"
             android:scaleHeight="100%">
             <shape >
-                <gradient android:startColor="@color/super_light_turquoise"
+                <gradient android:startColor="@color/turquoise_light_gradient"
                     android:endColor="@color/turquoise"
                     android:angle="90"/>
                 <corners android:radius="10dp"/>

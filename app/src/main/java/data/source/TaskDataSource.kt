@@ -37,11 +37,10 @@ class TaskDataSource @Inject constructor(
     }
 
     suspend fun getTaskById(id : String) : Task? {
-        cachedTasks.filterValues { it ->
-            val task = it.find {
-                it.id == id
+        cachedTasks.values.forEach {
+            it.find { it.id == id }?.let {
+                return it
             }
-            return task
         }
         return withContext(Dispatchers.IO) {
             return@withContext taskDao.getTaskById(id)
@@ -73,6 +72,7 @@ class TaskDataSource @Inject constructor(
     }
 
     private fun fillDateRange(range : MutableList<Long>) {
+        if (range.size < 2) return
         while (range[range.size - 1] - range[range.size - 2] > AppConstant.MILLISECOND_IN_DAY) {
             val nextDay = range[range.size - 2].plus(AppConstant.MILLISECOND_IN_DAY)
             range.add(range.size - 1, nextDay)
@@ -118,7 +118,7 @@ class TaskDataSource @Inject constructor(
         return result?.toMutableList() ?: cachedTasks[date]
     }
 
-    suspend fun addTask(task: Task) = withContext(Dispatchers.IO) {
+    suspend fun addTask(task: Task) = withContext(Dispatchers.IO) {// TODO : Loi  ham nay
         try {
             db.runInTransaction {
                 taskDao.addTask(task)
@@ -177,6 +177,29 @@ class TaskDataSource @Inject constructor(
             insertIndex = if(targetDiff < timeDiff) i + 1 else break
         }
         list.add(insertIndex, target)
+    }
+
+    private fun updateTaskInCache(oldTask : Task, newTask: Task) {
+        cachedTasks.values.forEach {
+            if(it.contains(oldTask)) {
+                val index = it.indexOf(oldTask)
+                it[index] = newTask
+            }
+        }
+    }
+
+    suspend fun finishTask(taskId: String) = withContext(Dispatchers.IO) {
+        try {
+            val _task = getTaskById(taskId)!!
+            val task = _task.copy(state = AppConstant.TASK_STATE_FINISHED)
+            db.runInTransaction {
+                taskDao.updateTask(task)
+            }
+            updateTaskInCache(_task, task)
+            return@withContext Result.Success
+        } catch (e : Exception) {
+            return@withContext Result.Error(e.message)
+        }
     }
 
     fun clearCacheDataOnSignOut() {

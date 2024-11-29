@@ -64,7 +64,7 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
         }
     }
 
-    fun notifyLoadingDataIfMustSignIn() {
+    fun notifyReloadHomeDate() {
         _loadHomeData.value = true
     }
 

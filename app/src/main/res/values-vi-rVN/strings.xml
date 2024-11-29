@@ -55,4 +55,5 @@
     <string name="finished">Đã hoàn thành</string>
     <string name="not_finished">Đang diễn ra</string>
     <string name="expired">Hết hạn</string>
+    <string name="finish_all_task">Chúc mừng ! Bạn đã hoàn thành nhiệm vụ hôm nay. Tiếp tục phát huy nhé ! 🚀</string>
 </resources>

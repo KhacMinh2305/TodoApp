@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.action_signing_in)
                 return@observe
             }
-            viewModel.notifyLoadingDataIfMustSignIn()
+            viewModel.notifyReloadHomeDate()
             viewModel.notifySplashFinished()
         }
     }
