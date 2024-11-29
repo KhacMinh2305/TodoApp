@@ -7,9 +7,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.todo.R
 import com.example.todo.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import ui.adapter.ProgressAdapter
+import ui.adapter.TaskAdapter
+import ui.custom.RecyclerViewItemDecoration
 import ui.viewmodel.AppViewModel
 import ui.viewmodel.HomeViewModel
 
@@ -56,17 +61,56 @@ class HomeFragment : Fragment() {
         navController = findNavController(requireActivity(), R.id.nav_host)
         appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        binding.viewmodel = viewModel
+        initViews()
         observeStates()
         return binding.root
     }
 
-    private fun observeStates() {
-        appViewModel.loadHomeData.observe(viewLifecycleOwner) {
-            viewModel.loadData()
-        }
+    private fun initViews() {
+        initWeekProgressViews()
+        initTodayRecyclerViews()
+    }
 
-        viewModel.usernameState.observe(viewLifecycleOwner) {
-            binding.userName.text = it
+    private fun initWeekProgressViews() {
+        binding.weekProgressRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.weekProgressRecyclerView.adapter = ProgressAdapter()
+        binding.weekProgressRecyclerView.addItemDecoration(RecyclerViewItemDecoration(30))
+    }
+
+    private fun initTodayRecyclerViews() {
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding.todayTaskRecyclerView)
+        binding.todayTaskRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.todayTaskRecyclerView.adapter = TaskAdapter {
+            println("Navigate to detail : $it")
+        }
+    }
+
+    private fun observeStates() {
+        observeLoadingHomeDataState()
+        observeWeekProgressState()
+        observeTodayTaskState()
+    }
+
+    private fun observeLoadingHomeDataState() {
+        appViewModel.loadHomeData.observe(viewLifecycleOwner) {
+            if(it) {
+                viewModel.loadData()
+                appViewModel.notifyHomeDataLoaded()
+            }
+        }
+    }
+
+    private fun observeWeekProgressState() {
+        viewModel.weekProgressState.observe(viewLifecycleOwner) {
+            (binding.weekProgressRecyclerView.adapter as ProgressAdapter).submit(it)
+        }
+    }
+
+    private fun observeTodayTaskState() {
+        viewModel.todayTaskState.observe(viewLifecycleOwner) {
+            (binding.todayTaskRecyclerView.adapter as TaskAdapter).submit(it)
         }
     }
 }

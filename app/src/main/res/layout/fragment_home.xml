@@ -1,10 +1,16 @@
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="viewmodel"
+            type="ui.viewmodel.HomeViewModel" />
+    </data>
 
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:fillViewport="true"
         android:background="@color/screen_background"
         tools:context="ui.view.HomeFragment">
@@ -28,9 +34,9 @@
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Demo Name"
                 android:textSize="25sp"
                 android:textStyle="bold"
+                android:text="@{viewmodel.usernameState}"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,9 +90,11 @@
                         android:layout_height="wrap_content"
                         android:textSize="32sp"
                         android:textStyle="bold"
+                        android:textColor="@color/pink"
+                        android:text="@{String.valueOf(viewmodel.weekTotalTaskState)}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/overallTitle"
-                        tools:text="39" />
+                        tools:text="23" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/plannedImage"
@@ -133,293 +141,16 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <FrameLayout
-                        android:id="@+id/monProgressContainer"
-                        android:layout_width="30dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toStartOf="@+id/tueProgressContainer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/finishedTask"
-                        android:layout_marginTop="15dp">
-
-                        <ProgressBar
-                            android:id="@+id/monProgress"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:progressDrawable="@drawable/vertical_progress_drawable" />
-
-                        <TextView
-                            android:id="@+id/mondayProgress"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            tools:text="23%"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"/>
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/tueProgressContainer"
-                        android:layout_width="30dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toStartOf="@+id/wedProgressContainer"
-                        app:layout_constraintStart_toEndOf="@+id/monProgressContainer"
-                        app:layout_constraintTop_toBottomOf="@+id/finishedTask"
-                        android:layout_marginTop="15dp">
-
-                        <ProgressBar
-                            android:id="@+id/tueProgress"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:progressDrawable="@drawable/vertical_progress_drawable" />
-
-                        <TextView
-                            android:id="@+id/tuesdayProgress"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            tools:text="23%"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"/>
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/wedProgressContainer"
-                        android:layout_width="30dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toStartOf="@id/thuProgressContainer"
-                        app:layout_constraintStart_toEndOf="@+id/tueProgressContainer"
-                        app:layout_constraintTop_toBottomOf="@+id/finishedTask"
-                        android:layout_marginTop="15dp">
-
-                        <ProgressBar
-                            android:id="@+id/wedProgress"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:progressDrawable="@drawable/vertical_progress_drawable" />
-
-                        <TextView
-                            android:id="@+id/wednesdayProgress"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            tools:text="23%"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"/>
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/thuProgressContainer"
-                        android:layout_width="30dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toStartOf="@id/friProgressContainer"
-                        app:layout_constraintStart_toEndOf="@id/wedProgressContainer"
-                        app:layout_constraintTop_toBottomOf="@+id/finishedTask"
-                        android:layout_marginTop="15dp">
-
-                        <ProgressBar
-                            android:id="@+id/thuProgress"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:progressDrawable="@drawable/vertical_progress_drawable" />
-
-                        <TextView
-                            android:id="@+id/thursdayProgress"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            tools:text="23%"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"/>
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/friProgressContainer"
-                        android:layout_width="30dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toStartOf="@id/satProgressContainer"
-                        app:layout_constraintStart_toEndOf="@id/thuProgressContainer"
-                        app:layout_constraintTop_toBottomOf="@+id/finishedTask"
-                        android:layout_marginTop="15dp">
-
-                        <ProgressBar
-                            android:id="@+id/friProgress"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:progressDrawable="@drawable/vertical_progress_drawable" />
-
-                        <TextView
-                            android:id="@+id/fridayProgress"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            tools:text="23%"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"/>
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/satProgressContainer"
-                        android:layout_width="30dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toStartOf="@id/sunProgressContainer"
-                        app:layout_constraintStart_toEndOf="@id/friProgressContainer"
-                        app:layout_constraintTop_toBottomOf="@+id/finishedTask"
-                        android:layout_marginTop="15dp">
-
-                        <ProgressBar
-                            android:id="@+id/satProgress"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:progressDrawable="@drawable/vertical_progress_drawable" />
-
-                        <TextView
-                            android:id="@+id/saturdayProgress"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            tools:text="23%"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"/>
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/sunProgressContainer"
-                        android:layout_width="30dp"
-                        android:layout_height="100dp"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/weekProgressRecyclerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/satProgressContainer"
-                        app:layout_constraintTop_toBottomOf="@+id/finishedTask"
-                        android:layout_marginTop="15dp">
-
-                        <ProgressBar
-                            android:id="@+id/sunProgress"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:progressDrawable="@drawable/vertical_progress_drawable" />
-
-                        <TextView
-                            android:id="@+id/sundayProgress"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            tools:text="23%"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"/>
-                    </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/monTitle"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/mon"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toStartOf="@id/tueTitle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/monProgressContainer" />
-
-                    <TextView
-                        android:id="@+id/tueTitle"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/tue"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toStartOf="@id/wedTitle"
-                        app:layout_constraintStart_toEndOf="@+id/monTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/tueProgressContainer" />
-
-                    <TextView
-                        android:id="@+id/wedTitle"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/wed"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toStartOf="@id/thuTitle"
-                        app:layout_constraintStart_toEndOf="@+id/tueTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/wedProgressContainer" />
-
-                    <TextView
-                        android:id="@+id/thuTitle"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/thu"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toStartOf="@id/friTitle"
-                        app:layout_constraintStart_toEndOf="@+id/wedTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/thuProgressContainer" />
-
-                    <TextView
-                        android:id="@+id/friTitle"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/fri"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toStartOf="@id/satTitle"
-                        app:layout_constraintStart_toEndOf="@+id/thuTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/friProgressContainer" />
-
-                    <TextView
-                        android:id="@+id/satTitle"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/sat"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toStartOf="@id/sunTitle"
-                        app:layout_constraintStart_toEndOf="@+id/friTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/satProgressContainer" />
-
-                    <TextView
-                        android:id="@+id/sunTitle"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/sun"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/satTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/sunProgressContainer" />
-
+                        app:layout_constraintTop_toBottomOf="@+id/finishedTask" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -457,21 +188,6 @@
                     android:background="@drawable/ongoing_card_background"
                     android:padding="15dp">
 
-                    <TextView
-                        android:id="@+id/taskName"
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_marginEnd="20dp"
-                        android:alpha="0.6"
-                        android:ellipsize="end"
-                        android:gravity="start|center_vertical"
-                        android:lines="1"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Finish layout of To Do App" />
 
                     <FrameLayout
                         android:id="@+id/onGoingTaskProgressContainer"
@@ -486,20 +202,22 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:text="@{String.valueOf(viewmodel.notFinishedTask)}"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="20sp"
                             android:textStyle="bold"
-                            tools:text="58%" />
+                            tools:text="5" />
 
                         <ProgressBar
                             android:id="@+id/taskProgressBar"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
+                            android:progress="@{viewmodel.progressState}"
+                            android:max="@{viewmodel.maxProgressState}"
                             android:layout_gravity="center"
                             android:indeterminateOnly="false"
                             android:progressDrawable="@drawable/progress_drawable" />
                     </FrameLayout>
-
 
                     <TextView
                         android:id="@+id/subTaskName"
@@ -508,10 +226,11 @@
                         android:gravity="start|center_vertical"
                         android:textSize="23sp"
                         android:textStyle="bold"
+                        android:text="@{viewmodel.onGoingTaskNameState}"
                         android:textColor="@color/black"
                         android:layout_marginTop="10dp"
-                        app:layout_constraintStart_toStartOf="@+id/taskName"
-                        app:layout_constraintTop_toBottomOf="@+id/taskName"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         tools:text="Home Screen UI" />
 
                     <TextView
@@ -520,6 +239,7 @@
                         android:layout_height="30dp"
                         android:textSize="16sp"
                         android:textStyle="bold"
+                        android:text="@{viewmodel.onGoingTaskState}"
                         android:textColor="@color/black"
                         android:gravity="start|center_vertical"
                         app:layout_constraintStart_toStartOf="parent"
@@ -527,19 +247,36 @@
                         tools:text="10:00 - 14:00" />
 
                     <TextView
+                        android:id="@+id/taskDescription"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:lineHeight="25dp"
+                        android:textSize="14sp"
+                        android:alpha="0.8"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:text="@{viewmodel.onGoingTaskDescriptionState}"
+                        android:gravity="start|center_vertical"
+                        tools:text="@string/demo_long_text"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/taskTime" />
+
+                    <TextView
                         android:id="@+id/priority"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
+                        android:background="@drawable/day_textview_background"
                         android:gravity="center"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
-                        android:layout_marginTop="25dp"
-                        android:textColor="@color/pink"
-                        android:background="@drawable/day_textview_background"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/taskTime"
+                        app:layout_constraintTop_toBottomOf="@+id/taskDescription"
+                        app:taskPriority="@{viewmodel.onGoingTaskPriorityState}"
                         tools:text="High" />
 
                     <TextView

@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import data.local.entity.Task
-import data.local.entity.WeekTask
 
 @Dao
 interface TaskDao {
@@ -21,16 +20,35 @@ interface TaskDao {
     suspend fun getTaskByName(name : String) : Task
 
     @Query("SELECT * FROM task WHERE start_date = :date")
-    suspend fun getTaskByStartDate(date : String) : List<Task>
+    suspend fun getTaskByStartDate(date : Long) : List<Task>
 
     @Query("SELECT * FROM task WHERE state = :state")
     suspend fun getFinishedTask(state : Int) : List<Task>
 
-    @Query("SELECT Task1.end_date as endDate, Task2.* FROM task Task1 " +
-            "JOIN task Task2 ON Task1.id = Task2.id" +
-            " WHERE Task1.user_id = :userId AND endDate IN (:dates)")
-    suspend fun getAllTaskInDateRange(userId : String, dates : List<String>) :
-            Map<@MapColumn(columnName = "endDate") String, List<Task>>
+    /*@Query("SELECT DISTINCT T1.start_date as date, T2.* FROM task as T1 , task as T2" +
+            " WHERE T2.user_id = :userId AND " +
+            "(date IN (:dates) AND T2.start_date <= date AND T2.end_date >= date AND T2.finished_at = -1) " +
+            "UNION " +
+            "SELECT DISTINCT finished_at as date, * from task " +
+            "WHERE user_id = :userId AND finished_at IN (:dates)")
+    suspend fun getAllTaskInDateRange(userId : String, dates : List<Long>) :
+            Map<@MapColumn(columnName = "date") Long, List<Task>>?*/
+
+    @Query("WITH RECURSIVE date_range(ele) AS (VALUES(:firstDate) UNION ALL SELECT ele + (:step) FROM date_range LIMIT (:totalDay)) " +
+            "SELECT date_range.ele AS date, T2.* from date_range, task as T2 WHERE T2.user_id = (:userId) " +
+            "AND T2.start_date <= date AND T2.end_date >= date AND T2.finished_at = -1 " +
+            "UNION " +
+            "SELECT DISTINCT finished_at as date, * from task " +
+            "WHERE user_id = :userId AND finished_at IN (:dates)")
+    suspend fun getTasksInDateRange(userId : String, dates : List<Long>, firstDate : Long, totalDay : Int, step : Long) :
+            Map<@MapColumn(columnName = "date") Long, List<Task>>?
+
+    @Query("SELECT (:date) AS target, task.* FROM task WHERE task.user_id = (:userId) " +
+            "AND task.start_date <= target AND task.end_date >= target AND task.finished_at = -1 " +
+            "UNION " +
+            "SELECT DISTINCT finished_at as target, * from task " +
+            "WHERE user_id = :userId AND finished_at = (:date)")
+    suspend fun getTasksAtDate(userId : String, date : Long) : List<Task>?
 
     @Update(entity = Task::class)
     suspend fun updateTask(task : Task)
@@ -38,5 +56,4 @@ interface TaskDao {
     @Insert(entity = Task::class, onConflict = OnConflictStrategy.ABORT)
     fun addTask(task : Task)
 
-    // more queries here ... (only declare when using)
 }

@@ -1,5 +1,4 @@
 package ui.view
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import ui.viewmodel.AppViewModel
 import ui.viewmodel.SettingViewModel
 
-
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
 
 @AndroidEntryPoint
 class SettingFragment : Fragment() {

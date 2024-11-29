@@ -10,6 +10,7 @@ import data.local.entity.Task
 import data.repo.ProfileRepository
 import data.repo.TaskRepository
 import data.result.Result
+import domain.DateTimeUseCase
 import domain.HashUseCase
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -37,8 +38,12 @@ class CreatingTaskViewModel @Inject constructor(
         viewModelScope.launch {
             val id = HashUseCase().hash(taskName.plus(startDate))
             profileRepo.getUserId()?.let {
+                val dateTimeUseCase = DateTimeUseCase()
+                val createdDay = dateTimeUseCase.convertDateStringIntoLong(createdAt)
+                val startOn = dateTimeUseCase.convertDateStringIntoLong(startDate)
+                val endOn = dateTimeUseCase.convertDateStringIntoLong(endDate)
                 val task = Task(id, taskName, priority,
-                    createdAt, startDate, endDate, beginTime,
+                    createdDay, startOn, endOn, -1L, beginTime,
                     endTime, description, AppConstant.TASK_STATE_NOT_FINISHED, it)
                 when(taskRepository.addTask(task)) {
                     is Result.Success -> {

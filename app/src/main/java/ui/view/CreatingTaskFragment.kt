@@ -141,12 +141,15 @@ class CreatingTaskFragment : Fragment() {
         timePicker.addOnPositiveButtonClickListener {
             val hour = timePicker.hour
             val minute = timePicker.minute
+            val displayHour = if (hour < 10) "0$hour" else hour
+            val displayMinute = if (minute < 10) "0$minute" else minute
+            val displayTime = "$displayHour:$displayMinute"
             if (binding.endEditText.isFocused
                 || binding.endEditText.text.isEmpty() && binding.beginEditText.text.isNotEmpty() && !binding.beginEditText.isFocused) {
-                binding.endEditText.setText("$hour:$minute")
+                binding.endEditText.setText(displayTime)
                 return@addOnPositiveButtonClickListener
             }
-            binding.beginEditText.setText("$hour:$minute")
+            binding.beginEditText.setText(displayTime)
         }
     }
 
@@ -201,7 +204,7 @@ class CreatingTaskFragment : Fragment() {
     private fun goBack() {
         binding.backButton.setOnClickListener {
             appViewModel.showBottomNav(true)
-            navController.popBackStack()
+            navController.navigateUp()
         }
     }
 }

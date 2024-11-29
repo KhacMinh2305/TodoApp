@@ -15,7 +15,8 @@
     <string name="recent_tasks">Nhiệm vụ gần đây</string>
     <string name="about_the_task">Thông tin nhiệm vụ</string>
     <string name="on_going">Đang tiến hành</string>
-    <string name="start_date">Ngày bắt đầu - Ngày kết thúc</string>
+    <string name="start_date">Ngày bắt đầu</string>
+    <string name="date_title">Ngày bắt đầu - Ngày kết thúc</string>
     <string name="end_date">Ngày kết thúc</string>
     <string name="time">Thời gian</string>
     <string name="priority">Mức ưu tiên</string>
@@ -47,4 +48,11 @@
     <string name="logni_hint">Tên của bạn </string>
     <string name="password_hint">Mật khẩu </string>
     <string name="sign_up">Đăng kí </string>
+    <string name="to">đến</string>
+    <string name="priority_high">Cao</string>
+    <string name="priority_medium">Trung bình</string>
+    <string name="priority_low">Thấp</string>
+    <string name="finished">Đã hoàn thành</string>
+    <string name="not_finished">Đang diễn ra</string>
+    <string name="expired">Hết hạn</string>
 </resources>

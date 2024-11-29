@@ -1,5 +1,4 @@
 package data.repo
-
 import data.local.entity.Task
 import data.source.TaskDataSource
 import java.time.LocalDate
@@ -9,11 +8,13 @@ import javax.inject.Singleton
 @Singleton
 class TaskRepository @Inject constructor(private var taskDataSource: TaskDataSource) {
 
-    suspend fun getTaskOnDay(startDate : LocalDate) : List<Task> {
-        return taskDataSource.getTaskOnDay(startDate)
-    }
-
     suspend fun getWeekTask(userId : String, weekDay : LocalDate) = taskDataSource.getWeekTask(userId, weekDay)
 
     suspend fun addTask(task : Task) = taskDataSource.addTask(task)
+
+    suspend fun getTaskByDate(userId : String, date : Long) = taskDataSource.getTaskByDate(userId, date)
+
+    suspend fun getOnGoingTaskAtDate(userId : String, date : Long) = taskDataSource.getOnGoingTaskAtDate(userId, date)
+
+    fun clearCacheDataOnSignOut() = taskDataSource.clearCacheDataOnSignOut()
 }

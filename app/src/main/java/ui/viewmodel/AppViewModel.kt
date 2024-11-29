@@ -68,6 +68,10 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
         _loadHomeData.value = true
     }
 
+    fun notifyHomeDataLoaded() {
+        _loadHomeData.value = false
+    }
+
     fun notifySplashFinished() {
         _splashState.value = false
     }

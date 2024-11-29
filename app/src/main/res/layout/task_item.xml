@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="task"
+            type="data.local.entity.Task"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:backGroundPriority="@{task.priority}">
+
+        <View
+            android:id="@+id/indicator"
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:background="@color/low"
+            app:colorPriority="@{task.priority}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/contentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="15dp"
+                android:alpha="0.7"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                app:startTime="@{task.startTime}"
+                app:endTime="@{task.endTime}"
+                app:startDate="@{String.valueOf(task.startDate)}"
+                app:endDate="@{String.valueOf(task.endDate)}"
+                android:paddingStart="0dp"
+                android:paddingEnd="15dp"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="10:00 - 14:00" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                android:maxLines="1"
+                android:text="@{task.name}"
+                android:paddingStart="0dp"
+                android:paddingEnd="15dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Create full UI for ToDo App" />
+
+            <TextView
+                android:id="@+id/priority"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                app:taskPriority="@{task.priority}"
+                android:lines="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="15dp"
+                android:textSize="14sp"
+                tools:text="Priority : Low" />
+
+            <TextView
+                android:id="@+id/state"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                android:lines="1"
+                app:finishState="@{task.state}"
+                android:paddingStart="0dp"
+                android:paddingEnd="15dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Finished" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

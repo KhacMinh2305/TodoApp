@@ -12,7 +12,9 @@
             android:scaleWidth="0%"
             android:scaleHeight="100%">
             <shape >
-                <solid android:color="@color/turquoise"/>
+                <gradient android:startColor="@color/super_light_turquoise"
+                    android:endColor="@color/turquoise"
+                    android:angle="90"/>
                 <corners android:radius="10dp"/>
             </shape>
         </scale>

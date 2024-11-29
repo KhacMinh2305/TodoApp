@@ -13,11 +13,13 @@ data class Task(
     @ColumnInfo(name = "priority")
     val priority: Int,
     @ColumnInfo(name = "created_at")
-    val createdAt: String,
+    val createdAt: Long,
     @ColumnInfo(name = "start_date")
-    val startDate: String,
+    val startDate: Long,
     @ColumnInfo(name = "end_date")
-    val endDate: String,
+    val endDate: Long,
+    @ColumnInfo(name = "finished_at")
+    val finishedDate: Long,
     @ColumnInfo(name = "start_time")
     val startTime: String,
     @ColumnInfo(name = "end_time")

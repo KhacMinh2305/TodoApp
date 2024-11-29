@@ -15,7 +15,8 @@
     <string name="recent_tasks">Recent tasks</string>
     <string name="about_the_task">About the task</string>
     <string name="on_going">Ongoing</string>
-    <string name="start_date">Start Date - End Date</string>
+    <string name="start_date">Start date</string>
+    <string name="date_title">Start Date - End Date</string>
     <string name="end_date">End Date</string>
     <string name="time">Time</string>
     <string name="priority">Priority</string>
@@ -47,4 +48,11 @@
     <string name="logni_hint">Your name</string>
     <string name="password_hint">Password</string>
     <string name="sign_up">Sign up</string>
+    <string name="to">to</string>
+    <string name="priority_high">High</string>
+    <string name="priority_medium">Medium</string>
+    <string name="priority_low">Low</string>
+    <string name="finished">Finished</string>
+    <string name="not_finished">On Going</string>
+    <string name="expired">Expired</string>
 </resources>

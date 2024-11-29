@@ -118,5 +118,4 @@ class MainActivity : AppCompatActivity() {
         binding.addTaskButton.setOnClickListener { navController.navigate(R.id.action_creating_task)}
     }
 }
-// Each Screen (Fragment) has its own viewmodel that work as a bridge between UI components and data components
 // Man hinh Calenda su dung week recycler view cho tung tuan , ben duoi su dung viewPager cho tung ngay trong tuan

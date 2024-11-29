@@ -1,306 +1,308 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/screen_background"
-    tools:context="ui.view.TaskDetailFragment">
+<layout>
 
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:importantForAccessibility="no"
-        android:padding="13dp"
-        android:background="@drawable/header_button_background"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/ic_todo_back" />
-
-    <ImageButton
-        android:id="@+id/editButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:importantForAccessibility="no"
-        android:padding="13dp"
-        android:background="@drawable/header_button_background"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_todo_edit" />
-
-    <TextView
-        android:id="@+id/taskName"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:lines="1"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backButton"
-        tools:text="Create UI for ToDo App" />
-
-    <TextView
-        android:id="@+id/startDateTitle"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:lines="1"
-        android:text="@string/start_date"
-        android:alpha="0.7"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskName" />
-
-    <TextView
-        android:id="@+id/startDate"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:lines="1"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        tools:text="23/01/2003"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/startDateTitle"
-        app:layout_constraintTop_toBottomOf="@+id/taskName" />
-
-    <TextView
-        android:id="@+id/endDateTitle"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:alpha="0.7"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:lines="1"
-        android:text="@string/end_date"
-        android:textColor="@color/gray"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startDateTitle" />
-
-    <TextView
-        android:id="@+id/endDate"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:lines="1"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/endDateTitle"
-        app:layout_constraintTop_toBottomOf="@+id/startDate"
-        tools:text="05/08/2024" />
-
-    <TextView
-        android:id="@+id/timeTitle"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:alpha="0.7"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:lines="1"
-        android:text="@string/time"
-        android:textColor="@color/gray"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endDateTitle" />
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:lines="1"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/timeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/endDate"
-        tools:text="10:00 - 14:00" />
-
-    <TextView
-        android:id="@+id/priorityTitle"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:alpha="0.7"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:lines="1"
-        android:layout_marginStart="15dp"
-        android:text="@string/priority"
-        android:textColor="@color/gray"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeTitle" />
-
-    <TextView
-        android:id="@+id/priority"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:lines="1"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toEndOf="@+id/priorityTitle"
-        app:layout_constraintTop_toBottomOf="@+id/time"
-        tools:text="High" />
-
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priority">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/task_detail_container_background"
-            android:padding="15dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/descriptionTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="top|end"
-                android:drawablePadding="10dp"
-                android:gravity="start|center_vertical"
-                android:textColor="@color/black"
-                android:text="@string/description"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:maxLines="3"
-                android:lineHeight="25dp"
-                android:layout_gravity="top|end"
-                android:drawablePadding="10dp"
-                android:ellipsize="end"
-                android:textColor="@color/black"
-                android:gravity="start|center_vertical"
-                tools:text="@string/demo_long_text"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTitle" />
-
-            <View
-                android:id="@+id/indicator"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/screen_background"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
-
-            <TextView
-                android:id="@+id/commentTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="top|end"
-                android:drawablePadding="10dp"
-                android:gravity="start|center_vertical"
-                android:text="@string/comment"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/indicator" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/commentRecyclerView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/commentTitle" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@id/descriptionTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="@string/comment"
-            android:textColor="@color/black"
-            app:drawableStartCompat="@drawable/ic_todo_comment"
-            android:gravity="center"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:drawablePadding="10dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:background="@drawable/comment_background"
-            android:layout_gravity="top|end"
-            android:layout_marginEnd="30dp"/>
-    </FrameLayout>
-
-    <View
-        android:id="@+id/bottomSheetAnchorView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <include
-        android:id="@+id/bottomSheet"
-        layout="@layout/edit_task_sheet"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_anchor="@id/bottomSheetAnchorView"
-        app:layout_anchorGravity="top" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/screen_background"
+        tools:context="ui.view.TaskDetailFragment">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:importantForAccessibility="no"
+            android:padding="13dp"
+            android:background="@drawable/header_button_background"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_todo_back" />
+
+        <ImageButton
+            android:id="@+id/editButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:importantForAccessibility="no"
+            android:padding="13dp"
+            android:background="@drawable/header_button_background"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_todo_edit" />
+
+        <TextView
+            android:id="@+id/taskName"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backButton"
+            tools:text="Create UI for ToDo App" />
+
+        <TextView
+            android:id="@+id/startDateTitle"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:text="@string/start_date"
+            android:alpha="0.7"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskName" />
+
+        <TextView
+            android:id="@+id/startDate"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            tools:text="23/01/2003"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/startDateTitle"
+            app:layout_constraintTop_toBottomOf="@+id/taskName" />
+
+        <TextView
+            android:id="@+id/endDateTitle"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:alpha="0.7"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:text="@string/end_date"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/startDateTitle" />
+
+        <TextView
+            android:id="@+id/endDate"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/endDateTitle"
+            app:layout_constraintTop_toBottomOf="@+id/startDate"
+            tools:text="05/08/2024" />
+
+        <TextView
+            android:id="@+id/timeTitle"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:alpha="0.7"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:text="@string/time"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/endDateTitle" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/timeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/endDate"
+            tools:text="10:00 - 14:00" />
+
+        <TextView
+            android:id="@+id/priorityTitle"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:alpha="0.7"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:layout_marginStart="15dp"
+            android:text="@string/priority"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeTitle" />
+
+        <TextView
+            android:id="@+id/priority"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toEndOf="@+id/priorityTitle"
+            app:layout_constraintTop_toBottomOf="@+id/time"
+            tools:text="High" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/priority">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/task_detail_container_background"
+                android:padding="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/descriptionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top|end"
+                    android:drawablePadding="10dp"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/black"
+                    android:text="@string/description"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:lineHeight="25dp"
+                    android:layout_gravity="top|end"
+                    android:drawablePadding="10dp"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:gravity="start|center_vertical"
+                    tools:text="@string/demo_long_text"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/descriptionTitle" />
+
+                <View
+                    android:id="@+id/indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/screen_background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/description" />
+
+                <TextView
+                    android:id="@+id/commentTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top|end"
+                    android:drawablePadding="10dp"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/comment"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/indicator" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/commentRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/commentTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/commentTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="@string/comment"
+                android:textColor="@color/black"
+                app:drawableStartCompat="@drawable/ic_todo_comment"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:drawablePadding="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:background="@drawable/comment_background"
+                android:layout_gravity="top|end"
+                android:layout_marginEnd="30dp"/>
+        </FrameLayout>
+
+        <View
+            android:id="@+id/bottomSheetAnchorView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <include
+            android:id="@+id/bottomSheet"
+            layout="@layout/edit_task_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_anchor="@id/bottomSheetAnchorView"
+            app:layout_anchorGravity="top" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

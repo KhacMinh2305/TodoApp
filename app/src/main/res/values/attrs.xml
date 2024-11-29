@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="text">
+        <attr name="percentText" format="integer"/>
+        <attr name="taskPriority" format="integer"/>
+        <attr name="finishState" format="integer"/>
+        <attr name="startTime" format="string"/>
+        <attr name="endTime" format="string"/>
+        <attr name="startDate" format="string"/>
+        <attr name="endDate" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="ui">
+        <attr name="colorPriority" format="integer"/>"
+        <attr name="backGroundPriority" format="integer"/>
+    </declare-styleable>
+</resources>

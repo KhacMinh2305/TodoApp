@@ -1,15 +1,24 @@
 package ui.view
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
 import com.example.todo.R
+import com.example.todo.databinding.FragmentTaskDetailBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import dagger.hilt.android.AndroidEntryPoint
+import ui.viewmodel.AppViewModel
+import ui.viewmodel.TaskDetailViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+@AndroidEntryPoint
 class TaskDetailFragment : Fragment() {
 
     private var param1: String? = null
@@ -26,6 +35,12 @@ class TaskDetailFragment : Fragment() {
             }
     }
 
+    private lateinit var binding: FragmentTaskDetailBinding
+    private lateinit var appViewModel : AppViewModel
+    private lateinit var viewModel: TaskDetailViewModel
+    private lateinit var navController : NavController
+    private lateinit var sheetBehavior : BottomSheetBehavior<ConstraintLayout>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -37,8 +52,26 @@ class TaskDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_detail, container, false)
+    ): View {
+        binding = FragmentTaskDetailBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+        }
+        sheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.editTaskSheet)
+        navController = findNavController(requireActivity(), R.id.nav_host)
+        appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
+        viewModel = ViewModelProvider(this)[TaskDetailViewModel::class.java]
+        observeStates()
+        setupListeners()
+        return binding.root
+    }
+
+    private fun observeStates() {
+
+    }
+
+    private fun setupListeners() {
+        binding.editButton.setOnClickListener {
+            sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
     }
 }

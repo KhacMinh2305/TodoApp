@@ -35,10 +35,4 @@ class CalendarViewModel @Inject constructor(
             }
         }
     }
-
-    private fun loadTaskOnDay(date : LocalDate) {
-        viewModelScope.launch {
-            val tasks = taskRepo.getTaskOnDay(date)
-        }
-    }
 }
