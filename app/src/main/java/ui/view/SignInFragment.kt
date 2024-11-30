@@ -111,7 +111,7 @@ class SignInFragment : Fragment() {
 
     private fun observeSigningUpState() {
         viewModel.signUpState.observe(viewLifecycleOwner) {
-            appViewModel.notifyReloadHomeDate()
+            appViewModel.notifyReloadHomeData()
             appViewModel.showBottomNav(true)
             navController.navigateUp()
         }

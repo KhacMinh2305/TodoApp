@@ -64,11 +64,11 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
         }
     }
 
-    fun notifyReloadHomeDate() {
+    fun notifyReloadHomeData() {
         _loadHomeData.value = true
     }
 
-    fun notifyHomeDataLoaded() {
+    fun notifyLoadedHomeData() {
         _loadHomeData.value = false
     }
 

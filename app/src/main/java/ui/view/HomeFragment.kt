@@ -93,6 +93,7 @@ class HomeFragment : Fragment() {
 
     private fun observeStates() {
         observeLoadingHomeDataState()
+        observeLoadingDataSuccessState()
         observeWeekProgressState()
         observeTodayTaskState()
         observeMessageState()
@@ -108,10 +109,13 @@ class HomeFragment : Fragment() {
 
     private fun observeLoadingHomeDataState() {
         appViewModel.loadHomeData.observe(viewLifecycleOwner) {
-            if(it) {
-                viewModel.loadData()
-                appViewModel.notifyHomeDataLoaded()
-            }
+            if(it) viewModel.loadData()
+        }
+    }
+
+    private fun observeLoadingDataSuccessState() {
+        viewModel.loadingDataSuccessState.observe(viewLifecycleOwner) {
+            appViewModel.notifyLoadedHomeData()
         }
     }
 
@@ -139,4 +143,4 @@ class HomeFragment : Fragment() {
     }
 }
 
-//TODO : Bug cache and reload data at Fragment Creating Task
+//TODO : 1 la Cache trong ham Task sai

@@ -53,12 +53,13 @@ class DateTimeUseCase {
     }
 
     fun getDateBetween(begin : Long, end : Long) : List<Long> {
-        val beginDate = LocalDate.parse(convertLongToDateString(begin), DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
+        var beginDate = LocalDate.parse(convertLongToDateString(begin), DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
         val endDate = LocalDate.parse(convertLongToDateString(end), DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
-        val dates = mutableListOf<Long>()
+        val dates = mutableListOf(convertDateStringIntoLong(convertDateInToString(beginDate)))
         while (beginDate.isBefore(endDate)) {
             val date = beginDate.plusDays(1)
             dates.add(convertDateStringIntoLong(convertDateInToString(date)))
+            beginDate = date
         }
         return dates
     }
