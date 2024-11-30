@@ -59,6 +59,9 @@ class HomeViewModel @Inject constructor(
     private var _messageState = MutableLiveData<String>()
     val messageState : LiveData<String> = _messageState
 
+    private var _loadingDataSuccessState = MutableLiveData<Boolean>()
+    val loadingDataSuccessState : LiveData<Boolean> = _loadingDataSuccessState
+
     fun loadData() {
         loadUserName()
         viewModelScope.launch {
@@ -66,6 +69,8 @@ class HomeViewModel @Inject constructor(
             loadTodayTasks()
             loadOnGoingTaskToday()
             emitOnGoingStates()
+
+            _loadingDataSuccessState.value = true
         }
     }
 

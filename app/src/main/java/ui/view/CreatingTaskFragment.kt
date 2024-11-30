@@ -107,8 +107,12 @@ class CreatingTaskFragment : Fragment() {
     }
 
     private fun observeAddingTaskState() {
-        viewModel.addingTaskState.observe(viewLifecycleOwner) {
-            appViewModel.notifyReloadHomeDate()
+        viewModel.addingTaskState.observe(viewLifecycleOwner) { // co van de
+            println("Da nhan duoc tin hieu tu CreatingFragmentViewModel")
+            if(it) {
+                println("Nhac Main Activity ra lenh load lai task o man hinh Home")
+                appViewModel.notifyReloadHomeData()
+            }
         }
     }
 

@@ -32,10 +32,10 @@ class CreatingTaskViewModel @Inject constructor(
                                     endDate : String, beginTime : String,
                                     endTime : String, description : String,
                                     priority : Int) : Task {
+        val dateTimeUseCase = DateTimeUseCase()
         val today = LocalDate.now()
         val createdAt = "${today.dayOfMonth}/${today.monthValue}/${today.year}"
-        val id = HashUseCase().hash(taskName.plus(startDate))
-        val dateTimeUseCase = DateTimeUseCase()
+        val id = HashUseCase().hash(System.currentTimeMillis().toString())
         val createdDay = dateTimeUseCase.convertDateStringIntoLong(createdAt)
         val startOn = dateTimeUseCase.convertDateStringIntoLong(startDate)
         val endOn = dateTimeUseCase.convertDateStringIntoLong(endDate)
@@ -57,7 +57,9 @@ class CreatingTaskViewModel @Inject constructor(
                         _messageState.value = AppMessage.RESULT_ADD_TASK_SUCCESS
                         _addingTaskState.value = true
                     }
-                    is Result.Error -> _messageState.value = AppMessage.RESULT_ADD_TASK_SUCCESS
+                    is Result.Error -> {
+                        _messageState.value = AppMessage.RESULT_ADD_TASK_FAILED
+                    }
                     else -> _messageState.value = AppMessage.UNDEFINED_ERROR
                 }
             }

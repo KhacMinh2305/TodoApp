@@ -44,7 +44,6 @@ interface TaskDao {
     @Update(entity = Task::class)
     fun updateTask(task : Task)
 
-    @Insert(entity = Task::class, onConflict = OnConflictStrategy.ABORT)
+    @Insert(entity = Task::class, onConflict = OnConflictStrategy.REPLACE)
     fun addTask(task : Task)
-
 }

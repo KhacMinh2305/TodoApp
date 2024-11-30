@@ -118,18 +118,18 @@ class TaskDataSource @Inject constructor(
         return result?.toMutableList() ?: cachedTasks[date]
     }
 
-    suspend fun addTask(task: Task) = withContext(Dispatchers.IO) {// TODO : Loi  ham nay
+    suspend fun addTask(task: Task) = withContext(Dispatchers.IO) {
         try {
             db.runInTransaction {
                 taskDao.addTask(task)
             }
-            cachedTasks[task.startDate] = mutableListOf(task)
             val range = DateTimeUseCase().getDateBetween(task.startDate, task.endDate)
             for(date in range) {
                 if(cachedTasks.containsKey(date)) {
                     cachedTasks[date]?.add(task)
                     continue
                 }
+                if(!cachedDates.contains(date)) cachedDates.add(date)
                 cachedTasks[date] = mutableListOf(task)
             }
             return@withContext Result.Success
