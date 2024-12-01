@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import ui.adapter.ProgressAdapter
+import ui.adapter.WeekDayAdapter
 
 class RecyclerViewItemDecoration(private val space: Int) : ItemDecoration() {
 
@@ -18,6 +19,7 @@ class RecyclerViewItemDecoration(private val space: Int) : ItemDecoration() {
         val position = parent.getChildAdapterPosition(view)
         when(parent.adapter) {
             is ProgressAdapter -> outRect.right = if (position == parent.adapter!!.itemCount - 1) 0 else space
+            is WeekDayAdapter -> outRect.left = if (position == 0) 0 else space
         }
     }
 }

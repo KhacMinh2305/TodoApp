@@ -5,10 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.todo.R
 import com.example.todo.databinding.FragmentCalendarBinding
 import dagger.hilt.android.AndroidEntryPoint
+import ui.adapter.WeekDayAdapter
+import ui.custom.RecyclerViewItemDecoration
+import ui.viewmodel.AppViewModel
 import ui.viewmodel.CalendarViewModel
+import java.time.LocalDate
+import java.util.concurrent.atomic.AtomicInteger
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -31,7 +39,9 @@ class CalendarFragment : Fragment() {
     }
 
     private lateinit var binding : FragmentCalendarBinding
+    private lateinit var appViewModel : AppViewModel
     private lateinit var viewModel : CalendarViewModel
+    private lateinit var navController : NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,24 +55,50 @@ class CalendarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCalendarBinding.inflate(inflater, container, false)
-        //initViews()
-        initComponents()
+        binding = FragmentCalendarBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+        }
+        navController = findNavController(requireActivity(), R.id.nav_host)
+        appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
+        viewModel = ViewModelProvider(this)[CalendarViewModel::class.java]
+        initViews()
+        observeStates()
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        binding.lifecycleOwner = viewLifecycleOwner
-    }
-
     private fun initViews() {
-        binding.weekDayRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        initWeekDayRecyclerView()
     }
 
-    private fun initComponents() {
-        viewModel = ViewModelProvider(this)[CalendarViewModel::class.java]
-        viewModel.init()
+    private fun initWeekDayRecyclerView() {
+        binding.weekDayRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.weekDayRecyclerView.addItemDecoration(RecyclerViewItemDecoration(40))
+        binding.weekDayRecyclerView.adapter = WeekDayAdapter(onClickWeekDay(), moveWeek())
+    }
+
+    private fun onClickWeekDay() = { oldPosition: AtomicInteger, dayOfMonth: Int ->
+        resetOldUiOn(oldPosition)
+    }
+
+    private fun moveWeek() = {date : LocalDate, direction : Int ->
+        viewModel.loadWeekDays(date.plusWeeks(direction.toLong()))
+    }
+
+    private fun resetOldUiOn(oldPosition : AtomicInteger) {
+        val viewHolder = binding.weekDayRecyclerView.findViewHolderForAdapterPosition(oldPosition.get())
+        viewHolder?.let {
+            (it as WeekDayAdapter.WeekDayViewHolder).updateUiOnDefault()
+        }
+    }
+
+    private fun observeStates() {
+        observeWeekState()
+    }
+
+    private fun observeWeekState() {
+        viewModel.weekDaysState.observe(viewLifecycleOwner) {
+            (binding.weekDayRecyclerView.adapter as WeekDayAdapter).submit(it)
+        }
     }
 
 }

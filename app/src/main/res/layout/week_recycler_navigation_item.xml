@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="40dp"
+        android:layout_height="70dp">
+
+        <ImageButton
+            android:id="@+id/navigateImageButton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="@drawable/header_button_background"
+            android:importantForAccessibility="no"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_todo_torward"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/monthYearTextView" />
+
+    </FrameLayout>
+</layout>
+
+
+
+
+

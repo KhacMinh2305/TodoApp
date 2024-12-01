@@ -23,5 +23,9 @@ sealed class AppConstant {
         const val PATTERN_DATE = "dd/MM/yyyy"
         const val PATTERN_TIME = "HH:mm"
         const val MILLISECOND_IN_DAY = 86400000L
+        const val BACKWARD_TEMP_DOW = "TEMP_LEFT"
+        const val TOWARD_TEMP_DOW = "TEMP_RIGHT"
+        const val BACKWARD_TEMP_DAY = -1
+        const val TOWARD_TEMP_DAY = 0
     }
 }

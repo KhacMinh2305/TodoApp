@@ -1,8 +1,10 @@
 package ui.viewmodel
-import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import data.model.WeekDayItem
 import data.repo.TaskRepository
 import domain.DateTimeUseCase
 import kotlinx.coroutines.launch
@@ -14,25 +16,22 @@ class CalendarViewModel @Inject constructor(
     private val taskRepo : TaskRepository
 ) : ViewModel() {
 
-    private var initialized = false
+    private var weekDays = mutableListOf<LocalDate>()
 
-    private companion object {
-        val dateTimeUseCase = DateTimeUseCase()
+    private var _weekDaysState = MutableLiveData<List<WeekDayItem>>()
+    val weekDaysState : LiveData<List<WeekDayItem>> = _weekDaysState
+
+    init {
+        loadWeekDays(LocalDate.now())
     }
 
-    fun init() {
-        if(initialized) return
-        //loadCurrentWeek()
-        //loadTaskOnDay(LocalDate.now())
-        initialized = true
-    }
-
-    private fun loadCurrentWeek() {
+    fun loadWeekDays(dateInWeek : LocalDate) {
         viewModelScope.launch {
-            val currWeek = dateTimeUseCase.getWeekDays(LocalDate.now())
-            for (date in currWeek) {
-                Log.d("Result", "${date.dayOfWeek} : ${date.dayOfMonth}")
-            }
+            weekDays = DateTimeUseCase().getWeekDays(dateInWeek).toMutableList()
+            val weekDayItems = weekDays.map {
+                WeekDayItem(it.dayOfWeek.name.substring(0, 3), it.dayOfMonth, it.monthValue, it.year)
+            }.toMutableList()
+            _weekDaysState.value = weekDayItems
         }
     }
 }

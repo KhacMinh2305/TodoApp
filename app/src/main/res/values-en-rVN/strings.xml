@@ -14,7 +14,7 @@
     <string name="sun">Sun</string>
     <string name="recent_tasks">Recent tasks</string>
     <string name="about_the_task">About the task</string>
-    <string name="on_going">Ongoing</string>
+    <string name="on_going">Ongoing🔥</string>
     <string name="start_date">Start date</string>
     <string name="date_title">Start Date - End Date</string>
     <string name="end_date">End Date</string>
@@ -56,4 +56,5 @@
     <string name="not_finished">On Going</string>
     <string name="expired">Expired</string>
     <string name="finish_all_task">Congratulations! You have finished all tasks. Keep it up ! 🚀</string>
+    <string name="calender">Calender</string>
 </resources>

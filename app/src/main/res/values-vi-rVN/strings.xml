@@ -14,7 +14,7 @@
     <string name="sun">CN</string>
     <string name="recent_tasks">Nhiệm vụ gần đây</string>
     <string name="about_the_task">Thông tin nhiệm vụ</string>
-    <string name="on_going">Đang tiến hành</string>
+    <string name="on_going">Đang tiến hành🔥</string>
     <string name="start_date">Ngày bắt đầu</string>
     <string name="date_title">Ngày bắt đầu - Ngày kết thúc</string>
     <string name="end_date">Ngày kết thúc</string>
@@ -56,4 +56,5 @@
     <string name="not_finished">Đang diễn ra</string>
     <string name="expired">Hết hạn</string>
     <string name="finish_all_task">Chúc mừng ! Bạn đã hoàn thành nhiệm vụ hôm nay. Tiếp tục phát huy nhé ! 🚀</string>
+    <string name="calender">Lịch</string>
 </resources>
