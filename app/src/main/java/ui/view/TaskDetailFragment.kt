@@ -1,9 +1,11 @@
 package ui.view
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -74,6 +76,7 @@ class TaskDetailFragment : Fragment() {
 
     private fun setupListeners() {
         openSheet()
+
         turnBack()
     }
 
@@ -81,6 +84,44 @@ class TaskDetailFragment : Fragment() {
         binding.editButton.setOnClickListener {
             sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
+        updateTask()
+
+    }
+    private fun updateTask() {
+        binding.bottomSheet.createTaskButton.setOnClickListener {
+            Log.d("TaskDetailFragment", "Confirm button clicked")
+            val taskName = binding.bottomSheet.taskNameInput.text.toString()
+            val startDate = binding.bottomSheet.startDateInput.text.toString()
+            val endDate = binding.bottomSheet.endDateInput.text.toString()
+            val startTime = binding.bottomSheet.beginTimeInput.text.toString()
+            val endTime = binding.bottomSheet.endTimeInput.text.toString()
+            val description = binding.bottomSheet.descriptionInput.text.toString()
+
+            // Validate the input
+
+                viewModel.validateInput(
+                    context = requireContext(),
+                    taskName = taskName,
+                    startDate = startDate,
+                    endDate = endDate,
+                    startTime = startTime,
+                    endTime = endTime,
+                    taskDescription = description
+                )
+
+
+
+
+
+//            // Kiểm tra nếu dữ liệu hợp lệ, thực hiện update task
+//            if (isValidInput()) {
+//                // Gọi hàm cập nhật task từ ViewModel
+//            }
+        }
+    }
+
+    private fun isValidInput(): Boolean {
+        return true
     }
 
     private fun turnBack() {
