@@ -4,10 +4,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.todo.R
+import com.example.todo.databinding.CalendarTaskItemBinding
 import com.example.todo.databinding.TaskItemBinding
 import data.local.entity.Task
+import domain.DateTimeUseCase
 
-class TaskAdapter(val callback: (String) -> Unit) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(val layout : Int, val callback: (String) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
 
     companion object {
         val itemCallback = object : DiffUtil.ItemCallback<Task>() {
@@ -23,17 +27,35 @@ class TaskAdapter(val callback: (String) -> Unit) : RecyclerView.Adapter<TaskAda
 
     private val mAsync: AsyncListDiffer<Task> = AsyncListDiffer(this, itemCallback)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        return TaskViewHolder(TaskItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        if(layout == R.layout.task_item) {
+            return TaskViewHolder(TaskItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        }
+        return CalenderTaskViewHolder(CalendarTaskItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mAsync.currentList[position]
         item?.let { task ->
-            holder.bind(task)
-            holder.itemView.setOnClickListener {
-                callback.invoke(task.id)
+            if(layout == R.layout.task_item) {
+                bindDataForTaskItemLayout(holder as TaskViewHolder, item)
+                return
             }
+            bindDataForCalenderTaskLayout(holder as CalenderTaskViewHolder, item)
+        }
+    }
+
+    private fun bindDataForTaskItemLayout(holder: TaskViewHolder, item : Task) {
+        holder.bind(item)
+        holder.itemView.setOnClickListener {
+            callback.invoke(item.id)
+        }
+    }
+
+    private fun bindDataForCalenderTaskLayout(holder: CalenderTaskViewHolder, item : Task) {
+        holder.bind(item)
+        holder.itemView.setOnClickListener {
+            callback.invoke(item.id)
         }
     }
 
@@ -49,9 +71,16 @@ class TaskAdapter(val callback: (String) -> Unit) : RecyclerView.Adapter<TaskAda
         mAsync.submitList(displayList)
     }
 
-    class TaskViewHolder(private val binding: TaskItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TaskViewHolder(private val binding: TaskItemBinding) : ViewHolder(binding.root) {
         fun bind(item: Task) {
             binding.task = item
+        }
+    }
+
+    class CalenderTaskViewHolder(private val binding: CalendarTaskItemBinding) : ViewHolder(binding.root) {
+        fun bind(item: Task) {
+            binding.task = item
+            binding.dateTime = DateTimeUseCase()
         }
     }
 }

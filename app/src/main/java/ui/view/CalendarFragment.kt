@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todo.R
 import com.example.todo.databinding.FragmentCalendarBinding
 import dagger.hilt.android.AndroidEntryPoint
+import ui.adapter.TaskAdapter
 import ui.adapter.WeekDayAdapter
 import ui.custom.RecyclerViewItemDecoration
 import ui.viewmodel.AppViewModel
@@ -68,12 +69,21 @@ class CalendarFragment : Fragment() {
 
     private fun initViews() {
         initWeekDayRecyclerView()
+        initTaskRecyclerView()
     }
 
     private fun initWeekDayRecyclerView() {
         binding.weekDayRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.weekDayRecyclerView.addItemDecoration(RecyclerViewItemDecoration(40))
         binding.weekDayRecyclerView.adapter = WeekDayAdapter(onClickWeekDay(), moveWeek())
+    }
+
+    private fun initTaskRecyclerView() {
+        binding.taskRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.taskRecyclerView.addItemDecoration(RecyclerViewItemDecoration(30))
+        binding.taskRecyclerView.adapter = TaskAdapter(R.layout.calendar_task_item) {
+            println("Move to task detail fragment : $it")
+        }
     }
 
     private fun onClickWeekDay() = { oldPosition: AtomicInteger, dayOfMonth: Int ->
@@ -93,11 +103,18 @@ class CalendarFragment : Fragment() {
 
     private fun observeStates() {
         observeWeekState()
+        observeTasksState()
     }
 
     private fun observeWeekState() {
         viewModel.weekDaysState.observe(viewLifecycleOwner) {
             (binding.weekDayRecyclerView.adapter as WeekDayAdapter).submit(it)
+        }
+    }
+
+    private fun observeTasksState() {
+        viewModel.taskState.observe(viewLifecycleOwner) {
+            (binding.taskRecyclerView.adapter as TaskAdapter).submit(it)
         }
     }
 

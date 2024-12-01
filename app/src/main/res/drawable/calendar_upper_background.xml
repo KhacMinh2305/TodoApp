@@ -3,7 +3,9 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:bottomLeftRadius="40dp" android:bottomRightRadius="40dp"/>
-            <solid android:color="@color/card_color"/>
+            <gradient android:startColor="@color/super_light_pink"
+                android:endColor="@color/super_light_turquoise"
+                android:angle="-90"/>
         </shape>
     </item>
 </selector>

@@ -1,123 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="15dp"
-    android:background="@drawable/task_list_item_background"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="dateTime"
+            type="domain.DateTimeUseCase" />
+        <variable
+            name="task"
+            type="data.local.entity.Task" />
+    </data>
 
-    <TextView
-        android:id="@+id/startDate"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="1/12/2024"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:cardBackgroundColor="@color/card_color"
+        app:cardElevation="3dp"
+        app:strokeColor="@color/transparent"
+        app:cardCornerRadius="15dp">
 
-    <View
-        android:layout_width="5dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/pink"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/endDate"
-        app:layout_constraintEnd_toStartOf="@+id/coordinatorLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startDate" />
-
-    <TextView
-        android:id="@+id/endDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="2/12/2024" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/coordinatorLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:background="@drawable/calender_inner_item_pink_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/startDate"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/deleteButton"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:importantForAccessibility="no"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:padding="15dp"
-            android:background="@drawable/list_task_item_cancel_background"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_todo_cancel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/priorityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:lineHeight="25dp"
-            android:textSize="18sp"
-            android:textColor="@color/pink"
-            android:textStyle="bold"
-            android:background="@drawable/calender_inner_item_pink_background"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            app:layout_constraintEnd_toStartOf="@+id/deleteButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Medium" />
+            <TextView
+                android:id="@+id/startDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1/12/2024"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="@{dateTime.convertLongToDateString(task.startDate)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/taskName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:lineHeight="25dp"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/priorityTextView"
-            tools:text="Design by Doan Khac Minh" />
+            <View
+                android:id="@+id/indicator"
+                android:layout_width="5dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/pink"
+                android:layout_marginEnd="15dp"
+                app:calenderIndicatorItemColor="@{task.priority}"
+                app:layout_constraintBottom_toTopOf="@+id/endDate"
+                app:layout_constraintEnd_toStartOf="@+id/innerContainer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/startDate" />
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:alpha="0.6"
-            android:lineHeight="25dp"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskName"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="14:00-15:00" />
+            <TextView
+                android:id="@+id/endDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="@{dateTime.convertLongToDateString(task.endDate)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="2/12/2024" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/innerContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                app:calenderInnerItemBackground="@{task.priority}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/startDate"
+                app:layout_constraintTop_toTopOf="parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageButton
+                    android:id="@+id/deleteButton"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:padding="10dp"
+                    android:background="@drawable/list_task_item_cancel_background"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_todo_cancel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/priorityTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:lineHeight="25dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/pink"
+                    android:textStyle="bold"
+                    app:taskPriority="@{task.priority}"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Medium" />
+
+                <TextView
+                    android:id="@+id/taskName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:lineHeight="25dp"
+                    android:text="@{task.name}"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/priorityTextView"
+                    tools:text="Design by Doan Khac Minh" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:alpha="0.6"
+                    android:lineHeight="25dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:startTime="@{task.startTime}"
+                    app:endTime="@{task.endTime}"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/taskName"
+                    tools:text="14:00-15:00" />
+
+                <TextView
+                    android:id="@+id/stateTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:lineHeight="25dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="15dp"
+                    app:finishState="@{task.state}"
+                    android:layout_marginStart="15dp"
+                    android:gravity="end|center_vertical"
+                    app:layout_constraintStart_toEndOf="@id/time"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/taskName"
+                    tools:text="Finished" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

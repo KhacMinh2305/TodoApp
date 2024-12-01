@@ -13,5 +13,7 @@
     <declare-styleable name="ui">
         <attr name="colorPriority" format="integer"/>"
         <attr name="backGroundPriority" format="integer"/>
+        <attr name="calenderInnerItemBackground" format="integer"/>
+        <attr name="calenderIndicatorItemColor" format="integer"/>
     </declare-styleable>
 </resources>

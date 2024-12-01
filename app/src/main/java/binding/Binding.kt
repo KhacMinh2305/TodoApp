@@ -1,4 +1,5 @@
 package binding
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -26,20 +27,30 @@ object Binding {
         view.text = text
     }
 
+    @BindingAdapter(value = ["startTime", "endTime"], requireAll = true)
+    @JvmStatic
+    fun bindOnlyTimeText(view: TextView, startTime: String, endTime: String) {
+        val text = "$startTime -- $endTime"
+        view.text = text
+    }
+
     @BindingAdapter("taskPriority")
     @JvmStatic
     fun bindTaskPriority(view: TextView, taskPriority: Int) {
         when(taskPriority) {
             AppConstant.PRIORITY_LOW -> {
                 view.setTextColor(view.resources.getColor(R.color.low, null))
+                view.setBackgroundResource(R.drawable.calender_inner_item_pink_background)
                 view.setText(R.string.low)
             }
             AppConstant.PRIORITY_MEDIUM -> {
                 view.setTextColor(view.resources.getColor(R.color.medium, null))
+                view.setBackgroundResource(R.drawable.calender_inner_item_yellow_background)
                 view.setText(R.string.medium)
             }
             AppConstant.PRIORITY_HIGH -> {
                 view.setTextColor(view.resources.getColor(R.color.pink, null))
+                view.setBackgroundResource(R.drawable.calender_inner_item_pink_background)
                 view.setText(R.string.high)
             }
         }
@@ -76,6 +87,38 @@ object Binding {
             }
             AppConstant.PRIORITY_HIGH -> {
                 view.setBackgroundColor(view.resources.getColor(R.color.super_light_pink, null))
+            }
+        }
+    }
+
+    @BindingAdapter("calenderInnerItemBackground")
+    @JvmStatic
+    fun bindInnerCalenderTaskView(view: ConstraintLayout, priority: Int) {
+        when(priority) {
+            AppConstant.PRIORITY_LOW -> {
+                view.setBackgroundResource(R.drawable.calender_inner_item_green_background)
+            }
+            AppConstant.PRIORITY_MEDIUM -> {
+                view.setBackgroundResource(R.drawable.calender_inner_item_yellow_background)
+            }
+            AppConstant.PRIORITY_HIGH -> {
+                view.setBackgroundResource(R.drawable.calender_inner_item_pink_background)
+            }
+        }
+    }
+
+    @BindingAdapter("calenderIndicatorItemColor")
+    @JvmStatic
+    fun bindIndicatorCalenderTaskView(view: View, priority: Int) {
+        when(priority) {
+            AppConstant.PRIORITY_LOW -> {
+                view.setBackgroundColor(view.resources.getColor(R.color.low, null))
+            }
+            AppConstant.PRIORITY_MEDIUM -> {
+                view.setBackgroundColor(view.resources.getColor(R.color.medium, null))
+            }
+            AppConstant.PRIORITY_HIGH -> {
+                view.setBackgroundColor(view.resources.getColor(R.color.pink, null))
             }
         }
     }
