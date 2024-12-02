@@ -11,13 +11,13 @@
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" >
         <action
-            android:id="@+id/action_calendarFragment_to_taskDetailFragment2"
-            app:destination="@id/taskDetailFragment2"
+            android:id="@+id/action_calendarFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment"
             app:restoreState="true"/>
     </fragment>
 
     <fragment
-        android:id="@+id/taskDetailFragment2"
+        android:id="@+id/taskDetailFragment"
         android:name="ui.view.TaskDetailFragment"
         android:label="TaskDetailFragment" />
 </navigation>

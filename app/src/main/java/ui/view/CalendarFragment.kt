@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,13 +13,13 @@ import com.example.todo.R
 import com.example.todo.databinding.FragmentCalendarBinding
 import config.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import ui.adapter.TaskAdapter
 import ui.adapter.WeekDayAdapter
 import ui.custom.RecyclerViewItemDecoration
 import ui.viewmodel.AppViewModel
 import ui.viewmodel.CalendarViewModel
 import java.time.LocalDate
-import java.util.concurrent.atomic.AtomicInteger
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -76,14 +77,14 @@ class CalendarFragment : Fragment() {
     private fun initWeekDayRecyclerView() {
         binding.weekDayRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.weekDayRecyclerView.addItemDecoration(RecyclerViewItemDecoration(40))
-        binding.weekDayRecyclerView.adapter = WeekDayAdapter(onClickWeekDay(), moveWeek())
+        binding.weekDayRecyclerView.adapter = WeekDayAdapter(viewModel._currentSelectedDateIndex, onClickWeekDay(), moveWeek())
     }
 
     private fun initTaskRecyclerView() {
         binding.taskRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.taskRecyclerView.addItemDecoration(RecyclerViewItemDecoration(30))
         binding.taskRecyclerView.adapter = TaskAdapter(R.layout.calendar_task_item) {
-            navController.navigate(R.id.action_calendarFragment_to_taskDetailFragment2, wrapDataForNavigation(it))
+            navController.navigate(R.id.action_calendarFragment_to_taskDetailFragment, wrapDataForNavigation(it))
         }
     }
 
@@ -91,17 +92,18 @@ class CalendarFragment : Fragment() {
         putString(AppConstant.TASK_ID_TAG, id)
     }
 
-    private fun onClickWeekDay() = { oldPosition: AtomicInteger, date: LocalDate ->
+    private fun onClickWeekDay() = { oldPosition: Int, newPosition : Int, date: LocalDate ->
         resetOldUiOn(oldPosition)
         viewModel.loadTasks(date)
+        viewModel._currentSelectedDateIndex = newPosition
     }
 
     private fun moveWeek() = {date : LocalDate, direction : Int ->
         viewModel.loadWeekDays(date.plusWeeks(direction.toLong()))
     }
 
-    private fun resetOldUiOn(oldPosition : AtomicInteger) {
-        val viewHolder = binding.weekDayRecyclerView.findViewHolderForAdapterPosition(oldPosition.get())
+    private fun resetOldUiOn(oldPosition : Int) {
+        val viewHolder = binding.weekDayRecyclerView.findViewHolderForAdapterPosition(oldPosition)
         viewHolder?.let {
             (it as WeekDayAdapter.WeekDayViewHolder).updateUiOnDefault()
         }
@@ -111,6 +113,25 @@ class CalendarFragment : Fragment() {
         observeWeekState()
         observeTasksState()
         observeReloadOnFinishTaskState()
+        observeReloadOnAddingTaskState()
+    }
+
+    private fun collectData(func : suspend () -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            func.invoke()
+        }
+    }
+
+    private fun observeWeekState() = collectData {
+        viewModel.weekDaysState.collect {
+            (binding.weekDayRecyclerView.adapter as WeekDayAdapter).submit(it)
+        }
+    }
+
+    private fun observeTasksState() = collectData {
+        viewModel.taskState.collect {
+            (binding.taskRecyclerView.adapter as TaskAdapter).submit(it)
+        }
     }
 
     private fun observeReloadOnFinishTaskState() {
@@ -123,15 +144,18 @@ class CalendarFragment : Fragment() {
         }
     }
 
-    private fun observeWeekState() {
-        viewModel.weekDaysState.observe(viewLifecycleOwner) {
-            (binding.weekDayRecyclerView.adapter as WeekDayAdapter).submit(it)
-        }
-    }
-
-    private fun observeTasksState() {
-        viewModel.taskState.observe(viewLifecycleOwner) {
-            (binding.taskRecyclerView.adapter as TaskAdapter).submit(it)
+    private fun observeReloadOnAddingTaskState() {
+        appViewModel.reLoadCalenderData.observe(viewLifecycleOwner) {
+            viewModel.loadTasks(it)
         }
     }
 }
+
+/**TODO:
+ * Bug :
+ *      Bug 1 : optimization function cause error when checking date to refresh data for adding task
+ *      because of race condition (the load require when data loading is still in processing => error when trying
+ *      retrieve data to load for comparing to reload)
+ *
+ *      Bug 2 : When creating task , the data for current selected date must be load again , not today
+ * */

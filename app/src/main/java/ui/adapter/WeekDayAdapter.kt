@@ -15,9 +15,9 @@ import config.AppConstant.Companion.TOWARD_TEMP_DAY
 import config.AppConstant.Companion.TOWARD_TEMP_DOW
 import data.model.WeekDayItem
 import java.time.LocalDate
-import java.util.concurrent.atomic.AtomicInteger
 
-class WeekDayAdapter(private val onClickCallback : (AtomicInteger, LocalDate) -> Unit,
+class WeekDayAdapter(
+    initSelectedIndex : Int, private val onClickCallback : (Int, Int, LocalDate) -> Unit,
     private val moveWeekClickCallback : (LocalDate, Int) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
 
     companion object {
@@ -37,10 +37,10 @@ class WeekDayAdapter(private val onClickCallback : (AtomicInteger, LocalDate) ->
         })
     }
 
-    private var currentSelectedIndex = AtomicInteger(LocalDate.now().dayOfWeek.value)
+    private var currentSelectedIndex = if (initSelectedIndex <= 0) LocalDate.now().dayOfWeek.value else initSelectedIndex
 
     fun getCurrentDay() : LocalDate {
-        val currentDay = mAsync.currentList[currentSelectedIndex.get()]
+        val currentDay = mAsync.currentList[currentSelectedIndex]
         return LocalDate.of(currentDay.year, currentDay.month, currentDay.dayOfMonth)
     }
 
@@ -71,7 +71,7 @@ class WeekDayAdapter(private val onClickCallback : (AtomicInteger, LocalDate) ->
 
     private fun bindNavigationItem(holder : NavigationViewHolder, position : Int) {
         holder.binding.navigateImageButton.setOnClickListener {
-            val selectedDate = mAsync.currentList[currentSelectedIndex.get()]
+            val selectedDate = mAsync.currentList[currentSelectedIndex]
             val localDate = LocalDate.of(selectedDate.year, selectedDate.month, selectedDate.dayOfMonth)
             val direction = if(position == 0) BACKWARD else TOWARD
             moveWeekClickCallback.invoke(localDate, direction)
@@ -85,13 +85,13 @@ class WeekDayAdapter(private val onClickCallback : (AtomicInteger, LocalDate) ->
 
     private fun bindDayItem(holder : WeekDayViewHolder, item: WeekDayItem, position : Int) {
         holder.bind(item)
-        if(position == currentSelectedIndex.get()) holder.updateUiOnSelected()
+        if(position == currentSelectedIndex) holder.updateUiOnSelected()
         holder.itemView.setOnClickListener {
-            if(currentSelectedIndex.get() == position) return@setOnClickListener
+            if(currentSelectedIndex == position) return@setOnClickListener
             holder.updateUiOnSelected()
             val clickedDate = LocalDate.of(item.year, item.month, item.dayOfMonth)
-            onClickCallback.invoke(currentSelectedIndex, clickedDate)
-            currentSelectedIndex.set(position)
+            onClickCallback.invoke(currentSelectedIndex, position, clickedDate)
+            currentSelectedIndex = position
         }
     }
 
@@ -102,7 +102,7 @@ class WeekDayAdapter(private val onClickCallback : (AtomicInteger, LocalDate) ->
         mAsync.submitList(listItem)
     }
 
-    class WeekDayViewHolder(val binding : WeekDayItemBinding) : ViewHolder(binding.root) {
+     class WeekDayViewHolder(val binding : WeekDayItemBinding) : ViewHolder(binding.root) {
         fun bind(item : WeekDayItem) {
             binding.day = item
         }

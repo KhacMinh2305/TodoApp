@@ -9,6 +9,8 @@ import data.model.WeekDayItem
 import data.repo.ProfileRepository
 import data.repo.TaskRepository
 import domain.DateTimeUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
@@ -19,11 +21,13 @@ class CalendarViewModel @Inject constructor(
     private val taskRepo : TaskRepository
 ) : ViewModel() {
 
-    private var _taskState = MutableLiveData<List<Task>>()
-    val taskState : LiveData<List<Task>> = _taskState
+    var _currentSelectedDateIndex = 0
 
-    private var _weekDaysState = MutableLiveData<List<WeekDayItem>>()
-    val weekDaysState : LiveData<List<WeekDayItem>> = _weekDaysState
+    private var _taskState = MutableStateFlow<List<Task>>(emptyList())
+    val taskState : StateFlow<List<Task>> = _taskState
+
+    private var _weekDaysState = MutableStateFlow<List<WeekDayItem>>(emptyList())
+    val weekDaysState : StateFlow<List<WeekDayItem>> = _weekDaysState
 
     init {
         loadWeekDays(LocalDate.now())
@@ -43,7 +47,7 @@ class CalendarViewModel @Inject constructor(
     fun loadTasks(date: LocalDate) {
         viewModelScope.launch {
             _taskState.value = taskRepo.getTaskByDate(profileRepo.getUserId()!!,
-                DateTimeUseCase().convertDateIntoLong(date))?.toList()
+                DateTimeUseCase().convertDateIntoLong(date))?.toList() ?: emptyList()
         }
     }
 }

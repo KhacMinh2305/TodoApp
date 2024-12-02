@@ -22,8 +22,8 @@ class CreatingTaskViewModel @Inject constructor(
     private val taskRepository: TaskRepository
 ) : ViewModel() {
 
-    private var _addingTaskState = MutableLiveData<Boolean>()
-    val addingTaskState : LiveData<Boolean> = _addingTaskState
+    private var _addingTaskState = MutableLiveData<LocalDate>()
+    val addingTaskState : LiveData<LocalDate> = _addingTaskState
 
     private var _messageState = MutableLiveData<String>()
     val messageState : LiveData<String> = _messageState
@@ -48,6 +48,8 @@ class CreatingTaskViewModel @Inject constructor(
                         endDate : String, beginTime : String,
                         endTime : String, description : String,
                         priority : Int) {
+        val isValid = validate(taskName, startDate, endDate, beginTime, endTime, description) && validatePriority(priority)
+        if(!isValid) return
         viewModelScope.launch {
             profileRepo.getUserId()?.let {
                 val task = createTaskFromInput(taskName, startDate, endDate,
@@ -55,7 +57,7 @@ class CreatingTaskViewModel @Inject constructor(
                 when(taskRepository.addTask(task)) {
                     is Result.Success -> {
                         _messageState.value = AppMessage.RESULT_ADD_TASK_SUCCESS
-                        _addingTaskState.value = true
+                        _addingTaskState.value = LocalDate.now()
                     }
                     is Result.Error -> {
                         _messageState.value = AppMessage.RESULT_ADD_TASK_FAILED
@@ -64,5 +66,28 @@ class CreatingTaskViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun validateEmptyInput(input: String): Boolean {
+        if (input.isEmpty()) {
+            _messageState.value = AppMessage.EMPTY_INPUT
+            return false
+        }
+        return true
+    }
+
+    private fun validatePriority(priority : Int) : Boolean {
+        if(priority == 0) {
+            _messageState.value = AppMessage.EMPTY_INPUT
+            return false
+        }
+        return true
+    }
+
+    private fun validate(vararg inputs : String) : Boolean {
+        inputs.forEach {
+            if(!validateEmptyInput(it)) return false
+        }
+        return true
     }
 }

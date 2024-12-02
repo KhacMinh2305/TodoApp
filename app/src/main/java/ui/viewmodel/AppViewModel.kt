@@ -9,6 +9,7 @@ import data.repo.ProfileRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,6 +38,9 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
 
     private val _updateOnFinishTaskState = MutableLiveData<Boolean>()
     val updateOnFinishTaskState : LiveData<Boolean> = _updateOnFinishTaskState
+
+    private val _reLoadCalenderData = MutableLiveData<LocalDate>()
+    val reLoadCalenderData : LiveData<LocalDate> = _reLoadCalenderData
 
     init {
         viewModelScope.launch {
@@ -73,6 +77,10 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
 
     fun notifyLoadedHomeData() {
         _loadHomeData.value = false
+    }
+
+    fun notifyReloadCalenderData(dateToReload : LocalDate) {
+        _reLoadCalenderData.value = dateToReload
     }
 
     fun notifySplashFinished() {

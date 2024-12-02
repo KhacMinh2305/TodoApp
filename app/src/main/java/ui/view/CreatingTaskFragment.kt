@@ -17,7 +17,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import config.AppConstant
-import config.AppMessage
 import dagger.hilt.android.AndroidEntryPoint
 import domain.DateTimeUseCase
 import ui.viewmodel.AppViewModel
@@ -107,12 +106,9 @@ class CreatingTaskFragment : Fragment() {
     }
 
     private fun observeAddingTaskState() {
-        viewModel.addingTaskState.observe(viewLifecycleOwner) { // co van de
-            println("Da nhan duoc tin hieu tu CreatingFragmentViewModel")
-            if(it) {
-                println("Nhac Main Activity ra lenh load lai task o man hinh Home")
-                appViewModel.notifyReloadHomeData()
-            }
+        viewModel.addingTaskState.observe(viewLifecycleOwner) {
+            appViewModel.notifyReloadHomeData()
+            appViewModel.notifyReloadCalenderData(it)
         }
     }
 
@@ -164,30 +160,6 @@ class CreatingTaskFragment : Fragment() {
         }
     }
 
-    // TODO: move check logic to ViewModel
-    private fun validateEmptyInput(input: String): Boolean {
-        if (input.isEmpty()) {
-            appViewModel.receiveMessage(AppMessage.EMPTY_INPUT)
-            return false
-        }
-        return true
-    }
-
-    private fun validatePriority(priority : Int) : Boolean {
-        if(priority == 0) {
-            appViewModel.receiveMessage(AppMessage.EMPTY_INPUT)
-            return false
-        }
-        return true
-    }
-
-    private fun validate(vararg inputs : String) : Boolean {
-        inputs.forEach {
-            if(!validateEmptyInput(it)) return false
-        }
-        return true
-    }
-
     private fun addTask() {
         val taskName = binding.taskName.text.toString()
         val startDate = binding.startDate.text.toString()
@@ -201,9 +173,6 @@ class CreatingTaskFragment : Fragment() {
             R.id.lowPriority -> AppConstant.PRIORITY_LOW
             else -> 0
         }
-        (validate(taskName, startDate, endDate, beginTime, endTime, description) && validatePriority(priority)).also {
-                if(!it) return
-            }
         viewModel.addTask(taskName, startDate, endDate, beginTime, endTime, description, priority)
     }
 
