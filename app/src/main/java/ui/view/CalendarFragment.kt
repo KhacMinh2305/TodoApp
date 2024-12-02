@@ -10,6 +10,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todo.R
 import com.example.todo.databinding.FragmentCalendarBinding
+import config.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
 import ui.adapter.TaskAdapter
 import ui.adapter.WeekDayAdapter
@@ -82,12 +83,17 @@ class CalendarFragment : Fragment() {
         binding.taskRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.taskRecyclerView.addItemDecoration(RecyclerViewItemDecoration(30))
         binding.taskRecyclerView.adapter = TaskAdapter(R.layout.calendar_task_item) {
-            println("Move to task detail fragment : $it")
+            navController.navigate(R.id.action_calendarFragment_to_taskDetailFragment2, wrapDataForNavigation(it))
         }
     }
 
-    private fun onClickWeekDay() = { oldPosition: AtomicInteger, dayOfMonth: Int ->
+    private fun wrapDataForNavigation(id : String) = Bundle().apply {
+        putString(AppConstant.TASK_ID_TAG, id)
+    }
+
+    private fun onClickWeekDay() = { oldPosition: AtomicInteger, date: LocalDate ->
         resetOldUiOn(oldPosition)
+        viewModel.loadTasks(date)
     }
 
     private fun moveWeek() = {date : LocalDate, direction : Int ->
@@ -104,6 +110,17 @@ class CalendarFragment : Fragment() {
     private fun observeStates() {
         observeWeekState()
         observeTasksState()
+        observeReloadOnFinishTaskState()
+    }
+
+    private fun observeReloadOnFinishTaskState() {
+        appViewModel.updateOnFinishTaskState.observe(viewLifecycleOwner) {
+            val isToday = (binding.weekDayRecyclerView.adapter as WeekDayAdapter)
+                .getCurrentDay().isEqual(LocalDate.now())
+            if(isToday) {
+                viewModel.loadTasks(LocalDate.now())
+            }
+        }
     }
 
     private fun observeWeekState() {
@@ -117,5 +134,4 @@ class CalendarFragment : Fragment() {
             (binding.taskRecyclerView.adapter as TaskAdapter).submit(it)
         }
     }
-
 }

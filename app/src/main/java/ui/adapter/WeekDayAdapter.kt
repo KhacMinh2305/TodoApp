@@ -17,7 +17,7 @@ import data.model.WeekDayItem
 import java.time.LocalDate
 import java.util.concurrent.atomic.AtomicInteger
 
-class WeekDayAdapter(private val onClickCallback : (AtomicInteger, Int) -> Unit,
+class WeekDayAdapter(private val onClickCallback : (AtomicInteger, LocalDate) -> Unit,
     private val moveWeekClickCallback : (LocalDate, Int) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
 
     companion object {
@@ -38,6 +38,11 @@ class WeekDayAdapter(private val onClickCallback : (AtomicInteger, Int) -> Unit,
     }
 
     private var currentSelectedIndex = AtomicInteger(LocalDate.now().dayOfWeek.value)
+
+    fun getCurrentDay() : LocalDate {
+        val currentDay = mAsync.currentList[currentSelectedIndex.get()]
+        return LocalDate.of(currentDay.year, currentDay.month, currentDay.dayOfMonth)
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if(position == 0 || position == mAsync.currentList.size - 1) 0 else 1
@@ -84,7 +89,8 @@ class WeekDayAdapter(private val onClickCallback : (AtomicInteger, Int) -> Unit,
         holder.itemView.setOnClickListener {
             if(currentSelectedIndex.get() == position) return@setOnClickListener
             holder.updateUiOnSelected()
-            onClickCallback.invoke(currentSelectedIndex, item.dayOfMonth)
+            val clickedDate = LocalDate.of(item.year, item.month, item.dayOfMonth)
+            onClickCallback.invoke(currentSelectedIndex, clickedDate)
             currentSelectedIndex.set(position)
         }
     }

@@ -37,7 +37,6 @@ class HomeFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-        val TAG = "HOME_FRAGMENT"
     }
 
     private lateinit var binding: FragmentHomeBinding
@@ -97,6 +96,15 @@ class HomeFragment : Fragment() {
         observeWeekProgressState()
         observeTodayTaskState()
         observeMessageState()
+        observeUpdateState()
+    }
+
+    private fun observeUpdateState() {
+        viewModel.notifyOtherScreenUpdate.observe(viewLifecycleOwner) {
+            if(it) {
+                appViewModel.notifyFinishedTask()
+            }
+        }
     }
 
     private fun observeMessageState() {
@@ -142,5 +150,3 @@ class HomeFragment : Fragment() {
         }
     }
 }
-
-//TODO : 1 la Cache trong ham Task sai

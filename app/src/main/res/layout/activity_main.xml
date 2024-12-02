@@ -37,6 +37,7 @@
             app:backgroundTint="@color/transparent"
             app:fabAlignmentMode="center"
             app:elevation="4dp"
+            app:hideOnScroll="true"
             android:visibility="@{viewModel.bottomNavState ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

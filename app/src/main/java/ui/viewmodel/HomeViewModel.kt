@@ -62,6 +62,9 @@ class HomeViewModel @Inject constructor(
     private var _loadingDataSuccessState = MutableLiveData<Boolean>()
     val loadingDataSuccessState : LiveData<Boolean> = _loadingDataSuccessState
 
+    private var _notifyOtherScreenUpdate = MutableLiveData<Boolean>()
+    val notifyOtherScreenUpdate : LiveData<Boolean> = _notifyOtherScreenUpdate
+
     fun loadData() {
         loadUserName()
         viewModelScope.launch {
@@ -69,7 +72,6 @@ class HomeViewModel @Inject constructor(
             loadTodayTasks()
             loadOnGoingTaskToday()
             emitOnGoingStates()
-
             _loadingDataSuccessState.value = true
         }
     }
@@ -144,7 +146,8 @@ class HomeViewModel @Inject constructor(
         }
         onGoingListTask.removeAt(onGoingListTask.size - 1)
         emitOnGoingStates()
-        //TODO : Notify AppViewModel to update data in Calendar (if must) and Profile task
+        _notifyOtherScreenUpdate.value = true
+
     }
 
     fun finishTask() {

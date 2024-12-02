@@ -8,6 +8,7 @@
         <attr name="endTime" format="string"/>
         <attr name="startDate" format="string"/>
         <attr name="endDate" format="string"/>
+        <attr name="onGoingPriorityBackground" format="integer"/>
     </declare-styleable>
 
     <declare-styleable name="ui">

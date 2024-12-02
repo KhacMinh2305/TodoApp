@@ -35,6 +35,9 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
     private val _loadHomeData = MutableLiveData<Boolean>()
     val loadHomeData : LiveData<Boolean> = _loadHomeData
 
+    private val _updateOnFinishTaskState = MutableLiveData<Boolean>()
+    val updateOnFinishTaskState : LiveData<Boolean> = _updateOnFinishTaskState
+
     init {
         viewModelScope.launch {
             if(profileRepo.getUiMode() == AppConstant.MODE_DARK) _themeState.value = true
@@ -74,6 +77,10 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
 
     fun notifySplashFinished() {
         _splashState.value = false
+    }
+
+    fun notifyFinishedTask() {
+        _updateOnFinishTaskState.value = true
     }
 
     fun showBottomNav( visibility : Boolean) {
