@@ -1,4 +1,5 @@
 package ui.viewmodel
+import android.util.Range
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,8 +40,8 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
     private val _updateOnFinishTaskState = MutableLiveData<Boolean>()
     val updateOnFinishTaskState : LiveData<Boolean> = _updateOnFinishTaskState
 
-    private val _reLoadCalenderData = MutableLiveData<LocalDate>()
-    val reLoadCalenderData : LiveData<LocalDate> = _reLoadCalenderData
+    private val _reLoadCalenderData = MutableLiveData<Range<LocalDate>>()
+    val reLoadCalenderData : LiveData<Range<LocalDate>> = _reLoadCalenderData
 
     init {
         viewModelScope.launch {
@@ -79,7 +80,7 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
         _loadHomeData.value = false
     }
 
-    fun notifyReloadCalenderData(dateToReload : LocalDate) {
+    fun notifyReloadCalenderData(dateToReload : Range<LocalDate>) {
         _reLoadCalenderData.value = dateToReload
     }
 

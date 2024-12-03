@@ -1,5 +1,6 @@
 package domain
 import android.annotation.SuppressLint
+import android.util.Range
 import androidx.core.util.rangeTo
 import config.AppConstant
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,13 @@ class DateTimeUseCase {
     fun convertDateStringIntoLong(input : String) : Long {
         val date = SimpleDateFormat(AppConstant.PATTERN_DATE).parse(input)
         return date!!.time
+    }
+
+    fun getDateRangeFromStrings(begin : String, end : String) : Range<LocalDate> {
+        val beginDate = LocalDate.parse(begin, DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
+        val endDate = LocalDate.parse(end, DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
+        val range = beginDate.rangeTo(endDate)
+        return range
     }
 
     @SuppressLint("SimpleDateFormat")

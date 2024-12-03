@@ -1,4 +1,5 @@
 package ui.viewmodel
+import android.util.Range
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,9 @@ class CreatingTaskViewModel @Inject constructor(
 
     private var _addingTaskState = MutableLiveData<LocalDate>()
     val addingTaskState : LiveData<LocalDate> = _addingTaskState
+
+    private var _updateCalenderState = MutableLiveData<Range<LocalDate>>()
+    val updateCalenderState : LiveData<Range<LocalDate>> = _updateCalenderState
 
     private var _messageState = MutableLiveData<String>()
     val messageState : LiveData<String> = _messageState
@@ -58,6 +62,7 @@ class CreatingTaskViewModel @Inject constructor(
                     is Result.Success -> {
                         _messageState.value = AppMessage.RESULT_ADD_TASK_SUCCESS
                         _addingTaskState.value = LocalDate.now()
+                        emitReloadCalenderDataState(startDate, endDate)
                     }
                     is Result.Error -> {
                         _messageState.value = AppMessage.RESULT_ADD_TASK_FAILED
@@ -66,6 +71,11 @@ class CreatingTaskViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun emitReloadCalenderDataState(startDate : String, endDate : String) {
+        val dateTimeUseCase = DateTimeUseCase()
+        _updateCalenderState.value = dateTimeUseCase.getDateRangeFromStrings(startDate, endDate)
     }
 
     private fun validateEmptyInput(input: String): Boolean {

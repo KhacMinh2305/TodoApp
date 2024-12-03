@@ -46,4 +46,7 @@ interface TaskDao {
 
     @Insert(entity = Task::class, onConflict = OnConflictStrategy.REPLACE)
     fun addTask(task : Task)
+
+    @Query("DELETE FROM task WHERE id = :id")
+    fun deleteTask(id : String)
 }

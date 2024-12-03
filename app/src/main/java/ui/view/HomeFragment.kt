@@ -84,10 +84,12 @@ class HomeFragment : Fragment() {
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.todayTaskRecyclerView)
         binding.todayTaskRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.todayTaskRecyclerView.adapter = TaskAdapter(R.layout.task_item) {
-            appViewModel.showBottomNav(false)
-            navController.navigate(R.id.action_homeFragment_to_taskDetailFragment, wrapNavigationData(it))
-        }
+        binding.todayTaskRecyclerView.adapter = TaskAdapter(R.layout.task_item, onClickItem(), null)
+    }
+
+    private fun onClickItem() = { id : String ->
+        appViewModel.showBottomNav(false)
+        navController.navigate(R.id.action_homeFragment_to_taskDetailFragment, wrapNavigationData(id))
     }
 
     private fun observeStates() {

@@ -11,7 +11,8 @@ import com.example.todo.databinding.TaskItemBinding
 import data.local.entity.Task
 import domain.DateTimeUseCase
 
-class TaskAdapter(val layout : Int, val callback: (String) -> Unit) : RecyclerView.Adapter<ViewHolder>() {
+class TaskAdapter(val layout : Int, private val callback: (String) -> Unit,
+                  private val deleteTaskCallback : ((task : Task) -> Unit)?) : RecyclerView.Adapter<ViewHolder>() {
 
     companion object {
         val itemCallback = object : DiffUtil.ItemCallback<Task>() {
@@ -57,6 +58,9 @@ class TaskAdapter(val layout : Int, val callback: (String) -> Unit) : RecyclerVi
         holder.itemView.setOnClickListener {
             callback.invoke(item.id)
         }
+        holder.binding.deleteButton.setOnClickListener {
+            deleteTaskCallback?.invoke(item)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -77,7 +81,7 @@ class TaskAdapter(val layout : Int, val callback: (String) -> Unit) : RecyclerVi
         }
     }
 
-    class CalenderTaskViewHolder(private val binding: CalendarTaskItemBinding) : ViewHolder(binding.root) {
+    class CalenderTaskViewHolder(val binding: CalendarTaskItemBinding) : ViewHolder(binding.root) {
         fun bind(item: Task) {
             binding.task = item
             binding.dateTime = DateTimeUseCase()

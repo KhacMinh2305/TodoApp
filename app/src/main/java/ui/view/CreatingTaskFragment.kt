@@ -97,6 +97,7 @@ class CreatingTaskFragment : Fragment() {
         appViewModel.showBottomNav(false)
         observeMessages()
         observeAddingTaskState()
+        observeUpdateCalenderState()
     }
 
     private fun observeMessages() {
@@ -108,6 +109,11 @@ class CreatingTaskFragment : Fragment() {
     private fun observeAddingTaskState() {
         viewModel.addingTaskState.observe(viewLifecycleOwner) {
             appViewModel.notifyReloadHomeData()
+        }
+    }
+
+    private fun observeUpdateCalenderState() {
+        viewModel.updateCalenderState.observe(viewLifecycleOwner) {
             appViewModel.notifyReloadCalenderData(it)
         }
     }
@@ -118,7 +124,7 @@ class CreatingTaskFragment : Fragment() {
         displaySelectedDate()
         displaySelectedTime()
         goBack()
-        addNewTask();
+        addNewTask()
     }
 
     private fun showDatePicker() {

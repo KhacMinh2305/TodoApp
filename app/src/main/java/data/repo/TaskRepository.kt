@@ -20,5 +20,7 @@ class TaskRepository @Inject constructor(private var taskDataSource: TaskDataSou
 
     suspend fun finishTask(taskId: String) = taskDataSource.finishTask(taskId)
 
+    suspend fun deleteTask(taskId : String) = taskDataSource.deleteTask(taskId)
+
     fun clearCacheDataOnSignOut() = taskDataSource.clearCacheDataOnSignOut()
 }

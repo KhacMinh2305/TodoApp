@@ -202,6 +202,26 @@ class TaskDataSource @Inject constructor(
         }
     }
 
+    suspend fun deleteTask(taskId : String) = withContext(Dispatchers.IO) {
+        try {
+            db.runInTransaction {
+                taskDao.deleteTask(taskId)
+            }
+            deleteTaskFromCache(taskId)
+            return@withContext Result.Success
+        } catch (e : Exception) {
+            return@withContext Result.Error(e.message)
+        }
+    }
+
+    private fun deleteTaskFromCache(taskId : String) {
+        cachedTasks.values.forEach {
+            it.removeIf {task ->
+                taskId == task.id
+            }
+        }
+    }
+
     fun clearCacheDataOnSignOut() {
         cachedDates.clear()
         cachedTasks.clear()

@@ -2,6 +2,7 @@ package config
 
 class AppMessage {
     companion object {
+        const val NOT_ALLOW_DELETE_TASK = "Not allow to delete finished or expired task."
         const val INVALID_DATE = "Invalid date."
         const val INVALID_TIME = "Invalid time."
         const val EMPTY_INPUT = "Fields are empty."

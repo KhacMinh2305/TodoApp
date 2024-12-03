@@ -41,7 +41,6 @@ class WeekDayAdapter(
 
     fun getCurrentDay() : LocalDate? {
         if(mAsync.currentList.size <= 2) return null
-        // test
         val currentDay = mAsync.currentList[currentSelectedIndex]
         return LocalDate.of(currentDay.year, currentDay.month, currentDay.dayOfMonth)
     }

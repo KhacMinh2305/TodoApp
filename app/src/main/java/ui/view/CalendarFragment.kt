@@ -13,6 +13,7 @@ import com.example.todo.R
 import com.example.todo.databinding.FragmentCalendarBinding
 import config.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
+import data.local.entity.Task
 import kotlinx.coroutines.launch
 import ui.adapter.TaskAdapter
 import ui.adapter.WeekDayAdapter
@@ -83,9 +84,7 @@ class CalendarFragment : Fragment() {
     private fun initTaskRecyclerView() {
         binding.taskRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.taskRecyclerView.addItemDecoration(RecyclerViewItemDecoration(30))
-        binding.taskRecyclerView.adapter = TaskAdapter(R.layout.calendar_task_item) {
-            navController.navigate(R.id.action_calendarFragment_to_taskDetailFragment, wrapDataForNavigation(it))
-        }
+        binding.taskRecyclerView.adapter = TaskAdapter(R.layout.calendar_task_item, navigateOnClick(), onClickDelete())
     }
 
     private fun wrapDataForNavigation(id : String) = Bundle().apply {
@@ -96,6 +95,7 @@ class CalendarFragment : Fragment() {
         resetOldUiOn(oldPosition)
         viewModel.loadTasks(date)
         viewModel._currentSelectedDateIndex = newPosition
+        viewModel._currentSelectedDate = date
     }
 
     private fun moveWeek() = {date : LocalDate, direction : Int ->
@@ -109,11 +109,22 @@ class CalendarFragment : Fragment() {
         }
     }
 
+    private fun navigateOnClick() = { id : String ->
+        navController.navigate(R.id.action_calendarFragment_to_taskDetailFragment,
+            wrapDataForNavigation(id))
+    }
+
+    private fun onClickDelete() = { task : Task ->
+        viewModel.deleteTask(task)
+    }
+
     private fun observeStates() {
         observeWeekState()
         observeTasksState()
+        observeMessageState()
         observeReloadOnFinishTaskState()
         observeReloadOnAddingTaskState()
+        observeDeleteTaskState()
     }
 
     private fun collectData(func : suspend () -> Unit) {
@@ -134,10 +145,16 @@ class CalendarFragment : Fragment() {
         }
     }
 
+    private fun observeMessageState() {
+        viewModel.messageState.observe(viewLifecycleOwner) {
+            appViewModel.receiveMessage(it)
+        }
+    }
+
     private fun observeReloadOnFinishTaskState() {
         appViewModel.updateOnFinishTaskState.observe(viewLifecycleOwner) {
             val isToday = (binding.weekDayRecyclerView.adapter as WeekDayAdapter)
-                .getCurrentDay()?.isEqual(LocalDate.now()) ?: false // test
+                .getCurrentDay()?.isEqual(LocalDate.now()) ?: false
             if(isToday) {
                 viewModel.loadTasks(LocalDate.now())
             }
@@ -146,7 +163,16 @@ class CalendarFragment : Fragment() {
 
     private fun observeReloadOnAddingTaskState() {
         appViewModel.reLoadCalenderData.observe(viewLifecycleOwner) {
-            viewModel.loadTasks(it)
+            if(!it.contains(viewModel._currentSelectedDate)) return@observe
+            viewModel.loadTasks(viewModel._currentSelectedDate)
+        }
+    }
+
+    private fun observeDeleteTaskState() {
+        viewModel.deleteTaskState.observe(viewLifecycleOwner) {
+            if(it) {
+                appViewModel.notifyReloadHomeData()
+            }
         }
     }
 }

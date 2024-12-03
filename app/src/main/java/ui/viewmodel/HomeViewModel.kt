@@ -72,6 +72,7 @@ class HomeViewModel @Inject constructor(
             loadTodayTasks()
             loadOnGoingTaskToday()
             emitOnGoingStates()
+            println("Reload home data !")
             _loadingDataSuccessState.value = true
         }
     }
