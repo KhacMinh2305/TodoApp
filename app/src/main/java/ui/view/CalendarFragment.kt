@@ -137,7 +137,7 @@ class CalendarFragment : Fragment() {
     private fun observeReloadOnFinishTaskState() {
         appViewModel.updateOnFinishTaskState.observe(viewLifecycleOwner) {
             val isToday = (binding.weekDayRecyclerView.adapter as WeekDayAdapter)
-                .getCurrentDay().isEqual(LocalDate.now())
+                .getCurrentDay()?.isEqual(LocalDate.now()) ?: false // test
             if(isToday) {
                 viewModel.loadTasks(LocalDate.now())
             }
@@ -150,12 +150,3 @@ class CalendarFragment : Fragment() {
         }
     }
 }
-
-/**TODO:
- * Bug :
- *      Bug 1 : optimization function cause error when checking date to refresh data for adding task
- *      because of race condition (the load require when data loading is still in processing => error when trying
- *      retrieve data to load for comparing to reload)
- *
- *      Bug 2 : When creating task , the data for current selected date must be load again , not today
- * */
