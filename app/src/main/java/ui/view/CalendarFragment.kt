@@ -99,7 +99,9 @@ class CalendarFragment : Fragment() {
     }
 
     private fun moveWeek() = {date : LocalDate, direction : Int ->
-        viewModel.loadWeekDays(date.plusWeeks(direction.toLong()))
+        val weekDayOnNextWeek = date.plusWeeks(direction.toLong())
+        viewModel.loadWeekDays(weekDayOnNextWeek)
+        viewModel.loadTasks(weekDayOnNextWeek)
     }
 
     private fun resetOldUiOn(oldPosition : Int) {
