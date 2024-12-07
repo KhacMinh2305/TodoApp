@@ -1,5 +1,6 @@
 [versions]
 agp = "8.6.0"
+coreKtxVersion = "2.2.0"
 coreSplashscreen = "1.0.1"
 datastorePreferences = "1.1.1"
 hiltAndroid = "2.52"
@@ -26,6 +27,7 @@ workRuntimeKtx = "2.10.0"
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-ktx-v220 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }

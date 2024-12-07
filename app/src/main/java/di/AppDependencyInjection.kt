@@ -1,7 +1,7 @@
 package di
 import android.content.Context
 import androidx.room.Room
-import config.AppConstant
+import env_variable.AppConstant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,7 +1,11 @@
 package com.example.todo
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.os.IBinder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -15,7 +19,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.todo.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
-import config.AppConstant
+import env_variable.AppConstant
+import config.TaskTrackerService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ui.viewmodel.AppViewModel
@@ -27,7 +32,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var navController : NavController
     private lateinit var viewModel : AppViewModel
+    private lateinit var taskTrackerService : TaskTrackerService
     private var keepSplashOnScreen = true
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
+            val binder = p1 as TaskTrackerService.TaskTrackerBinder
+            taskTrackerService = binder.getService()
+            viewModel.serviceInput.observe(this@MainActivity) {
+                taskTrackerService.receiveData(it)
+            }
+        }
+
+        override fun onServiceDisconnected(p0: ComponentName?) {}
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -40,6 +58,11 @@ class MainActivity : AppCompatActivity() {
         splashScreen.setKeepOnScreenCondition { keepSplashOnScreen }
     }
 
+    override fun onStart() {
+        super.onStart()
+        bindToService()
+    }
+
     private fun init() {
         binding.bottomNavView.itemActiveIndicatorColor = ColorStateList.valueOf(Color.TRANSPARENT)
         supportFragmentManager.findFragmentById(R.id.nav_host).also {
@@ -47,6 +70,16 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavView.setupWithNavController(navController)
         }
         viewModel = ViewModelProvider(this)[AppViewModel::class.java].also { binding.viewModel = it }
+    }
+
+    private fun bindToService() {
+        Intent(this, TaskTrackerService::class.java).apply {
+            val bundle = Bundle().apply {
+                putString("arg", "Doan Khac Minh !")
+            }
+            putExtras(bundle)
+            bindService(this, connection, BIND_AUTO_CREATE)
+        }
     }
 
     private fun observeStates() {
@@ -118,4 +151,6 @@ class MainActivity : AppCompatActivity() {
         binding.addTaskButton.setOnClickListener { navController.navigate(R.id.action_creating_task)}
     }
 }
-// Man hinh Calenda su dung week recycler view cho tung tuan , ben duoi su dung viewPager cho tung ngay trong tuan
+
+// Adjust the id  work to a meaningful id or same thing
+// When adding, updating and deleting task , need to notify to WorkManager 

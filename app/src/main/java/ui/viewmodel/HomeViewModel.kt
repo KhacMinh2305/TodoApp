@@ -3,8 +3,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import config.AppConstant
-import config.AppMessage
+import env_variable.AppConstant
+import env_variable.AppMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import data.local.entity.Task
 import data.model.WeekProgressItem
@@ -21,7 +21,8 @@ class HomeViewModel @Inject constructor(
     private val profileRepo: ProfileRepository,
     private val taskRepo: TaskRepository) : ViewModel() {
 
-    private lateinit var onGoingListTask : MutableList<Task>
+    private /*lateinit*/ var _onGoingListTask : MutableList<Task> = mutableListOf() // test
+    val onGoingListTask get() = _onGoingListTask
 
     private var _usernameState = MutableLiveData<String>()
     val usernameState : LiveData<String> = _usernameState
@@ -65,6 +66,9 @@ class HomeViewModel @Inject constructor(
     private var _notifyOtherScreenUpdate = MutableLiveData<Boolean>()
     val notifyOtherScreenUpdate : LiveData<Boolean> = _notifyOtherScreenUpdate
 
+    private var _serviceInputTask = MutableLiveData<List<Task>>()
+    val serviceInputTask : LiveData<List<Task>> = _serviceInputTask
+
     fun loadData() {
         loadUserName()
         viewModelScope.launch {
@@ -72,7 +76,6 @@ class HomeViewModel @Inject constructor(
             loadTodayTasks()
             loadOnGoingTaskToday()
             emitOnGoingStates()
-            println("Reload home data !")
             _loadingDataSuccessState.value = true
         }
     }
@@ -96,8 +99,15 @@ class HomeViewModel @Inject constructor(
             weekItem.add(WeekProgressItem(dayOfWeek, progress))
             totalTask += it.value.size
         }
-        _weekTotalTaskStates.value = totalTask
+        //_weekTotalTaskStates.value = totalTask
+        _weekTotalTaskStates.value = calculateWeekTotalTask(result)
         return weekItem.toList()
+    }
+
+    // Remove the duplicated task if it takes many days
+    private fun calculateWeekTotalTask(data : Map<Long, List<Task>>) : Int {
+        val flattenList = data.values.flatten().toMutableList()
+        return flattenList.distinct().count()
     }
 
     private fun calculateDayProgress(tasks : List<Task>) : Int {
@@ -118,14 +128,15 @@ class HomeViewModel @Inject constructor(
     private suspend fun loadOnGoingTaskToday() {
         val today = DateTimeUseCase().convertDateIntoLong(LocalDate.now())
         val tasks = taskRepo.getOnGoingTaskAtDate(profileRepo.getUserId()!!, today)
-        onGoingListTask = tasks
+        _onGoingListTask = tasks
+        _serviceInputTask.value = _onGoingListTask // TODO : Test
     }
 
     private fun emitOnGoingStates() {
-        val hasNoTaskToDo = onGoingListTask.isEmpty()
+        val hasNoTaskToDo = _onGoingListTask.isEmpty()
         _finishedTaskState.value = hasNoTaskToDo
         if(hasNoTaskToDo) return
-        val onGoingTask = onGoingListTask.last()
+        val onGoingTask = _onGoingListTask.last()
         _onGoingTaskNameState.value = onGoingTask.name
         _onGoingTaskTimeState.value = "${onGoingTask.startTime} - ${onGoingTask.endTime}"
         _onGoingTaskDescriptionState.value = onGoingTask.description
@@ -135,25 +146,25 @@ class HomeViewModel @Inject constructor(
             count = if(it.state == AppConstant.TASK_STATE_FINISHED) count + 1 else count
         }
         _progressState.value = if(count != 0) count * 100 / _todayTaskState.value!!.size else 0
-        _notFinishedTask.value = onGoingListTask.size
+        _notFinishedTask.value = _onGoingListTask.size
     }
 
     private suspend fun reloadOnFinishTask() {
         loadWeekProgress()
         loadTodayTasks()
-        if(onGoingListTask.isEmpty()) {
+        if(_onGoingListTask.isEmpty()) {
             _finishedTaskState.value = true
             return
         }
-        onGoingListTask.removeAt(onGoingListTask.size - 1)
+        _onGoingListTask.removeAt(_onGoingListTask.size - 1)
         emitOnGoingStates()
         _notifyOtherScreenUpdate.value = true
 
     }
 
     fun finishTask() {
-        if(onGoingListTask.isEmpty()) return
-        val taskId = onGoingListTask.last().id
+        if(_onGoingListTask.isEmpty()) return
+        val taskId = _onGoingListTask.last().id
         viewModelScope.launch {
             when(val result = taskRepo.finishTask(taskId)) {
                 is Result.Success -> reloadOnFinishTask()

@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import config.AppConstant
+import env_variable.AppConstant
 import dagger.hilt.android.lifecycle.HiltViewModel
+import data.local.entity.Task
 import data.repo.ProfileRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -42,6 +43,9 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
 
     private val _reLoadCalenderData = MutableLiveData<Range<LocalDate>>()
     val reLoadCalenderData : LiveData<Range<LocalDate>> = _reLoadCalenderData
+
+    private var _serviceInput = MutableLiveData<List<Task>>()
+    val serviceInput : LiveData<List<Task>> = _serviceInput
 
     init {
         viewModelScope.launch {
@@ -100,5 +104,9 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
         message.isNotEmpty().also {
             _messageState.value = message
         }
+    }
+
+    fun receiveServiceInput(tasks : List<Task>) {
+        _serviceInput.value = tasks
     }
 }

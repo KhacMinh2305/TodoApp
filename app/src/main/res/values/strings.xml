@@ -56,4 +56,6 @@
     <string name="expired">Expired</string>
     <string name="finish_all_task">Congratulations! You have finished all tasks. Keep it up ! 🚀</string>
     <string name="calender">Calender</string>
+    <string name="task_expired_chanel_name">Task Expired</string>
+    <string name="task_expired_chanel_description">Notify when task is expired</string>
 </resources>

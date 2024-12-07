@@ -1,6 +1,6 @@
 package domain
 
-import config.AppConstant
+import env_variable.AppConstant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.math.BigInteger

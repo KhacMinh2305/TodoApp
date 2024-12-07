@@ -14,7 +14,7 @@ import androidx.navigation.Navigation.findNavController
 import com.example.todo.R
 import com.example.todo.databinding.FragmentSignInBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import config.AppMessage
+import env_variable.AppMessage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ui.viewmodel.AppViewModel

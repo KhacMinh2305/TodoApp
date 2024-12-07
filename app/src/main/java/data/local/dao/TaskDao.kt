@@ -44,6 +44,9 @@ interface TaskDao {
     @Update(entity = Task::class)
     fun updateTask(task : Task)
 
+    @Query("UPDATE task SET state = 2 WHERE id IN (:ids)")
+    fun updateExpiredListTask(ids : List<String>)
+
     @Insert(entity = Task::class, onConflict = OnConflictStrategy.REPLACE)
     fun addTask(task : Task)
 

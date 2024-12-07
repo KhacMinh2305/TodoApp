@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import config.AppConstant
-import config.AppMessage
+import env_variable.AppConstant
+import env_variable.AppMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import data.local.entity.Task
 import data.repo.ProfileRepository

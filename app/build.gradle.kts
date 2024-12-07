@@ -77,8 +77,9 @@ dependencies {
 
     //DataStore
     implementation(libs.androidx.datastore.preferences)
-
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.work.runtime.ktx)
+
 }
 
 kapt {

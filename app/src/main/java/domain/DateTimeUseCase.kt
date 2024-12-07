@@ -2,7 +2,7 @@ package domain
 import android.annotation.SuppressLint
 import android.util.Range
 import androidx.core.util.rangeTo
-import config.AppConstant
+import env_variable.AppConstant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -26,7 +26,7 @@ class DateTimeUseCase {
         val beginDate = LocalDate.parse(begin, DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
         val endDate = LocalDate.parse(end, DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
         val range = beginDate.rangeTo(endDate)
-        return range
+        return range 
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -37,7 +37,8 @@ class DateTimeUseCase {
     }
 
     fun convertLongDayOfWeek(key: Long): String {
-        val date = LocalDate.parse(convertLongToDateString(key), DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
+        val date = LocalDate.parse(convertLongToDateString(key), DateTimeFormatter.ofPattern(
+            AppConstant.PATTERN_DATE))
         return date.dayOfWeek.toString().substring(0, 3)
     }
 
@@ -61,8 +62,10 @@ class DateTimeUseCase {
     }
 
     fun getDateBetween(begin : Long, end : Long) : List<Long> {
-        var beginDate = LocalDate.parse(convertLongToDateString(begin), DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
-        val endDate = LocalDate.parse(convertLongToDateString(end), DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
+        var beginDate = LocalDate.parse(convertLongToDateString(begin), DateTimeFormatter.ofPattern(
+            AppConstant.PATTERN_DATE))
+        val endDate = LocalDate.parse(convertLongToDateString(end), DateTimeFormatter.ofPattern(
+            AppConstant.PATTERN_DATE))
         val dates = mutableListOf(convertDateStringIntoLong(convertDateInToString(beginDate)))
         while (beginDate.isBefore(endDate)) {
             val date = beginDate.plusDays(1)
@@ -73,7 +76,8 @@ class DateTimeUseCase {
     }
 
     fun combineDateAndTimeFromTask(date : Long, time : String) : LocalDateTime {
-        val localDate = LocalDate.parse(convertLongToDateString(date), DateTimeFormatter.ofPattern(AppConstant.PATTERN_DATE))
+        val localDate = LocalDate.parse(convertLongToDateString(date), DateTimeFormatter.ofPattern(
+            AppConstant.PATTERN_DATE))
         val localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern(AppConstant.PATTERN_TIME))
         return LocalDateTime.of(localDate, localTime)
     }

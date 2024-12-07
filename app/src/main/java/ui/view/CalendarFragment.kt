@@ -11,7 +11,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todo.R
 import com.example.todo.databinding.FragmentCalendarBinding
-import config.AppConstant
+import env_variable.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
 import data.local.entity.Task
 import kotlinx.coroutines.launch
@@ -178,3 +178,4 @@ class CalendarFragment : Fragment() {
         }
     }
 }
+// Man hinh Calenda su dung week recycler view cho tung tuan , ben duoi su dung viewPager cho tung ngay trong tuan

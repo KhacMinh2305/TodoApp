@@ -11,7 +11,7 @@ import androidx.navigation.Navigation.findNavController
 import com.example.todo.R
 import com.example.todo.databinding.FragmentTaskDetailBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import config.AppConstant
+import env_variable.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
 import ui.viewmodel.AppViewModel
 import ui.viewmodel.TaskDetailViewModel

@@ -1,5 +1,5 @@
 package data.source
-import config.AppConstant
+import env_variable.AppConstant
 import data.local.AppLocalDatabase
 import data.local.dao.TaskDao
 import data.local.entity.Task
@@ -28,19 +28,47 @@ class TaskDataSource @Inject constructor(
         cachedDates.addAll(dates)
     }
 
-    private fun cacheMapOfTasks(date : Map<Long, List<Task>>?) = date?.forEach {
-        cachedTasks[it.key] = it.value.toMutableList()
+    private suspend fun cacheMapOfTasks(date : Map<Long, List<Task>>?) {
+        val expiredTasks = mutableListOf<Task>()
+        date?.forEach {
+            cachedTasks[it.key] = it.value.toMutableList()
+            expiredTasks.addAll(filterExpiredTask(cachedTasks[it.key]!!))
+        }
+        updateExpiredTaskInDb(expiredTasks.map { it.id })
     }
 
-    private fun cacheListOfTasks(date : Long, data : List<Task>?) = data?.let {
+    private suspend fun updateExpiredTaskInDb(ids : List<String>) = withContext(Dispatchers.IO) {
+        launch {
+            db.runInTransaction {
+                taskDao.updateExpiredListTask(ids)
+            }
+        }
+    }
+
+    private fun filterExpiredTask(list : MutableList<Task>) : List<Task> {
+        val now = LocalDateTime.now()
+        val dateTimeUseCase = DateTimeUseCase()
+        val expiredTaskList = mutableListOf<Task>()
+        for(i in list.indices) {
+            val task = list[i]
+            val deadline = dateTimeUseCase.combineDateAndTimeFromTask(task.endDate, task.endTime)
+            if(deadline.isBefore(now) || deadline.isEqual(now)) {
+                list[i] = task.copy(state = AppConstant.TASK_STATE_EXPIRED)
+                expiredTaskList.add(task)
+            }
+        }
+        return expiredTaskList.toList()
+    }
+
+    private suspend fun cacheListOfTasks(date : Long, data : List<Task>?) = data?.let {
         cachedTasks[date] = it.toMutableList()
+        val expiredTasks = filterExpiredTask(cachedTasks[date]!!)
+        updateExpiredTaskInDb(expiredTasks.map { task -> task.id }) // TODO : Not stable ! Check again
     }
 
     suspend fun getTaskById(id : String) : Task? {
         cachedTasks.values.forEach {
-            it.find { it.id == id }?.let {
-                return it
-            }
+            it.find { task -> task.id == id }?.let {result -> return result }
         }
         return withContext(Dispatchers.IO) {
             return@withContext taskDao.getTaskById(id)
@@ -51,14 +79,15 @@ class TaskDataSource @Inject constructor(
         val dates = DateTimeUseCase().getWeekDays(weekDay).map {
             DateTimeUseCase().convertDateStringIntoLong("${it.dayOfMonth}/${it.monthValue}/${it.year}")
         }
-        val loadRange = filterDateRange(dates)
-        fillDateRange(loadRange)
-        if(loadRange.isEmpty()) {
+        val dateRangeToLoadTasks = filterDateRange(dates)
+        fillDateRange(dateRangeToLoadTasks)
+        if(dateRangeToLoadTasks.isEmpty()) {
             return@withContext getTasksFromCacheInRangeIfAvailable(dates)
         }
-        taskDao.getTasksInDateRange(userId, loadRange, loadRange[0], loadRange.size, AppConstant.MILLISECOND_IN_DAY)?.let {
+        taskDao.getTasksInDateRange(userId, dateRangeToLoadTasks, dateRangeToLoadTasks[0],
+            dateRangeToLoadTasks.size, AppConstant.MILLISECOND_IN_DAY)?.let {
             cacheMapOfTasks(it)
-            cacheLoadedDay(loadRange)
+            cacheLoadedDay(dateRangeToLoadTasks)
         }
         return@withContext getTasksFromCacheInRangeIfAvailable(dates)
     }

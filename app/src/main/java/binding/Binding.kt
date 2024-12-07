@@ -4,7 +4,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.example.todo.R
-import config.AppConstant
+import env_variable.AppConstant
 import domain.DateTimeUseCase
 
 object Binding {

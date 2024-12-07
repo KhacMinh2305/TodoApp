@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.todo.R
 import com.example.todo.databinding.WeekDayItemBinding
 import com.example.todo.databinding.WeekRecyclerNavigationItemBinding
-import config.AppConstant.Companion.BACKWARD_TEMP_DAY
-import config.AppConstant.Companion.BACKWARD_TEMP_DOW
-import config.AppConstant.Companion.TOWARD_TEMP_DAY
-import config.AppConstant.Companion.TOWARD_TEMP_DOW
+import env_variable.AppConstant.Companion.BACKWARD_TEMP_DAY
+import env_variable.AppConstant.Companion.BACKWARD_TEMP_DOW
+import env_variable.AppConstant.Companion.TOWARD_TEMP_DAY
+import env_variable.AppConstant.Companion.TOWARD_TEMP_DOW
 import data.model.WeekDayItem
 import java.time.LocalDate
 

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.todo.R
 import com.example.todo.databinding.FragmentHomeBinding
-import config.AppConstant
+import env_variable.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
 import ui.adapter.ProgressAdapter
 import ui.adapter.TaskAdapter
@@ -99,6 +99,7 @@ class HomeFragment : Fragment() {
         observeTodayTaskState()
         observeMessageState()
         observeUpdateState()
+        observeServiceInput()
     }
 
     private fun observeUpdateState() {
@@ -132,6 +133,12 @@ class HomeFragment : Fragment() {
     private fun observeWeekProgressState() {
         viewModel.weekProgressState.observe(viewLifecycleOwner) {
             (binding.weekProgressRecyclerView.adapter as ProgressAdapter).submit(it)
+        }
+    }
+
+    private fun observeServiceInput() {
+        viewModel.serviceInputTask.observe(viewLifecycleOwner) {
+            appViewModel.receiveServiceInput(it)
         }
     }
 

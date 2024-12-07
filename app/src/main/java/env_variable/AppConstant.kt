@@ -1,4 +1,4 @@
-package config
+package env_variable
 
 sealed class AppConstant {
     companion object {
@@ -27,5 +27,6 @@ sealed class AppConstant {
         const val TOWARD_TEMP_DOW = "TEMP_RIGHT"
         const val BACKWARD_TEMP_DAY = -1
         const val TOWARD_TEMP_DAY = 0
+        const val TASK_EXPIRED_CHANEL_ID = "TASK_EXPIRED"
     }
 }

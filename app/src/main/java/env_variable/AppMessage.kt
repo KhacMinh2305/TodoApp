@@ -1,4 +1,4 @@
-package config
+package env_variable
 
 class AppMessage {
     companion object {
