@@ -77,11 +77,8 @@ class TaskDetailViewModel @Inject constructor(private val taskRepo: TaskReposito
         return false
     }
 
-    fun updateTask(taskName : String, startDate : String, endDate : String,
-                   beginTime : String, endTime : String, description : String) {
-        val isValid = validate(taskName, startDate, endDate, beginTime, endTime, description)
-        if(task == null) return
-        if(!isValid) return
+    private fun copyTask(taskName : String, startDate : String, endDate : String,
+                         beginTime : String, endTime : String, description : String) : Task? {
         val dateTimeUseCase = DateTimeUseCase()
         val startAtDate = if(startDate.isNotEmpty()) dateTimeUseCase.convertDateStringIntoLong(startDate) else task?.startDate!!
         val endAtDate = if(endDate.isNotEmpty()) dateTimeUseCase.convertDateStringIntoLong(endDate) else task?.endDate!!
@@ -92,12 +89,22 @@ class TaskDetailViewModel @Inject constructor(private val taskRepo: TaskReposito
             startTime = beginTime.ifEmpty { task?.startTime!! },
             endTime = endTime.ifEmpty { task?.endTime!! },
             description = description.ifEmpty { task?.description!!})
-        task = updatedTask
+        return updatedTask
+    }
+
+    fun updateTask(taskName : String, startDate : String, endDate : String,
+                   beginTime : String, endTime : String, description : String) {
+        val isValid = validate(taskName, startDate, endDate, beginTime, endTime, description)
+        if(task == null) return
+        if(!isValid) return
+        val dateTimeUseCase = DateTimeUseCase()
+        val updatedTask = copyTask(taskName, startDate, endDate, beginTime, endTime, description)
         viewModelScope.launch {
-            when (taskRepo.updateTask(task!!)) {
+            when (taskRepo.updateTask(task!!, updatedTask!!)) {
                 is Result.Success -> {
                     val dateRange = dateTimeUseCase.getDateRangeFromLong(task?.startDate!!, task?.endDate!!)
                     _updateTaskState.emit(dateRange)
+                    task = updatedTask
                 }
                 is Result.Error -> _messageState.value = AppMessage.UPDATE_TASK_FAILED
                 else -> _messageState.value = AppMessage.UNDEFINED_ERROR

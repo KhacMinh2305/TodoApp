@@ -91,7 +91,7 @@ class TaskDetailFragment : Fragment() {
             viewModel.updateTaskState.collect {
                 appViewModel.notifyReloadHomeData()
                 appViewModel.notifyReloadCalenderData(it)
-                println("Tao da nhan duoc thong bao roi nhe ! ${it.lower} -> ${it.upper}")
+                // TODO : Notify service change work
             }
         }
     }
@@ -107,7 +107,6 @@ class TaskDetailFragment : Fragment() {
             sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
     }
-
 
     private fun updateTask() {
         binding.bottomSheet.updateTaskButton.setOnClickListener {

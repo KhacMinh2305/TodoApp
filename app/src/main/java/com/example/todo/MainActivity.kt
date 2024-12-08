@@ -42,6 +42,14 @@ class MainActivity : AppCompatActivity() {
             viewModel.serviceInput.observe(this@MainActivity) {
                 taskTrackerService.receiveData(it)
             }
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    taskTrackerService.workState.collect {
+                        if(it.isEmpty()) return@collect
+                        viewModel.notifyTaskExpired(it)
+                    }
+                }
+            }
         }
 
         override fun onServiceDisconnected(p0: ComponentName?) {}
@@ -149,6 +157,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.addTaskButton.setOnClickListener { navController.navigate(R.id.action_creating_task)}
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService(connection)
     }
 }
 

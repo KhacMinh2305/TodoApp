@@ -196,7 +196,7 @@ class TaskDataSource @Inject constructor(
     private fun addTaskToOnGoingList(now : LocalDateTime, target : Task, list : MutableList<Task>) {
         val targetEndTime = DateTimeUseCase().combineDateAndTimeFromTask(target.endDate, target.endTime)
         val targetDiff = DateTimeUseCase().calculateTimeDiff(now, targetEndTime)
-        var insertIndex = 0;
+        var insertIndex = 0
         var endTime : LocalDateTime
         if(target.state == AppConstant.TASK_STATE_FINISHED) return
         if(targetEndTime.isBefore(now) || targetEndTime.isEqual(now)) return
@@ -251,16 +251,30 @@ class TaskDataSource @Inject constructor(
         }
     }
 
-    //should return a particular error for this because sometime it can return a nom message error
-    suspend fun updateTask(updatedTask : Task) = withContext(Dispatchers.IO) {
+    suspend fun updateTask(oldTask : Task, newTask : Task) = withContext(Dispatchers.IO) {
         try {
             db.runInTransaction {
-                taskDao.updateTask(updatedTask)
+                taskDao.updateTask(newTask)
             }
-            println("Thanh cong !")
+            changeTaskInCacheOnUpdating(oldTask, newTask)
             return@withContext Result.Success
         } catch (e : Exception) {
             return@withContext Result.Error(e.message)
+        }
+    }
+
+    private fun changeTaskInCacheOnUpdating(oldTask : Task, newTask: Task) {
+        cachedTasks.values.forEach {
+            it.removeIf { task -> task.id == oldTask.id }
+        }
+        val dateTimeUseCase = DateTimeUseCase()
+        val range = dateTimeUseCase.getDateBetween(newTask.startDate, newTask.endDate)
+        for(date in range) {
+            if(cachedTasks.keys.contains(date)) {
+                cachedTasks[date]?.add(newTask)
+                continue
+            }
+            cachedTasks[date] = mutableListOf(newTask)
         }
     }
 

@@ -47,6 +47,9 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
     private var _serviceInput = MutableLiveData<List<Task>>()
     val serviceInput : LiveData<List<Task>> = _serviceInput
 
+    private var _taskExpiredState = MutableStateFlow("")
+    val taskExpiredState : StateFlow<String> = _taskExpiredState
+
     init {
         viewModelScope.launch {
             if(profileRepo.getUiMode() == AppConstant.MODE_DARK) _themeState.value = true
@@ -104,6 +107,10 @@ class AppViewModel @Inject constructor(private val profileRepo : ProfileReposito
         message.isNotEmpty().also {
             _messageState.value = message
         }
+    }
+
+    fun notifyTaskExpired(id : String) {
+        _taskExpiredState.value = id
     }
 
     fun receiveServiceInput(tasks : List<Task>) {

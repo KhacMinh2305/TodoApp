@@ -22,7 +22,7 @@ class TaskRepository @Inject constructor(private var taskDataSource: TaskDataSou
 
     suspend fun deleteTask(taskId : String) = taskDataSource.deleteTask(taskId)
 
-    suspend fun updateTask(updatedTask : Task) = taskDataSource.updateTask(updatedTask)
+    suspend fun updateTask(oldTask : Task, newTask : Task) = taskDataSource.updateTask(oldTask, newTask)
 
     fun clearCacheDataOnSignOut() = taskDataSource.clearCacheDataOnSignOut()
 }

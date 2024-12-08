@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,10 @@ import com.example.todo.R
 import com.example.todo.databinding.FragmentHomeBinding
 import env_variable.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.launch
 import ui.adapter.ProgressAdapter
 import ui.adapter.TaskAdapter
 import ui.custom.RecyclerViewItemDecoration
@@ -100,6 +105,7 @@ class HomeFragment : Fragment() {
         observeMessageState()
         observeUpdateState()
         observeServiceInput()
+        observeOnFinishTask()
     }
 
     private fun observeUpdateState() {
@@ -156,6 +162,18 @@ class HomeFragment : Fragment() {
         if(isChecked) {
             viewModel.finishTask()
             button.isChecked = false
+        }
+    }
+
+    private fun observeOnFinishTask() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            appViewModel.taskExpiredState.shareIn(viewLifecycleOwner.lifecycleScope, SharingStarted.Lazily)
+                .distinctUntilChanged().collect {
+                    if(it.isNotEmpty()) {
+                        appViewModel.notifyReloadHomeData()
+                        println("Ok het han roi !")
+                    }
+            }
         }
     }
 }

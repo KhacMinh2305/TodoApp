@@ -8,12 +8,13 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.todo.R
 import env_variable.AppConstant
 
-class PushNotificationWork(val context : Context, private val param : WorkerParameters) : Worker(context, param) {
+class PushNotificationWork(val context : Context, param : WorkerParameters) : Worker(context, param) {
 
     private var taskExpiredBuilder = NotificationCompat.Builder(context, AppConstant.TASK_EXPIRED_CHANEL_ID)
         .setSmallIcon(R.drawable.splash_logo)
@@ -21,10 +22,10 @@ class PushNotificationWork(val context : Context, private val param : WorkerPara
         .setPriority(NotificationCompat.PRIORITY_HIGH)
 
     override fun doWork(): Result {
+        val taskId = inputData.getString("task_id")
         val notificationContent = inputData.getString("notification_content")
         pushNotification(notificationContent!!)
-        // notify update data here
-        return Result.success()
+        return Result.success(Data.Builder().putString("result", taskId).build())
     }
 
     private fun pushNotification(taskName: String) {
