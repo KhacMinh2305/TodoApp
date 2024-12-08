@@ -29,6 +29,12 @@ class DateTimeUseCase {
         return range 
     }
 
+    fun getDateRangeFromLong(begin : Long, end : Long) : Range<LocalDate> {
+        val beginDate = convertLongToDateString(begin)
+        val endDate = convertLongToDateString(end)
+        return getDateRangeFromStrings(beginDate, endDate)
+    }
+
     @SuppressLint("SimpleDateFormat")
     fun convertLongToDateString(time : Long) : String {
         val date = Date(time)

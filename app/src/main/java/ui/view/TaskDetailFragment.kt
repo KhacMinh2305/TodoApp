@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import com.example.todo.R
@@ -13,6 +14,7 @@ import com.example.todo.databinding.FragmentTaskDetailBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import env_variable.AppConstant
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import ui.viewmodel.AppViewModel
 import ui.viewmodel.TaskDetailViewModel
 
@@ -60,8 +62,13 @@ class TaskDetailFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
         navController = findNavController(requireActivity(), R.id.nav_host)
-        appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java]
-        viewModel = ViewModelProvider(this)[TaskDetailViewModel::class.java].apply { loadInit(taskId) }
+        appViewModel = ViewModelProvider(requireActivity())[AppViewModel::class.java].also {
+            it.showBottomNav(false)
+        }
+        viewModel = ViewModelProvider(this)[TaskDetailViewModel::class.java].apply {
+            loadInit(taskId)
+            binding.viewmodel = this
+        }
         sheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.editTaskSheet)
         observeStates()
         setupListeners()
@@ -69,17 +76,48 @@ class TaskDetailFragment : Fragment() {
     }
 
     private fun observeStates() {
+        observeMessages()
+        observeUpdateTaskState()
+    }
 
+    private fun observeMessages() {
+        viewModel.messageState.observe(viewLifecycleOwner) {
+            appViewModel.receiveMessage(it)
+        }
+    }
+
+    private fun observeUpdateTaskState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.updateTaskState.collect {
+                appViewModel.notifyReloadHomeData()
+                appViewModel.notifyReloadCalenderData(it)
+                println("Tao da nhan duoc thong bao roi nhe ! ${it.lower} -> ${it.upper}")
+            }
+        }
     }
 
     private fun setupListeners() {
         openSheet()
+        updateTask()
         turnBack()
     }
 
     private fun openSheet() {
         binding.editButton.setOnClickListener {
             sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+    }
+
+
+    private fun updateTask() {
+        binding.bottomSheet.updateTaskButton.setOnClickListener {
+            val taskName = binding.bottomSheet.taskNameInput.text.toString()
+            val startDate = binding.bottomSheet.startDateInput.text.toString()
+            val endDate = binding.bottomSheet.endDateInput.text.toString()
+            val beginTime = binding.bottomSheet.beginTimeInput.text.toString()
+            val endTime = binding.bottomSheet.endTimeInput.text.toString()
+            val description = binding.bottomSheet.descriptionInput.text.toString()
+            viewModel.updateTask(taskName, startDate, endDate, beginTime, endTime, description)
         }
     }
 

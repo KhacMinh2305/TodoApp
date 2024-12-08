@@ -2,6 +2,7 @@ package env_variable
 
 class AppMessage {
     companion object {
+        const val UPDATE_TASK_FAILED = "Update task failed."
         const val NOT_ALLOW_DELETE_TASK = "Not allow to delete finished or expired task."
         const val INVALID_DATE = "Invalid date."
         const val INVALID_TIME = "Invalid time."

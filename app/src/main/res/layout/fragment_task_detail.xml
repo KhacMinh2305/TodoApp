@@ -1,5 +1,11 @@
 <layout>
 
+    <data>
+        <variable
+            name="viewmodel"
+            type="ui.viewmodel.TaskDetailViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -45,7 +51,7 @@
             android:lines="1"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:text="@{viewmodel.name}"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -79,10 +85,10 @@
             android:lines="1"
             android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
+            android:text="@{viewmodel.startDate}"
             tools:text="23/01/2003"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_marginEnd="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/startDateTitle"
@@ -114,7 +120,7 @@
             android:lines="1"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:text="@{viewmodel.endDate}"
             android:layout_marginEnd="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
@@ -149,7 +155,8 @@
             android:lines="1"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            app:startTime="@{viewmodel.startTime}"
+            app:endTime="@{viewmodel.endTime}"
             android:layout_marginEnd="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
@@ -185,6 +192,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingStart="10dp"
+            app:taskPriority="@{viewmodel.priority}"
             android:textColor="@color/black"
             android:paddingEnd="10dp"
             android:layout_marginEnd="15dp"
@@ -234,6 +242,7 @@
                     android:layout_gravity="top|end"
                     android:drawablePadding="10dp"
                     android:ellipsize="end"
+                    android:text="@{viewmodel.description}"
                     android:textColor="@color/black"
                     android:gravity="start|center_vertical"
                     tools:text="@string/demo_long_text"
@@ -251,47 +260,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/description" />
-
-                <TextView
-                    android:id="@+id/commentTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_gravity="top|end"
-                    android:drawablePadding="10dp"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/comment"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/indicator" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/commentRecyclerView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/commentTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/commentTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:text="@string/comment"
-                android:textColor="@color/black"
-                app:drawableStartCompat="@drawable/ic_todo_comment"
-                android:gravity="center"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:drawablePadding="10dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="@drawable/comment_background"
-                android:layout_gravity="top|end"
-                android:layout_marginEnd="30dp"/>
         </FrameLayout>
 
         <View

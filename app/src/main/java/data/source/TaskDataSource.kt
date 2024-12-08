@@ -63,7 +63,7 @@ class TaskDataSource @Inject constructor(
     private suspend fun cacheListOfTasks(date : Long, data : List<Task>?) = data?.let {
         cachedTasks[date] = it.toMutableList()
         val expiredTasks = filterExpiredTask(cachedTasks[date]!!)
-        updateExpiredTaskInDb(expiredTasks.map { task -> task.id }) // TODO : Not stable ! Check again
+        updateExpiredTaskInDb(expiredTasks.map { task -> task.id })
     }
 
     suspend fun getTaskById(id : String) : Task? {
@@ -248,6 +248,19 @@ class TaskDataSource @Inject constructor(
             it.removeIf {task ->
                 taskId == task.id
             }
+        }
+    }
+
+    //should return a particular error for this because sometime it can return a nom message error
+    suspend fun updateTask(updatedTask : Task) = withContext(Dispatchers.IO) {
+        try {
+            db.runInTransaction {
+                taskDao.updateTask(updatedTask)
+            }
+            println("Thanh cong !")
+            return@withContext Result.Success
+        } catch (e : Exception) {
+            return@withContext Result.Error(e.message)
         }
     }
 
